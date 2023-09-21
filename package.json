@@ -1,0 +1,27 @@
+{
+	"name": "fable-synth",
+	"version": "1.0.0",
+	"description": "",
+	"main": "Program.fs.js",
+	"type": "module",
+	"scripts": {
+		"start": "vite",
+		"dev": "dotnet fable watch -e .fs.jsx --run npx vite",
+		"build": "vite build",
+		"serve": "vite preview"
+	},
+	"license": "MIT",
+	"devDependencies": {
+		"autoprefixer": "^10.4.14",
+		"postcss": "^8.4.24",
+		"solid-devtools": "^0.27.3",
+		"tailwindcss": "^3.3.2",
+		"vite": "^4.4.9",
+		"vite-plugin-solid": "^2.7.0"
+	},
+	"dependencies": {
+		"@elemaudio/core": "^2.1.0",
+		"@elemaudio/web-renderer": "^2.1.0",
+		"solid-js": "^1.7.12"
+	}
+}

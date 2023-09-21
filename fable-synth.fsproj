@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <RootNamespace>fable_synth</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="src/App.fs" />
+    <Compile Include="src/Program.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Fable.Browser.Dom" Version="2.14.0" />
+    <PackageReference Include="Fable.Core" Version="4.0.0" />
+    <ProjectReference Include="projects/Fable.Solid/Fable.Solid.fsproj" />
+  </ItemGroup>
+
+</Project>
