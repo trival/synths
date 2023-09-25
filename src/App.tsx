@@ -1,11 +1,16 @@
-import { el } from '@elemaudio/core'
 import WebRenderer from '@elemaudio/web-renderer'
-import { createSignal } from 'solid-js'
+import { For, createEffect, createSignal } from 'solid-js'
+import { Track } from './tracks'
+import { el } from '@elemaudio/core'
 
 const ctx = new AudioContext()
 const core = new WebRenderer()
 
-core.on('load', function () {})
+const [loaded, setLoaded] = createSignal(false)
+
+core.on('load', function () {
+	setLoaded(true)
+})
 
 async function main() {
 	let node = await core.initialize(ctx, {
@@ -19,32 +24,60 @@ async function main() {
 
 main().catch(console.error)
 
-function start() {
-	if (ctx.state !== 'running') {
-		ctx.resume()
-	}
+interface AudioExampleProps {
+	title: string
+	isSelected: boolean
+	toggleTrack: () => void
 }
 
-function play(volume: number) {
-	const left = el.cycle(440)
-	const right = el.cycle(441)
-	core.render(el.mul(left, volume), el.mul(right, volume))
-}
-
-export function App() {
-	const [volume, setVolume] = createSignal(1)
+export function AudioExample(props: AudioExampleProps) {
 	return (
-		<div class="py-20 text-center">
+		<div class="my-12 text-center">
+			<p class="mx-auto my-4 max-w-md">{props.title}</p>
 			<button
 				class="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
-				onClick={() => {
-					start()
-					play(volume())
-					setVolume((volume) => (volume ? 0 : 1))
-				}}
+				onClick={() => props.toggleTrack()}
 			>
-				Toggle sound
+				Toggle Track
 			</button>
 		</div>
+	)
+}
+
+export interface AppProps {
+	tracks: Track[]
+}
+
+export function App(props: AppProps) {
+	const [trackIdx, setTrackIdx] = createSignal(-1)
+
+	createEffect(() => {
+		const track = props.tracks[trackIdx()]
+		if (loaded()) {
+			if (track) {
+				track.renderAudio((left: any, right: any) => {
+					core.render(left, right)
+				})
+			} else {
+				core.render(0, 0)
+			}
+		}
+	})
+
+	return (
+		<For each={props.tracks}>
+			{(track, index) => (
+				<AudioExample
+					title={track.title}
+					isSelected={index() === trackIdx()}
+					toggleTrack={() => {
+						if (ctx.state !== 'running') {
+							ctx.resume()
+						}
+						setTrackIdx(index() === trackIdx() ? -1 : index())
+					}}
+				/>
+			)}
+		</For>
 	)
 }
