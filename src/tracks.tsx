@@ -1,14 +1,14 @@
 import { NodeRepr_t, el } from '@elemaudio/core'
 
 export interface Track {
-	title: string
+	text: string
 	renderAudio: (
 		render: (left: NodeRepr_t | number, right: NodeRepr_t | number) => void,
 	) => void
 }
 
 const basic: Track = {
-	title: 'Basic stereo',
+	text: 'Basic stereo',
 	renderAudio: (render) => {
 		const left = el.cycle(440)
 		const right = el.cycle(441)
@@ -17,7 +17,7 @@ const basic: Track = {
 }
 
 const basicMul: Track = {
-	title: 'Fq mul',
+	text: 'Fq mul',
 	renderAudio: (render) => {
 		const node = el.mul(el.cycle(440), el.cycle(440))
 		render(node, node)
@@ -25,7 +25,7 @@ const basicMul: Track = {
 }
 
 const basicAdd: Track = {
-	title: 'Fq add',
+	text: 'Fq add',
 	renderAudio: (render) => {
 		const added = el.add(el.cycle(440), el.cycle(441))
 		const node = el.mul(added, 0.5)
@@ -34,7 +34,7 @@ const basicAdd: Track = {
 }
 
 const basicChord: Track = {
-	title: 'Chord',
+	text: 'Chord',
 	renderAudio: (render) => {
 		const baseNote = 110
 		const chord = el.add(

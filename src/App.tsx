@@ -25,7 +25,7 @@ async function main() {
 main().catch(console.error)
 
 interface AudioExampleProps {
-	title: string
+	text: string
 	isSelected: boolean
 	toggleTrack: () => void
 }
@@ -33,7 +33,7 @@ interface AudioExampleProps {
 export function AudioExample(props: AudioExampleProps) {
 	return (
 		<div class="my-12 text-center">
-			<p class="mx-auto my-4 max-w-md">{props.title}</p>
+			<p class="mx-auto my-4 max-w-md">{props.text}</p>
 			<button
 				class="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
 				onClick={() => props.toggleTrack()}
@@ -68,7 +68,7 @@ export function App(props: AppProps) {
 		<For each={props.tracks}>
 			{(track, index) => (
 				<AudioExample
-					title={track.title}
+					text={track.text}
 					isSelected={index() === trackIdx()}
 					toggleTrack={() => {
 						if (ctx.state !== 'running') {
