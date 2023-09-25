@@ -19,7 +19,7 @@ const basic: Track = {
 const basicMul: Track = {
 	text: 'Fq mul',
 	renderAudio: (render) => {
-		const node = el.mul(el.cycle(440), el.cycle(440))
+		const node = el.mul(el.cycle(440), el.cycle(441))
 		render(node, node)
 	},
 }
