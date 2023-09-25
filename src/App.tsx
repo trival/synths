@@ -33,12 +33,11 @@ interface AudioExampleProps {
 export function AudioExample(props: AudioExampleProps) {
 	return (
 		<div class="my-12 text-center">
-			<p class="mx-auto my-4 max-w-md">{props.text}</p>
 			<button
 				class="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
 				onClick={() => props.toggleTrack()}
 			>
-				Toggle Track
+				{props.text}
 			</button>
 		</div>
 	)
