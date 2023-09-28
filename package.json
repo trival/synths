@@ -29,6 +29,8 @@
   "dependencies": {
     "@elemaudio/core": "^2.1.0",
     "@elemaudio/web-renderer": "^2.1.0",
-    "solid-js": "^1.7.12"
+    "clsx": "^2.0.0",
+    "solid-js": "^1.7.12",
+    "webaudio-oscilloscope": "^3.2.1"
   }
 }

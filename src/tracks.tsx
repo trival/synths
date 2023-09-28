@@ -1,10 +1,28 @@
 import { NodeRepr_t, el } from '@elemaudio/core'
+import { InputDeclaration, InputType } from './input'
 
 const basic: Track = {
 	text: 'Basic stereo',
-	renderAudio: (render) => {
-		const left = el.cycle(440)
-		const right = el.cycle(441)
+	inputs: [
+		{
+			type: InputType.SLIDER,
+			initialValue: 440,
+			label: 'fc',
+			max: 220 * 4,
+			step: 10,
+			min: 220,
+		},
+		{
+			type: InputType.TOGGLE,
+			initialValue: 1,
+			label: 'Play',
+		},
+	],
+	renderAudio: (render, vals) => {
+		const play = vals[1]
+		const fc = (vals[0] || 440) * play
+		const left = el.cycle(fc)
+		const right = el.cycle(fc + 1)
 		render(left, right)
 	},
 }
@@ -82,7 +100,9 @@ export const tracks: Track[] = [
 
 export interface Track {
 	text: string
+	inputs?: InputDeclaration[]
 	renderAudio: (
 		render: (left: NodeRepr_t | number, right: NodeRepr_t | number) => void,
+		inputVals: number[],
 	) => void
 }
