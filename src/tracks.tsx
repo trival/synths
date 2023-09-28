@@ -112,6 +112,16 @@ const basicNoiseFilter: Track = {
 	},
 }
 
+const basicSeq: Track = {
+	text: 'seq',
+	renderAudio(render) {
+		const t = el.le(el.phasor(3, 0), 0.999)
+		const s = el.seq({ seq: [1, 0, 0, 1, 0, 1] }, t, 0)
+		const n = el.mul(s, el.triangle(220))
+		render(n, n)
+	},
+}
+
 export const tracks: Track[] = [
 	basic,
 	basicMul,
@@ -120,6 +130,7 @@ export const tracks: Track[] = [
 	basicChordSaw,
 	basicChordSquare,
 	basicEnv,
+	basicSeq,
 	basicNoiseFilter,
 ]
 
