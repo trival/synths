@@ -21,8 +21,8 @@ const basic: Track = {
 	renderAudio: (render, vals) => {
 		const play = vals[1]
 		const fc = (vals[0] || 440) * play
-		const left = el.cycle(fc)
-		const right = el.cycle(fc + 1)
+		const left = el.cycle({ key: 'fc' }, fc)
+		const right = el.cycle({ key: 'fc1' }, fc + 1)
 		render(left, right)
 	},
 }
@@ -61,7 +61,7 @@ const basicChordSin: Track = {
 
 const basicChordSaw: Track = {
 	text: 'Chord saw',
-	renderAudio: (render) => {
+	renderAudio(render) {
 		const baseNote = 110
 		const chord = el.add(
 			el.saw(baseNote * 2),
@@ -76,7 +76,7 @@ const basicChordSaw: Track = {
 
 const basicChordSquare: Track = {
 	text: 'Chord square',
-	renderAudio: (render) => {
+	renderAudio(render) {
 		const baseNote = 110
 		const chord = el.add(
 			el.square(baseNote * 2),
@@ -89,6 +89,29 @@ const basicChordSquare: Track = {
 	},
 }
 
+const basicEnv: Track = {
+	text: 'Gain Env',
+	renderAudio(render) {
+		const t = el.train(0.7)
+		const env1 = el.env(el.tau2pole(0.2), el.tau2pole(0.05), t)
+		const env2 = el.env(el.tau2pole(0.02), el.tau2pole(0.3), t)
+		const n = el.mul(el.cycle(440), el.mul(el.add(env1, env2), 0.5))
+		render(n, n)
+	},
+}
+
+const basicNoiseFilter: Track = {
+	text: 'seq noise Filter',
+	renderAudio(render) {
+		const t = el.le(el.phasor(6, 0), 0.6)
+		const s = el.seq({ seq: [1, 0, 0, 1, 0, 1] }, t, 0)
+		const envG = el.env(el.tau2pole(0.04), el.tau2pole(0.3), s)
+		const sound = el.mul(el.pinknoise(), envG, 5)
+		const n = el.lowpass(el.mul(envG, 1200), 1, sound)
+		render(n, n)
+	},
+}
+
 export const tracks: Track[] = [
 	basic,
 	basicMul,
@@ -96,6 +119,8 @@ export const tracks: Track[] = [
 	basicChordSin,
 	basicChordSaw,
 	basicChordSquare,
+	basicEnv,
+	basicNoiseFilter,
 ]
 
 export interface Track {
