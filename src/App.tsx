@@ -36,7 +36,7 @@ interface AudioExampleProps {
 
 export function AudioExample(props: AudioExampleProps) {
 	return (
-		<div class="my-12 text-center">
+		<div class="my-8 text-center">
 			<button
 				class="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
 				onClick={() => props.toggleTrack()}
@@ -87,8 +87,8 @@ export function App(props: AppProps) {
 
 	return (
 		<div class="flex h-full w-full">
-			<div class="mx-4 my-auto h-full overflow-y-auto">
-				<canvas ref={canvas} width="400" height="300" />
+			<div class="auto m-4 h-full overflow-y-auto">
+				<canvas ref={canvas} width="600" height="400" />
 				<Show when={track()?.inputs}>
 					<Inputs
 						inputs={track().inputs!}
