@@ -64,9 +64,13 @@ export function App(props: AppProps) {
 		if (loaded()) {
 			if (t) {
 				console.log('rendering', t.text, inputs())
-				t.renderAudio((left: any, right: any) => {
-					core.render(left, right)
-				}, inputs())
+				t.renderAudio(
+					(left: any, right: any) => {
+						core.render(left, right)
+					},
+					inputs(),
+					ctx,
+				)
 			} else {
 				core.render(0, 0)
 			}

@@ -122,6 +122,96 @@ const basicSeq: Track = {
 	},
 }
 
+let playingNotes: { fc: number; start: number }[] = []
+const baseTone = 440
+let tones = [
+	baseTone / 1,
+
+	(baseTone * 7) / 6,
+	// (baseTone * 6) / 5, // no minor third
+	(baseTone * 5) / 4,
+	(baseTone * 4) / 3,
+	(baseTone * 3) / 2,
+
+	(((baseTone * 3) / 2) * 7) / 6,
+	(((baseTone * 3) / 2) * 5) / 4,
+
+	baseTone * 2,
+]
+tones = tones.concat(tones.map((t) => t * 2))
+
+function pick<T>(ts: T[]) {
+	return ts[Math.floor(ts.length * Math.random())]
+}
+let renderTimes = 1
+
+const duration = 0.5
+const release = 1.5
+
+const basicSchedule: Track = {
+	text: 'schedule',
+	inputs: [
+		{
+			type: InputType.TOGGLE,
+			initialValue: 0,
+			label: 'play',
+		},
+	],
+	renderAudio(render, vals, ctx) {
+		const t = ctx.currentTime
+
+		playingNotes = playingNotes.filter(
+			(n) => n.start > t - (duration + release),
+		)
+		playingNotes.push(
+			{
+				fc: pick(tones),
+				start: t,
+			},
+			{
+				fc: pick(tones),
+				start: t + 1 + Math.random(),
+			},
+		)
+
+		console.log('rendering', renderTimes++, playingNotes)
+
+		const envs = playingNotes.map((note, i) => {
+			const s = el.mul(
+				el.ge(
+					el.div(el.time(), el.sr()),
+					el.const({
+						key: 'start' + i,
+						value: note.start,
+					}),
+				),
+				el.le(
+					el.div(el.time(), el.sr()),
+					el.const({ key: 'end' + i, value: note.start + duration }),
+				),
+			)
+			return el.adsr(0.1, 0.2, 0.6, release, s)
+		})
+
+		const ns = playingNotes.map((note, i) => {
+			const n = el.mul(el.cycle(note.fc), envs[i], 0.9)
+			return n
+		})
+
+		const [first, ...rest] = ns
+		const sig = rest.reduce((acc, n) => el.add(acc, n), first)
+
+		const [e1, ...es] = envs
+		const playingCount = es.reduce(
+			(acc, e) => el.add(acc, el.ge(e, 0.001)),
+			el.ge(e1, 0.001),
+		)
+		let n = el.div(sig, el.pow(playingCount, 0.5))
+		n = el.compress(10, 100, -8, 4, n, n)
+		render(n, n)
+	},
+}
+
 export const tracks: Track[] = [
 	basic,
 	basicMul,
@@ -132,6 +222,7 @@ export const tracks: Track[] = [
 	basicEnv,
 	basicSeq,
 	basicNoiseFilter,
+	basicSchedule,
 ]
 
 export interface Track {
@@ -140,5 +231,6 @@ export interface Track {
 	renderAudio: (
 		render: (left: NodeRepr_t | number, right: NodeRepr_t | number) => void,
 		inputVals: number[],
+		ctx: AudioContext,
 	) => void
 }
