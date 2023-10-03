@@ -63,14 +63,20 @@ export function App(props: AppProps) {
 		const t = track()
 		if (loaded()) {
 			if (t) {
-				console.log('rendering', t.text, inputs())
+				const is = inputs()
+				console.log('rendering', t.text, is)
+
 				t.renderAudio(
 					(left: any, right: any) => {
 						core.render(left, right)
 					},
-					inputs(),
+					is,
 					ctx,
 				)
+
+				requestAnimationFrame(() => {
+					localStorage.setItem(t.text, JSON.stringify(is))
+				})
 			} else {
 				core.render(0, 0)
 			}
@@ -85,7 +91,18 @@ export function App(props: AppProps) {
 	createEffect(() => {
 		const t = track()
 		if (t?.inputs) {
-			setInputs(t.inputs.map((i) => i.initialValue))
+			const stored = localStorage.getItem(t.text)
+			if (stored) {
+				const parsed = JSON.parse(stored)
+				if (
+					parsed.length === t.inputs.length &&
+					parsed.every((p: any) => typeof p === 'number')
+				) {
+					setInputs(parsed)
+				}
+			} else {
+				setInputs(t.inputs.map((i) => i.initialValue))
+			}
 		}
 	})
 

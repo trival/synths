@@ -1,5 +1,6 @@
 import { NodeRepr_t, el } from '@elemaudio/core'
 import { InputDeclaration, InputType } from './input'
+import { NoteName, midiToFc, noteToMidi } from './utils'
 
 const basic: Track = {
 	text: 'Basic stereo',
@@ -212,6 +213,114 @@ const basicSchedule: Track = {
 	},
 }
 
+const basicSynth: Track = {
+	text: 'synth',
+	inputs: [
+		{
+			type: InputType.SLIDER,
+			label: 'lfo fc gain',
+			initialValue: 0.5,
+			min: 0.1,
+			max: 40,
+			step: 0.1,
+		},
+		{
+			type: InputType.SLIDER,
+			label: 'modulation amount gain',
+			initialValue: 0.5,
+			min: 0,
+			max: 1,
+			step: 0.01,
+		},
+		{
+			type: InputType.SLIDER,
+			label: 'lfo fc',
+			initialValue: 10,
+			min: 0.1,
+			max: 40,
+			step: 0.1,
+		},
+		{
+			type: InputType.SLIDER,
+			label: 'modulation amount fc',
+			initialValue: 0.1,
+			min: 0,
+			max: 1,
+			step: 0.01,
+		},
+		{
+			type: InputType.SLIDER,
+			label: 'lfo filter',
+			initialValue: 0.5,
+			min: 0.1,
+			max: 40,
+			step: 0.1,
+		},
+		{
+			type: InputType.SLIDER,
+			label: 'modulation amount filter',
+			initialValue: 0.5,
+			min: 0,
+			max: 1,
+			step: 0.01,
+		},
+		{
+			type: InputType.SLIDER,
+			label: 'filter Q',
+			initialValue: 0.5,
+			min: 0,
+			max: 2,
+			step: 0.01,
+		},
+	],
+	renderAudio(
+		render,
+		[gainSig, gainAmount, fcSig, fcAmount, filterSig, filterAmount, filterQ],
+	) {
+		const notes: [NoteName, number][] = [
+			['D', 3],
+			['F', 3],
+			['A', 3],
+			['C', 4],
+			['B', 3],
+			['G', 3],
+			['F', 3],
+			['D', 3],
+			['C', 3],
+			['E', 3],
+			['G', 3],
+			['B', 3],
+			['A', 3],
+			['F', 3],
+			['E', 3],
+			['C', 3],
+		]
+		const fcs = notes.map(([note, octave]) =>
+			midiToFc(noteToMidi({ note, octave })),
+		)
+		const trigger = el.phasor(1.5, 0)
+		const sigSeq = el.le(trigger, 0.99)
+		const sigEnv = el.le(trigger, 0.3)
+		const seq = el.seq({ seq: fcs }, sigSeq, 0)
+
+		const fcLFO = el.cycle(fcSig)
+		const fc = el.add(seq, el.mul(fcAmount * 100, fcLFO))
+		const tone = el.saw(fc)
+
+		const filterLFO = el.cycle(filterSig)
+		const fcFilter = el.add(fc, el.mul(filterAmount * 100, filterLFO))
+		const filter = el.lowpass(fcFilter, filterQ, tone)
+
+		const env = el.adsr(0.2, 0.2, 0.6, 1.5, sigEnv)
+		const gainLFO = el.sub(
+			1,
+			el.mul(el.add(1, el.cycle(gainSig)), 0.5, gainAmount),
+		)
+		const res = el.mul(filter, env, gainLFO)
+		render(res, res)
+	},
+}
+
 export const tracks: Track[] = [
 	basic,
 	basicMul,
@@ -223,6 +332,7 @@ export const tracks: Track[] = [
 	basicSeq,
 	basicNoiseFilter,
 	basicSchedule,
+	basicSynth,
 ]
 
 export interface Track {
