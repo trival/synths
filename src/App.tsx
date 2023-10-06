@@ -3,9 +3,17 @@ import { For, Show, createEffect, createSignal } from 'solid-js'
 import { Track } from './tracks'
 import { Oscilloscope } from 'webaudio-oscilloscope/index.js'
 import { Inputs } from './input'
+import { Icon } from 'solid-heroicons'
+import { pause, play } from 'solid-heroicons/solid'
 
 const ctx = new AudioContext()
 const core = new WebRenderer()
+
+function startCtx() {
+	if (ctx.state !== 'running') {
+		ctx.resume()
+	}
+}
 
 const [loaded, setLoaded] = createSignal(false)
 const [initialized, setInitialized] = createSignal(false)
@@ -28,41 +36,41 @@ async function main() {
 
 main().catch(console.error)
 
-interface AudioExampleProps {
-	text: string
-	isSelected: boolean
-	toggleTrack: () => void
-}
-
-export function AudioExample(props: AudioExampleProps) {
-	return (
-		<div class="my-8 text-center">
-			<button
-				class="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
-				onClick={() => props.toggleTrack()}
-			>
-				{props.text}
-			</button>
-		</div>
-	)
-}
-
 export interface AppProps {
 	tracks: Track[]
 }
 
+const paramName = 'track'
+
 export function App(props: AppProps) {
 	const [trackIdx, setTrackIdx] = createSignal(-1)
 	const [inputs, setInputs] = createSignal<number[]>([])
+	const [isPlaying, setIsPlaying] = createSignal(false)
 
 	let canvas: HTMLCanvasElement | undefined
 
 	const track = () => props.tracks[trackIdx()]
 
+	function setTrackFromQuery() {
+		const query = new URLSearchParams(window.location.search)
+		console.log('setting track from query', query)
+		if (query.has(paramName)) {
+			const trackName = query.get(paramName)
+			const trackIndex = props.tracks.findIndex((t) => t.text === trackName)
+			if (trackIndex !== -1) {
+				setTrackIdx(trackIndex)
+			}
+		}
+	}
+
+	createEffect(() => {
+		setTrackFromQuery()
+	})
+
 	createEffect(() => {
 		const t = track()
 		if (loaded()) {
-			if (t) {
+			if (t && isPlaying()) {
 				const is = inputs()
 				console.log('rendering', t.text, is)
 
@@ -108,7 +116,48 @@ export function App(props: AppProps) {
 
 	return (
 		<div class="flex h-full w-full">
-			<div class="auto m-4 h-full overflow-y-auto">
+			<div class="m-8 mr-16 h-full overflow-y-auto">
+				<For each={props.tracks}>
+					{(track) => (
+						<div class="mb-4">
+							<button
+								class="block font-bold text-blue-500 underline"
+								type="button"
+								onClick={() => {
+									startCtx()
+									window.history.replaceState(
+										{},
+										'',
+										`?${paramName}=${track.text}`,
+									)
+									setTrackFromQuery()
+								}}
+							>
+								{track.text}
+							</button>
+						</div>
+					)}
+				</For>
+			</div>
+			<div class="auto m-8 h-full overflow-y-auto">
+				<div class="flex">
+					<button
+						type="button"
+						class="my-auto mr-4 rounded-sm bg-slate-100 p-2 shadow-md"
+						onClick={() => {
+							startCtx()
+							setIsPlaying(!isPlaying())
+						}}
+					>
+						<Show
+							when={isPlaying()}
+							fallback={<Icon path={play} class="h-6 w-6" />}
+						>
+							<Icon path={pause} class="h-6 w-6" />
+						</Show>
+					</button>
+					<h3 class="my-4 grow">{track()?.text}</h3>
+				</div>
 				<canvas ref={canvas} width="600" height="400" />
 				<Show when={track()?.inputs}>
 					<Inputs
@@ -116,22 +165,6 @@ export function App(props: AppProps) {
 						onChange={(vals) => setInputs(vals)}
 					/>
 				</Show>
-			</div>
-			<div class="h-full flex-grow overflow-y-auto">
-				<For each={props.tracks}>
-					{(track, index) => (
-						<AudioExample
-							text={track.text}
-							isSelected={index() === trackIdx()}
-							toggleTrack={() => {
-								if (ctx.state !== 'running') {
-									ctx.resume()
-								}
-								setTrackIdx(index() === trackIdx() ? -1 : index())
-							}}
-						/>
-					)}
-				</For>
 			</div>
 		</div>
 	)
