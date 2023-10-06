@@ -9,9 +9,18 @@ import { pause, play } from 'solid-heroicons/solid'
 const ctx = new AudioContext()
 const core = new WebRenderer()
 
-function startCtx() {
+const [isPlaying, setIsPlaying] = createSignal(false)
+function playCtx() {
 	if (ctx.state !== 'running') {
 		ctx.resume()
+		setIsPlaying(true)
+	}
+}
+
+function pauseCtx() {
+	if (ctx.state === 'running') {
+		ctx.suspend()
+		setIsPlaying(false)
 	}
 }
 
@@ -45,7 +54,6 @@ const paramName = 'track'
 export function App(props: AppProps) {
 	const [trackIdx, setTrackIdx] = createSignal(-1)
 	const [inputs, setInputs] = createSignal<number[]>([])
-	const [isPlaying, setIsPlaying] = createSignal(false)
 
 	let canvas: HTMLCanvasElement | undefined
 
@@ -85,8 +93,6 @@ export function App(props: AppProps) {
 				requestAnimationFrame(() => {
 					localStorage.setItem(t.text, JSON.stringify(is))
 				})
-			} else {
-				core.render(0, 0)
 			}
 		}
 
@@ -124,7 +130,6 @@ export function App(props: AppProps) {
 								class="block font-bold text-blue-500 underline"
 								type="button"
 								onClick={() => {
-									startCtx()
 									window.history.replaceState(
 										{},
 										'',
@@ -145,8 +150,7 @@ export function App(props: AppProps) {
 						type="button"
 						class="my-auto mr-4 rounded-sm bg-slate-100 p-2 shadow-md"
 						onClick={() => {
-							startCtx()
-							setIsPlaying(!isPlaying())
+							isPlaying() ? pauseCtx() : playCtx()
 						}}
 					>
 						<Show

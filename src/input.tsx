@@ -36,18 +36,35 @@ export interface SliderProps {
 export function Slider(props: SliderProps) {
 	return (
 		<label
-			class={clsx('flex items-center font-medium text-gray-800', props.class)}
+			class={clsx('block items-center font-medium text-gray-800', props.class)}
 		>
-			<span class="mr-4">{props.label}</span>
-			<input
-				class="w-[400px]"
-				type="range"
-				min={props.min}
-				max={props.max}
-				step={props.step}
-				value={props.value}
-				onInput={(e) => props.onChange(Number(e.target.value))}
-			/>
+			<span class="mb-1 block">{props.label}</span>
+			<div class="flex items-start">
+				<div class="w-[500px]">
+					<input
+						class="w-full"
+						type="range"
+						min={props.min}
+						max={props.max}
+						step={props.step}
+						value={props.value}
+						onInput={(e) => props.onChange(Number(e.target.value))}
+					/>
+					<div class="-mt-2 flex w-full text-xs text-slate-500">
+						<span class="w-1/2 text-left">{props.min}</span>
+						<span class="w-1/2 text-right">{props.max}</span>
+					</div>
+				</div>
+				<input
+					class="mx-4 w-[60px]"
+					type="number"
+					min={props.min}
+					max={props.max}
+					step={props.step}
+					value={props.value}
+					onInput={(e) => props.onChange(Number(e.target.value))}
+				/>
+			</div>
 		</label>
 	)
 }

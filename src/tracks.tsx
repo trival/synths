@@ -13,15 +13,9 @@ const basic: Track = {
 			step: 10,
 			min: 220,
 		},
-		{
-			type: InputType.TOGGLE,
-			initialValue: 1,
-			label: 'Play',
-		},
 	],
 	renderAudio: (render, vals) => {
-		const play = vals[1]
-		const fc = (vals[0] || 440) * play
+		const fc = vals[0] || 440
 		const left = el.cycle({ key: 'fc' }, fc)
 		const right = el.cycle({ key: 'fc1' }, fc + 1)
 		render(left, right)
