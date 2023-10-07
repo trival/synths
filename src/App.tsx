@@ -76,8 +76,8 @@ export function App(props: AppProps) {
 	})
 
 	createEffect(() => {
-		const t = track()
 		if (loaded()) {
+			const t = track()
 			if (t && isPlaying()) {
 				const is = inputs()
 				console.log('rendering', t.text, is)
@@ -95,7 +95,9 @@ export function App(props: AppProps) {
 				})
 			}
 		}
+	})
 
+	createEffect(() => {
 		if (initialized() && canvas && node) {
 			const o = new Oscilloscope(ctx, node, canvas)
 			o.start()
@@ -162,7 +164,7 @@ export function App(props: AppProps) {
 					</button>
 					<h3 class="my-4 grow">{track()?.text}</h3>
 				</div>
-				<canvas ref={canvas} width="400" height="300" />
+				<canvas ref={canvas} width="600" height="400" />
 				<Show when={track()?.inputs}>
 					<Inputs
 						inputs={track().inputs!}
