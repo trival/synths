@@ -162,10 +162,11 @@ export function App(props: AppProps) {
 					</button>
 					<h3 class="my-4 grow">{track()?.text}</h3>
 				</div>
-				<canvas ref={canvas} width="600" height="400" />
+				<canvas ref={canvas} width="400" height="300" />
 				<Show when={track()?.inputs}>
 					<Inputs
 						inputs={track().inputs!}
+						values={inputs()}
 						onChange={(vals) => setInputs(vals)}
 					/>
 				</Show>

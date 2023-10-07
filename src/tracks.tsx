@@ -1,6 +1,6 @@
 import { NodeRepr_t, el } from '@elemaudio/core'
 import { InputDeclaration, InputType } from './input'
-import { NoteName, midiToFc, noteToMidi } from './utils'
+import { NoteName, fit1011, fit1110, midiToFc, noteToMidi } from './utils'
 
 const basic: Track = {
 	text: 'Basic stereo',
@@ -212,7 +212,7 @@ const basicSynth: Track = {
 	inputs: [
 		{
 			type: InputType.SLIDER,
-			label: 'lfo fc gain',
+			label: 'gain lfo fc',
 			initialValue: 0.5,
 			min: 0.1,
 			max: 40,
@@ -220,7 +220,7 @@ const basicSynth: Track = {
 		},
 		{
 			type: InputType.SLIDER,
-			label: 'modulation amount gain',
+			label: 'gain mod amount',
 			initialValue: 0.5,
 			min: 0,
 			max: 1,
@@ -228,7 +228,7 @@ const basicSynth: Track = {
 		},
 		{
 			type: InputType.SLIDER,
-			label: 'lfo fc',
+			label: 'fc lfo fc',
 			initialValue: 10,
 			min: 0.1,
 			max: 40,
@@ -236,15 +236,15 @@ const basicSynth: Track = {
 		},
 		{
 			type: InputType.SLIDER,
-			label: 'modulation amount fc',
-			initialValue: 0.1,
+			label: 'fc mod scale',
+			initialValue: 10,
 			min: 0,
-			max: 1,
-			step: 0.01,
+			max: 100,
+			step: 0.1,
 		},
 		{
 			type: InputType.SLIDER,
-			label: 'lfo filter',
+			label: 'filter lfo fc',
 			initialValue: 0.5,
 			min: 0.1,
 			max: 40,
@@ -252,11 +252,11 @@ const basicSynth: Track = {
 		},
 		{
 			type: InputType.SLIDER,
-			label: 'modulation amount filter',
-			initialValue: 0.5,
+			label: 'filter mod scale',
+			initialValue: 50,
 			min: 0,
-			max: 1,
-			step: 0.01,
+			max: 1000,
+			step: 0.1,
 		},
 		{
 			type: InputType.SLIDER,
@@ -269,7 +269,7 @@ const basicSynth: Track = {
 	],
 	renderAudio(
 		render,
-		[gainSig, gainAmount, fcSig, fcAmount, filterSig, filterAmount, filterQ],
+		[gainSig, gainAmount, fcSig, fcScale, filterSig, filterScale, filterQ],
 	) {
 		const notes: [NoteName, number][] = [
 			['D', 3],
@@ -298,20 +298,44 @@ const basicSynth: Track = {
 		const seq = el.seq({ seq: fcs }, sigSeq, 0)
 
 		const fcLFO = el.cycle(fcSig)
-		const fc = el.add(seq, el.mul(fcAmount * 100, fcLFO))
+		const fc = el.add(seq, el.mul(fcScale, fcLFO))
 		const tone = el.saw(fc)
 
 		const filterLFO = el.cycle(filterSig)
-		const fcFilter = el.add(fc, el.mul(filterAmount * 100, filterLFO))
+		const fcFilter = el.add(fc, el.mul(filterScale, filterLFO))
 		const filter = el.lowpass(fcFilter, filterQ, tone)
 
 		const env = el.adsr(0.2, 0.2, 0.6, 1.5, sigEnv)
-		const gainLFO = el.sub(
-			1,
-			el.mul(el.add(1, el.cycle(gainSig)), 0.5, gainAmount),
-		)
+		const gainLFO = el.sub(1, el.mul(fit1110(el.cycle(gainSig)), gainAmount))
 		const res = el.mul(filter, env, gainLFO)
 		render(res, res)
+	},
+}
+
+const basicPulseModulation: Track = {
+	text: 'pulse modulation',
+	inputs: [
+		{
+			type: InputType.SLIDER,
+			label: 'fc',
+			initialValue: 440,
+			min: 40,
+			max: 2000,
+			step: 1,
+		},
+		{
+			type: InputType.SLIDER,
+			label: 'mod fc',
+			initialValue: 0.5,
+			min: 0,
+			max: 100,
+			step: 0.1,
+		},
+	],
+	renderAudio(render, [fc, modFc]) {
+		const mod = el.mul(fit1110(el.cycle(modFc)), 0.5)
+		const sig = el.mul(fit1011(el.le(el.phasor(fc, 0), mod)), 0.5)
+		render(sig, sig)
 	},
 }
 
@@ -327,6 +351,7 @@ export const tracks: Track[] = [
 	basicNoiseFilter,
 	basicSchedule,
 	basicSynth,
+	basicPulseModulation,
 ]
 
 export interface Track {

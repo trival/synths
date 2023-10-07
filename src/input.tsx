@@ -113,13 +113,17 @@ export function Toggle(props: ToggleProps) {
 
 interface InputsProps {
 	inputs: InputDeclaration[]
+	values: number[]
 	onChange: (values: number[]) => void
 	class?: string
 }
 
 export function Inputs(props: InputsProps) {
 	// eslint-disable-next-line solid/reactivity
-	let [store, setStore] = createStore(props.inputs.map((i) => i.initialValue))
+	let [store, setStore] = createStore(props.values)
+	createEffect(() => {
+		setStore(props.values)
+	})
 
 	const update = (i: number, val: number) => {
 		let newVals = [...store]
@@ -127,10 +131,6 @@ export function Inputs(props: InputsProps) {
 		props.onChange(newVals)
 		setStore(newVals)
 	}
-
-	createEffect(() => {
-		setStore(props.inputs.map((i) => i.initialValue))
-	})
 
 	return (
 		<div>
@@ -140,7 +140,7 @@ export function Inputs(props: InputsProps) {
 						case InputType.SLIDER:
 							return (
 								<Slider
-									class="m-4"
+									class="my-4"
 									label={input.label}
 									max={input.max}
 									min={input.min}
@@ -153,7 +153,7 @@ export function Inputs(props: InputsProps) {
 						case InputType.TOGGLE:
 							return (
 								<Toggle
-									class="m-4"
+									class="my-4"
 									label={input.label}
 									value={store[i()] as 1 | 0}
 									onChange={(val) => update(i(), val)}
