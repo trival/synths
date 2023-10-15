@@ -24,6 +24,10 @@ function pauseCtx() {
 	}
 }
 
+function setTrack(track: Track) {
+	window.history.replaceState({}, '', `?${paramName}=${track.text}`)
+}
+
 const [loaded, setLoaded] = createSignal(false)
 const [initialized, setInitialized] = createSignal(false)
 
@@ -61,7 +65,6 @@ export function App(props: AppProps) {
 
 	function setTrackFromQuery() {
 		const query = new URLSearchParams(window.location.search)
-		console.log('setting track from query', query)
 		if (query.has(paramName)) {
 			const trackName = query.get(paramName)
 			const trackIndex = props.tracks.findIndex((t) => t.text === trackName)
@@ -73,6 +76,10 @@ export function App(props: AppProps) {
 
 	createEffect(() => {
 		setTrackFromQuery()
+		if (trackIdx() === -1) {
+			setTrack(props.tracks[0])
+			setTrackFromQuery()
+		}
 	})
 
 	createEffect(() => {
@@ -132,11 +139,7 @@ export function App(props: AppProps) {
 								class="block font-bold text-blue-500 underline"
 								type="button"
 								onClick={() => {
-									window.history.replaceState(
-										{},
-										'',
-										`?${paramName}=${track.text}`,
-									)
+									setTrack(track)
 									setTrackFromQuery()
 								}}
 							>
@@ -148,20 +151,22 @@ export function App(props: AppProps) {
 			</div>
 			<div class="auto m-8 h-full overflow-y-auto">
 				<div class="flex">
-					<button
-						type="button"
-						class="my-auto mr-4 rounded-sm bg-slate-100 p-2 shadow-md"
-						onClick={() => {
-							isPlaying() ? pauseCtx() : playCtx()
-						}}
-					>
-						<Show
-							when={isPlaying()}
-							fallback={<Icon path={play} class="h-6 w-6" />}
+					<Show when={trackIdx() !== -1}>
+						<button
+							type="button"
+							class="my-auto mr-4 rounded-sm bg-slate-100 p-2 shadow-md"
+							onClick={() => {
+								isPlaying() ? pauseCtx() : playCtx()
+							}}
 						>
-							<Icon path={pause} class="h-6 w-6" />
-						</Show>
-					</button>
+							<Show
+								when={isPlaying()}
+								fallback={<Icon path={play} class="h-6 w-6" />}
+							>
+								<Icon path={pause} class="h-6 w-6" />
+							</Show>
+						</button>
+					</Show>
 					<h3 class="my-4 grow">{track()?.text}</h3>
 				</div>
 				<canvas ref={canvas} width="600" height="400" />

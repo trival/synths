@@ -339,6 +339,121 @@ const basicPulseModulation: Track = {
 	},
 }
 
+const WaveTypeOptions = ['sine', 'square', 'saw', 'triangle'] as const
+export const basicGainModulation: Track = {
+	text: 'gain modulation',
+	inputs: [
+		{
+			type: InputType.SELECT,
+			label: 'modulation equation',
+			options: ['simple mul', 'complex, add difference and sum'],
+			initialValue: 0,
+		},
+		{
+			type: InputType.SELECT,
+			label: 'wave type',
+			options: WaveTypeOptions,
+			initialValue: 0,
+		},
+		{
+			type: InputType.SLIDER,
+			label: 'fc',
+			initialValue: 440,
+			min: 40,
+			max: 4000,
+			step: 1,
+		},
+		{
+			type: InputType.SLIDER,
+			label: 'mod fc',
+			initialValue: 0.5,
+			min: 0,
+			max: 1000,
+			step: 0.1,
+		},
+		{
+			type: InputType.SLIDER,
+			label: 'mod amount',
+			initialValue: 0.5,
+			min: 0,
+			max: 2,
+			step: 0.01,
+		},
+	],
+	renderAudio(render, [eq, waveType, fc, modFc, modAmount]) {
+		let wave: NodeRepr_t | number
+		if (eq === 0) {
+			switch (WaveTypeOptions[waveType]) {
+				case 'sine':
+					wave = el.add(
+						el.cycle(fc),
+						el.mul(el.cycle(fc), el.cycle(modFc), modAmount),
+					)
+					break
+
+				case 'square':
+					wave = el.add(
+						el.square(fc),
+						el.mul(el.square(fc), el.square(modFc), modAmount),
+					)
+					break
+
+				case 'saw':
+					wave = el.add(
+						el.saw(fc),
+						el.mul(el.saw(fc), el.saw(modFc), modAmount),
+					)
+					break
+
+				case 'triangle':
+					wave = el.add(
+						el.triangle(fc),
+						el.mul(el.triangle(fc), el.triangle(modFc), modAmount),
+					)
+					break
+			}
+		} else {
+			// A1=a1cos(w1t) + 1/2 [a2cos(w1+w2)t] + 1/2[a2cos(w1-w2)t]
+			switch (WaveTypeOptions[waveType]) {
+				case 'sine':
+					wave = el.add(
+						el.cycle(fc),
+						el.mul(el.cycle(fc + modFc), modAmount, 0.5),
+						el.mul(el.cycle(fc - modFc), modAmount, 0.5),
+					)
+					break
+
+				case 'square':
+					wave = el.add(
+						el.square(fc),
+						el.mul(el.square(fc + modFc), modAmount, 0.5),
+						el.mul(el.square(fc - modFc), modAmount, 0.5),
+					)
+					break
+
+				case 'saw':
+					wave = el.add(
+						el.saw(fc),
+						el.mul(el.saw(fc + modFc), modAmount, 0.5),
+						el.mul(el.saw(fc - modFc), modAmount, 0.5),
+					)
+					break
+
+				case 'triangle':
+					wave = el.add(
+						el.triangle(fc),
+						el.mul(el.triangle(fc + modFc), modAmount, 0.5),
+						el.mul(el.triangle(fc - modFc), modAmount, 0.5),
+					)
+					break
+			}
+		}
+
+		wave = el.mul(wave, 0.5)
+		render(wave, wave)
+	},
+}
+
 export const tracks: Track[] = [
 	basic,
 	basicMul,
@@ -352,6 +467,7 @@ export const tracks: Track[] = [
 	basicSchedule,
 	basicSynth,
 	basicPulseModulation,
+	basicGainModulation,
 ]
 
 export interface Track {

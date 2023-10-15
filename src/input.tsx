@@ -5,6 +5,7 @@ import { createStore } from 'solid-js/store'
 export enum InputType {
 	SLIDER,
 	TOGGLE,
+	SELECT,
 }
 
 export interface SliderDeclaration {
@@ -22,7 +23,17 @@ export interface ToggleDeclaration {
 	initialValue: 0 | 1
 }
 
-export type InputDeclaration = SliderDeclaration | ToggleDeclaration
+export interface SelectDeclaration {
+	type: InputType.SELECT
+	label: string
+	options: readonly string[]
+	initialValue: number
+}
+
+export type InputDeclaration =
+	| SliderDeclaration
+	| ToggleDeclaration
+	| SelectDeclaration
 
 export interface SliderProps {
 	class?: string
@@ -111,6 +122,37 @@ export function Toggle(props: ToggleProps) {
 	)
 }
 
+interface SelectProps {
+	class?: string
+	label: string
+	options: readonly string[]
+	value: number
+	onChange: (val: number) => void
+}
+
+export function Select(props: SelectProps) {
+	return (
+		<label
+			class={clsx(
+				'block bg-white text-sm font-medium leading-6 text-gray-900',
+				props.class,
+			)}
+		>
+			<span class="block">{props.label}</span>
+			<select
+				name="location"
+				class="mt-2 block w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
+				onChange={(e) => props.onChange(Number(e.target.value))}
+				value={props.value}
+			>
+				<For each={props.options}>
+					{(option, i) => <option value={i()}>{option}</option>}
+				</For>
+			</select>
+		</label>
+	)
+}
+
 interface InputsProps {
 	inputs: InputDeclaration[]
 	values: number[]
@@ -156,6 +198,17 @@ export function Inputs(props: InputsProps) {
 									class="my-4"
 									label={input.label}
 									value={store[i()] as 1 | 0}
+									onChange={(val) => update(i(), val)}
+								/>
+							)
+
+						case InputType.SELECT:
+							return (
+								<Select
+									class="my-4"
+									label={input.label}
+									options={input.options}
+									value={store[i()]}
 									onChange={(val) => update(i(), val)}
 								/>
 							)
