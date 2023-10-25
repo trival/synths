@@ -27,8 +27,8 @@
     "vite-plugin-solid": "^2.7.0"
   },
   "dependencies": {
-    "@elemaudio/core": "^2.1.0",
-    "@elemaudio/web-renderer": "^2.1.0",
+    "@elemaudio/core": "^3.0.0",
+    "@elemaudio/web-renderer": "^3.0.0",
     "clsx": "^2.0.0",
     "solid-heroicons": "^3.2.4",
     "solid-js": "^1.7.12",

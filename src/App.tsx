@@ -89,13 +89,12 @@ export function App(props: AppProps) {
 				const is = inputs()
 				console.log('rendering', t.text, is)
 
-				t.renderAudio(
-					(left: any, right: any) => {
-						core.render(left, right)
-					},
-					is,
-					ctx,
-				)
+				let el = t.renderAudio(is, ctx)
+				if (Array.isArray(el)) {
+					core.render(...el)
+				} else {
+					core.render(el, el)
+				}
 
 				requestAnimationFrame(() => {
 					localStorage.setItem(t.text, JSON.stringify(is))

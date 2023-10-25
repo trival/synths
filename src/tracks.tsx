@@ -14,34 +14,32 @@ const basic: Track = {
 			min: 220,
 		},
 	],
-	renderAudio: (render, vals) => {
+	renderAudio(vals) {
 		const fc = vals[0] || 440
 		const left = el.cycle({ key: 'fc' }, fc)
 		const right = el.cycle({ key: 'fc1' }, fc + 1)
-		render(left, right)
+		return [left, right]
 	},
 }
 
 const basicMul: Track = {
 	text: 'Fq mul',
-	renderAudio: (render) => {
-		const node = el.mul(el.cycle(440), el.cycle(441))
-		render(node, node)
+	renderAudio() {
+		return el.mul(el.cycle(440), el.cycle(441))
 	},
 }
 
 const basicAdd: Track = {
 	text: 'Fq add',
-	renderAudio: (render) => {
+	renderAudio() {
 		const added = el.add(el.cycle(440), el.cycle(441))
-		const node = el.mul(added, 0.5)
-		render(node, node)
+		return el.mul(added, 0.5)
 	},
 }
 
 const basicChordSin: Track = {
 	text: 'Chord cycle',
-	renderAudio: (render) => {
+	renderAudio() {
 		const baseNote = 110
 		const chord = el.add(
 			el.cycle(baseNote * 2),
@@ -50,13 +48,13 @@ const basicChordSin: Track = {
 			el.cycle((baseNote * 5) / 2),
 		)
 		const node = el.mul(chord, 0.25)
-		render(node, node)
+		return node
 	},
 }
 
 const basicChordSaw: Track = {
 	text: 'Chord saw',
-	renderAudio(render) {
+	renderAudio() {
 		const baseNote = 110
 		const chord = el.add(
 			el.saw(baseNote * 2),
@@ -65,13 +63,13 @@ const basicChordSaw: Track = {
 			el.saw((baseNote * 5) / 2),
 		)
 		const node = el.mul(chord, 0.25)
-		render(node, node)
+		return node
 	},
 }
 
 const basicChordSquare: Track = {
 	text: 'Chord square',
-	renderAudio(render) {
+	renderAudio() {
 		const baseNote = 110
 		const chord = el.add(
 			el.square(baseNote * 2),
@@ -80,40 +78,40 @@ const basicChordSquare: Track = {
 			el.square((baseNote * 5) / 2),
 		)
 		const node = el.mul(chord, 0.25)
-		render(node, node)
+		return node
 	},
 }
 
 const basicEnv: Track = {
 	text: 'Gain Env',
-	renderAudio(render) {
+	renderAudio() {
 		const t = el.train(0.7)
 		const env1 = el.env(el.tau2pole(0.2), el.tau2pole(0.05), t)
 		const env2 = el.env(el.tau2pole(0.02), el.tau2pole(0.3), t)
 		const n = el.mul(el.cycle(440), el.mul(el.add(env1, env2), 0.5))
-		render(n, n)
+		return n
 	},
 }
 
 const basicNoiseFilter: Track = {
 	text: 'seq noise Filter',
-	renderAudio(render) {
-		const t = el.le(el.phasor(6, 0), 0.6)
+	renderAudio() {
+		const t = el.le(el.phasor(6), 0.6)
 		const s = el.seq({ seq: [1, 0, 0, 1, 0, 1] }, t, 0)
 		const envG = el.env(el.tau2pole(0.04), el.tau2pole(0.3), s)
 		const sound = el.mul(el.pinknoise(), envG, 5)
 		const n = el.lowpass(el.mul(envG, 1200), 1, sound)
-		render(n, n)
+		return n
 	},
 }
 
 const basicSeq: Track = {
 	text: 'seq',
-	renderAudio(render) {
-		const t = el.le(el.phasor(3, 0), 0.999)
+	renderAudio() {
+		const t = el.le(el.phasor(3), 0.999)
 		const s = el.seq({ seq: [1, 0, 0, 1, 0, 1] }, t, 0)
 		const n = el.mul(s, el.triangle(220))
-		render(n, n)
+		return n
 	},
 }
 
@@ -152,7 +150,7 @@ const basicSchedule: Track = {
 			label: 'play',
 		},
 	],
-	renderAudio(render, vals, ctx) {
+	renderAudio(vals, ctx) {
 		const t = ctx.currentTime
 
 		playingNotes = playingNotes.filter(
@@ -203,7 +201,7 @@ const basicSchedule: Track = {
 		)
 		let n = el.div(sig, el.pow(playingCount, 0.5))
 		n = el.compress(10, 100, -8, 4, n, n)
-		render(n, n)
+		return n
 	},
 }
 
@@ -267,10 +265,15 @@ const basicSynth: Track = {
 			step: 0.01,
 		},
 	],
-	renderAudio(
-		render,
-		[gainSig, gainAmount, fcSig, fcScale, filterSig, filterScale, filterQ],
-	) {
+	renderAudio([
+		gainSig,
+		gainAmount,
+		fcSig,
+		fcScale,
+		filterSig,
+		filterScale,
+		filterQ,
+	]) {
 		const notes: [NoteName, number][] = [
 			['D', 3],
 			['F', 3],
@@ -292,7 +295,7 @@ const basicSynth: Track = {
 		const fcs = notes.map(([note, octave]) =>
 			midiToFc(noteToMidi({ note, octave })),
 		)
-		const trigger = el.phasor(1.5, 0)
+		const trigger = el.phasor(1.5)
 		const sigSeq = el.le(trigger, 0.99)
 		const sigEnv = el.le(trigger, 0.3)
 		const seq = el.seq({ seq: fcs }, sigSeq, 0)
@@ -308,7 +311,7 @@ const basicSynth: Track = {
 		const env = el.adsr(0.2, 0.2, 0.6, 1.5, sigEnv)
 		const gainLFO = el.sub(1, el.mul(fit1110(el.cycle(gainSig)), gainAmount))
 		const res = el.mul(filter, env, gainLFO)
-		render(res, res)
+		return res
 	},
 }
 
@@ -332,10 +335,10 @@ const basicPulseModulation: Track = {
 			step: 0.1,
 		},
 	],
-	renderAudio(render, [fc, modFc]) {
+	renderAudio([fc, modFc]) {
 		const mod = el.mul(fit1110(el.cycle(modFc)), 0.5)
-		const sig = el.mul(fit1011(el.le(el.phasor(fc, 0), mod)), 0.5)
-		render(sig, sig)
+		const sig = el.mul(fit1011(el.le(el.phasor(fc), mod)), 0.5)
+		return sig
 	},
 }
 
@@ -380,8 +383,8 @@ export const basicGainModulation: Track = {
 			step: 0.01,
 		},
 	],
-	renderAudio(render, [eq, waveType, fc, modFc, modAmount]) {
-		let wave: NodeRepr_t | number
+	renderAudio([eq, waveType, fc, modFc, modAmount]) {
+		let wave: Node
 		if (eq === 0) {
 			switch (WaveTypeOptions[waveType]) {
 				case 'sine':
@@ -449,8 +452,7 @@ export const basicGainModulation: Track = {
 			}
 		}
 
-		wave = el.mul(wave, 0.5)
-		render(wave, wave)
+		return el.mul(wave, 0.5)
 	},
 }
 
@@ -470,12 +472,10 @@ export const tracks: Track[] = [
 	basicGainModulation,
 ]
 
+type Node = NodeRepr_t | number
+
 export interface Track {
 	text: string
 	inputs?: InputDeclaration[]
-	renderAudio: (
-		render: (left: NodeRepr_t | number, right: NodeRepr_t | number) => void,
-		inputVals: number[],
-		ctx: AudioContext,
-	) => void
+	renderAudio: (inputVals: number[], ctx: AudioContext) => Node | Node[]
 }
