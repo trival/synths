@@ -1,4 +1,3 @@
-import { el } from '@elemaudio/core'
 import { AudioNode, timedTrigger } from './elemaudio'
 
 export interface SeqNote<T> {

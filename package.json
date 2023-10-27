@@ -4,9 +4,7 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "start": "vite",
     "dev": "vite",
-    "dev:fable": "dotnet fable watch --run npx vite",
     "build": "vite build",
     "serve": "vite preview",
     "types": "tsc --noEmit"

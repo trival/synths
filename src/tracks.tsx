@@ -431,7 +431,6 @@ export const basicGainModulation: Track = {
 	},
 }
 
-// import { tracks as fsTracks } from './fs/tracks'
 import { tracks as advancedTracks } from './tracks/tracks'
 import { Track } from './utils/base'
 
@@ -450,4 +449,3 @@ export const tracks: Track[] = advancedTracks.concat([
 	basicPulseModulation,
 	basicGainModulation,
 ])
-// .concat(fsTracks)
