@@ -6,6 +6,7 @@ export enum InputType {
 	SLIDER,
 	TOGGLE,
 	SELECT,
+	TICK,
 }
 
 export interface SliderDeclaration {
@@ -34,6 +35,7 @@ export type InputDeclaration =
 	| SliderDeclaration
 	| ToggleDeclaration
 	| SelectDeclaration
+	| { type: InputType.TICK }
 
 export interface SliderProps {
 	class?: string
@@ -162,13 +164,13 @@ interface InputsProps {
 
 export function Inputs(props: InputsProps) {
 	// eslint-disable-next-line solid/reactivity
-	let [store, setStore] = createStore(props.values)
+	const [store, setStore] = createStore(props.values)
 	createEffect(() => {
 		setStore(props.values)
 	})
 
 	const update = (i: number, val: number) => {
-		let newVals = [...store]
+		const newVals = [...store]
 		newVals[i] = val
 		props.onChange(newVals)
 		setStore(newVals)

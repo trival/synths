@@ -1,10 +1,10 @@
 import WebRenderer from '@elemaudio/web-renderer'
-import { For, Show, createEffect, createSignal } from 'solid-js'
-import { Track } from './tracks'
+import { For, Show, createEffect, createSignal, onCleanup } from 'solid-js'
 import { Oscilloscope } from 'webaudio-oscilloscope/index.js'
-import { Inputs } from './input'
+import { InputType, Inputs } from './input'
 import { Icon } from 'solid-heroicons'
 import { pause, play } from 'solid-heroicons/solid'
+import { Track } from './utils/base'
 
 const ctx = new AudioContext()
 const core = new WebRenderer()
@@ -63,6 +63,19 @@ export function App(props: AppProps) {
 
 	const track = () => props.tracks[trackIdx()]
 
+	const i = setInterval(() => {
+		const i = track().inputs?.findIndex((i) => i.type === InputType.TICK)
+		if (i != null && i !== -1) {
+			const newInputs = [...inputs()]
+			newInputs[i] = ctx.currentTime
+			setInputs(newInputs)
+		}
+	}, 25)
+
+	onCleanup(() => {
+		clearInterval(i)
+	})
+
 	function setTrackFromQuery() {
 		const query = new URLSearchParams(window.location.search)
 		if (query.has(paramName)) {
@@ -89,7 +102,7 @@ export function App(props: AppProps) {
 				const is = inputs()
 				console.log('rendering', t.text, is)
 
-				let el = t.renderAudio(is, ctx)
+				const el = t.renderAudio(is, ctx)
 				if (Array.isArray(el)) {
 					core.render(...el)
 				} else {
@@ -123,7 +136,11 @@ export function App(props: AppProps) {
 					setInputs(parsed)
 				}
 			} else {
-				setInputs(t.inputs.map((i) => i.initialValue))
+				setInputs(
+					t.inputs.map((i) =>
+						i.type === InputType.TICK ? ctx.currentTime : i.initialValue,
+					),
+				)
 			}
 		}
 	})

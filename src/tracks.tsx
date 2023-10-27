@@ -1,6 +1,12 @@
-import { NodeRepr_t, el } from '@elemaudio/core'
-import { InputDeclaration, InputType } from './input'
-import { NoteName, fit1011, fit1110, midiToFc, noteToMidi } from './utils'
+import { el } from '@elemaudio/core'
+import { InputType } from './input'
+import {
+	NoteName,
+	harmonicMajorScale,
+	midiToFc,
+	noteToMidi,
+} from './utils/music'
+import { fit1011, fit1110, AudioNode } from './utils/elemaudio'
 
 const basic: Track = {
 	text: 'Basic stereo',
@@ -116,22 +122,8 @@ const basicSeq: Track = {
 }
 
 let playingNotes: { fc: number; start: number }[] = []
-const baseTone = 440
-let tones = [
-	baseTone / 1,
-
-	(baseTone * 7) / 6,
-	// (baseTone * 6) / 5, // no minor third
-	(baseTone * 5) / 4,
-	(baseTone * 4) / 3,
-	(baseTone * 3) / 2,
-
-	(((baseTone * 3) / 2) * 7) / 6,
-	(((baseTone * 3) / 2) * 5) / 4,
-
-	baseTone * 2,
-]
-tones = tones.concat(tones.map((t) => t * 2))
+let scale = harmonicMajorScale(440)
+scale = scale.concat(scale.map((t) => t * 2))
 
 function pick<T>(ts: T[]) {
 	return ts[Math.floor(ts.length * Math.random())]
@@ -158,11 +150,11 @@ const basicSchedule: Track = {
 		)
 		playingNotes.push(
 			{
-				fc: pick(tones),
+				fc: pick(scale),
 				start: t,
 			},
 			{
-				fc: pick(tones),
+				fc: pick(scale),
 				start: t + 1 + Math.random(),
 			},
 		)
@@ -384,7 +376,7 @@ export const basicGainModulation: Track = {
 		},
 	],
 	renderAudio([eq, waveType, fc, modFc, modAmount]) {
-		let wave: Node
+		let wave: AudioNode
 		if (eq === 0) {
 			switch (WaveTypeOptions[waveType]) {
 				case 'sine':
@@ -457,27 +449,23 @@ export const basicGainModulation: Track = {
 }
 
 import { tracks as fsTracks } from './fs/tracks'
+import { tracks as advancedTracks } from './tracks/tracks'
+import { Track } from './utils/base'
 
-export const tracks: Track[] = [
-	basic,
-	basicMul,
-	basicAdd,
-	basicChordSin,
-	basicChordSaw,
-	basicChordSquare,
-	basicEnv,
-	basicSeq,
-	basicNoiseFilter,
-	basicSchedule,
-	basicSynth,
-	basicPulseModulation,
-	basicGainModulation,
-].concat(fsTracks)
-
-type Node = NodeRepr_t | number
-
-export interface Track {
-	text: string
-	inputs?: InputDeclaration[]
-	renderAudio: (inputVals: number[], ctx: AudioContext) => Node | Node[]
-}
+export const tracks: Track[] = advancedTracks
+	.concat([
+		basic,
+		basicMul,
+		basicAdd,
+		basicChordSin,
+		basicChordSaw,
+		basicChordSquare,
+		basicEnv,
+		basicSeq,
+		basicNoiseFilter,
+		basicSchedule,
+		basicSynth,
+		basicPulseModulation,
+		basicGainModulation,
+	])
+	.concat(fsTracks)
