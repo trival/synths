@@ -448,24 +448,23 @@ export const basicGainModulation: Track = {
 	},
 }
 
-import { tracks as fsTracks } from './fs/tracks'
+// import { tracks as fsTracks } from './fs/tracks'
 import { tracks as advancedTracks } from './tracks/tracks'
 import { Track } from './utils/base'
 
-export const tracks: Track[] = advancedTracks
-	.concat([
-		basic,
-		basicMul,
-		basicAdd,
-		basicChordSin,
-		basicChordSaw,
-		basicChordSquare,
-		basicEnv,
-		basicSeq,
-		basicNoiseFilter,
-		basicSchedule,
-		basicSynth,
-		basicPulseModulation,
-		basicGainModulation,
-	])
-	.concat(fsTracks)
+export const tracks: Track[] = advancedTracks.concat([
+	basic,
+	basicMul,
+	basicAdd,
+	basicChordSin,
+	basicChordSaw,
+	basicChordSquare,
+	basicEnv,
+	basicSeq,
+	basicNoiseFilter,
+	basicSchedule,
+	basicSynth,
+	basicPulseModulation,
+	basicGainModulation,
+])
+// .concat(fsTracks)
