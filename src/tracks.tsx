@@ -456,6 +456,8 @@ export const basicGainModulation: Track = {
 	},
 }
 
+import { tracks as fsTracks } from './fs/tracks'
+
 export const tracks: Track[] = [
 	basic,
 	basicMul,
@@ -470,7 +472,7 @@ export const tracks: Track[] = [
 	basicSynth,
 	basicPulseModulation,
 	basicGainModulation,
-]
+].concat(fsTracks)
 
 type Node = NodeRepr_t | number
 

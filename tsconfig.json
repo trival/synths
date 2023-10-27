@@ -11,6 +11,7 @@
     "types": ["vite/client", "./declarations.d.ts"],
     "noEmit": true,
     "isolatedModules": true,
-    "noUnusedLocals": true
+    "noUnusedLocals": true,
+    "allowJs": true
   }
 }

@@ -5,7 +5,9 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<Compile Include="src/fs-audio.fs" />
+		<Compile Include="src/fs/elemaudio.fs" />
+		<Compile Include="src/fs/lib.fs" />
+		<Compile Include="src/fs/tracks/**/*.fs" />
 	</ItemGroup>
 
 	<ItemGroup>

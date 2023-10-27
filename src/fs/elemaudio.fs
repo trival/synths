@@ -42,11 +42,6 @@ type StdlibIdentity =
   abstract channel: float option with get, set
 
 [<AllowNullLiteral>]
-type StdlibConstant =
-  abstract key: string option with get, set
-  abstract value: float with get, set
-
-[<AllowNullLiteral>]
 type StdlibMaxhold =
   abstract key: string option with get, set
   abstract hold: float option with get, set
@@ -293,7 +288,7 @@ type Stdlib =
     xn: ElemNode ->
       t
 
-  abstract constant: props: StdlibConstant -> t
+  abstract constant: props: obj -> t
   abstract sr: unit -> t
   abstract time: unit -> t
   abstract counter: gate: ElemNode -> t
@@ -353,13 +348,3 @@ type Stdlib =
   abstract fft: props: StdlibFft * x: ElemNode -> t
   abstract capture: g: ElemNode * x: ElemNode -> t
   abstract capture: props: StdlibCapture * g: ElemNode * x: ElemNode -> t
-
-
-[<Import("el", "@elemaudio/core")>]
-let el: Stdlib = jsNative
-
-type Node(n: ElemNode) =
-  member _.n = n
-
-  static member inline (+)(a: Node, b: Node) =
-    Node(U2.Case1(el.add (ResizeArray [ a.n; b.n ])))
