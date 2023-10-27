@@ -16,12 +16,29 @@ interface SynthSignal {
 
 export const composePolySynth = (signals: SynthSignal[]) => {
 	const sum = el.add(...signals.map((s) => el.mul(s.sound, s.env)))
+	const volume = el.add(...signals.map((s) => s.env))
+	return el.div(sum, volume)
+}
 
-	const [e1, ...es] = signals.map((s) => s.env)
-	const playingCount = es.reduce(
-		(acc, e) => el.add(acc, el.ge(e, 0.00000001)),
-		el.ge(e1, 0.00000001),
+export const timedTrigger = (
+	startTime: number,
+	endTime: number,
+	keyPrefix: string,
+) => {
+	return el.mul(
+		el.ge(
+			el.div(el.time(), el.sr()),
+			el.const({
+				key: keyPrefix + '_start',
+				value: startTime,
+			}),
+		),
+		el.le(
+			el.div(el.time(), el.sr()),
+			el.const({
+				key: keyPrefix + '_end',
+				value: endTime,
+			}),
+		),
 	)
-
-	return el.div(sum, el.pow(playingCount, 0.5))
 }

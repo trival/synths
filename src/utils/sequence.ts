@@ -1,5 +1,5 @@
 import { el } from '@elemaudio/core'
-import { AudioNode } from './elemaudio'
+import { AudioNode, timedTrigger } from './elemaudio'
 
 export interface SeqNote<T> {
 	data: T | null
@@ -80,21 +80,10 @@ export const createSequencer = <T>(
 				return {
 					data: note.data!,
 					idx: n.idx,
-					triggerSignal: el.mul(
-						el.ge(
-							el.div(el.time(), el.sr()),
-							el.const({
-								key: seqTriggerKey + '_start' + n.idx,
-								value: start,
-							}),
-						),
-						el.le(
-							el.div(el.time(), el.sr()),
-							el.const({
-								key: seqTriggerKey + '_end' + n.idx,
-								value: start + note.duration * secPerBeat,
-							}),
-						),
+					triggerSignal: timedTrigger(
+						start,
+						start + note.duration * secPerBeat,
+						seqTriggerKey + n.idx,
 					),
 				}
 			})

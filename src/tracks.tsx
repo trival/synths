@@ -6,7 +6,13 @@ import {
 	midiToFc,
 	noteToMidi,
 } from './utils/music'
-import { fit1011, fit1110, AudioNode } from './utils/elemaudio'
+import {
+	fit1011,
+	fit1110,
+	AudioNode,
+	composePolySynth,
+	timedTrigger,
+} from './utils/elemaudio'
 
 const basic: Track = {
 	text: 'Basic stereo',
@@ -162,38 +168,15 @@ const basicSchedule: Track = {
 		console.log('rendering', renderTimes++, playingNotes)
 
 		const envs = playingNotes.map((note, i) => {
-			const s = el.mul(
-				el.ge(
-					el.div(el.time(), el.sr()),
-					el.const({
-						key: 'start' + i,
-						value: note.start,
-					}),
-				),
-				el.le(
-					el.div(el.time(), el.sr()),
-					el.const({ key: 'end' + i, value: note.start + duration }),
-				),
-			)
+			const s = timedTrigger(note.start, note.start + duration, '' + i)
 			return el.adsr(0.1, 0.2, 0.6, release, s)
 		})
 
-		const ns = playingNotes.map((note, i) => {
-			const n = el.mul(el.cycle(note.fc), envs[i], 0.9)
-			return n
-		})
+		const ns = playingNotes.map((note) => el.cycle(note.fc))
 
-		const [first, ...rest] = ns
-		const sig = rest.reduce((acc, n) => el.add(acc, n), first)
+		const n = composePolySynth(envs.map((env, i) => ({ env, sound: ns[i] })))
 
-		const [e1, ...es] = envs
-		const playingCount = es.reduce(
-			(acc, e) => el.add(acc, el.ge(e, 0.001)),
-			el.ge(e1, 0.001),
-		)
-		let n = el.div(sig, el.pow(playingCount, 0.5))
-		n = el.compress(10, 100, -8, 4, n, n)
-		return n
+		return el.mul(n, 0.7)
 	},
 }
 
