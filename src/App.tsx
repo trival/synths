@@ -7,6 +7,7 @@ import { pause, play } from 'solid-heroicons/solid'
 import { Track } from './utils/base'
 
 const ctx = new AudioContext()
+ctx.suspend()
 const core = new WebRenderer()
 
 const [isPlaying, setIsPlaying] = createSignal(false)
@@ -64,13 +65,14 @@ export function App(props: AppProps) {
 	const track = () => props.tracks[trackIdx()]
 
 	const i = setInterval(() => {
+		if (!isPlaying()) return
 		const i = track().inputs?.findIndex((i) => i.type === InputType.TICK)
 		if (i != null && i !== -1) {
 			const newInputs = [...inputs()]
 			newInputs[i] = ctx.currentTime
 			setInputs(newInputs)
 		}
-	}, 25)
+	}, 30)
 
 	onCleanup(() => {
 		clearInterval(i)

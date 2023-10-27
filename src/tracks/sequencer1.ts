@@ -2,10 +2,11 @@ import { el } from '@elemaudio/core'
 import { InputType } from '../input'
 import { Track } from '../utils/base'
 import { chord, midiToFc } from '../utils/music'
-import { sequence } from '../utils/sequence'
+import { createSequencer } from '../utils/sequence'
+import { composePolySynth } from '../utils/elemaudio'
 
 const notes = [
-	...chord('C-2', 'maj'),
+	...chord('C-3', 'maj'),
 	null,
 	...chord('F-2', 'maj'),
 	null,
@@ -15,34 +16,35 @@ const notes = [
 	null,
 ]
 
-console.log(notes)
+const releaseTime = 1
+
+const sequencer = createSequencer(
+	notes.map((n) => ({ data: n, duration: 1 })),
+	{
+		releaseTime,
+		bpm: 160,
+	},
+)
 
 export default {
-	text: 'Sequencer 1',
+	text: 'Sequence 1',
 	inputs: [{ type: InputType.TICK }],
-	renderAudio(inputVals) {
-		const [tick] = inputVals
-		const seq = sequence(
-			notes.map((n) => ({ data: n, duration: 1 })),
-			tick,
+
+	renderAudio(inputs) {
+		const [tick] = inputs
+
+		const activeNotes = sequencer(tick)
+
+		if (activeNotes.length === 0) return 0
+
+		return el.mul(
+			composePolySynth(
+				activeNotes.map((n) => ({
+					env: el.adsr(0.1, 0.2, 0.6, 2, n.triggerSignal),
+					sound: el.cycle(midiToFc(n.data)),
+				})),
+			),
+			0.7,
 		)
-		const envs = seq.map((n) => el.adsr(0.1, 0.2, 0.6, 1, n.triggerSignal))
-		if (seq.length === 0) return 0
-
-		const ns = seq.map((note, i) => {
-			const n = el.mul(el.triangle(midiToFc(note.data)), envs[i], 0.5)
-			return n
-		})
-
-		const [first, ...rest] = ns
-		const sig = rest.reduce((acc, n) => el.add(acc, n), first)
-
-		const [e1, ...es] = envs
-		const playingCount = es.reduce(
-			(acc, e) => el.add(acc, el.ge(e, 0.00000001)),
-			el.ge(e1, 0.00000001),
-		)
-		const n = el.div(sig, el.pow(playingCount, 0.5))
-		return n
 	},
 } as Track

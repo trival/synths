@@ -18,7 +18,7 @@ interface SequenceProps {
 	bpm: number
 	repetitions: number
 	startTime: number
-	releaseTime: 1
+	releaseTime: number
 	seqTriggerKey: string
 }
 
@@ -30,11 +30,10 @@ const defaultSequenceProps: SequenceProps = {
 	seqTriggerKey: 'trigger',
 }
 
-export const sequence = <T>(
+export const createSequencer = <T>(
 	seq: Sequence<T>,
-	currentTime: number,
 	props: Partial<SequenceProps> = {},
-): PlayableNote<T>[] => {
+): ((currentTime: number) => PlayableNote<T>[]) => {
 	const { bpm, repetitions, startTime, releaseTime, seqTriggerKey } = {
 		...defaultSequenceProps,
 		...props,
@@ -44,7 +43,7 @@ export const sequence = <T>(
 	const seqDuration =
 		seq.reduce((acc, note) => acc + note.duration, 0) * secPerBeat
 
-	const noteIntervals: { start: number; end: number; idx: number }[] = []
+	let noteIntervals: { start: number; end: number; idx: number }[] = []
 	let currentSeqTime = 0
 	seq.forEach((note, i) => {
 		if (note.data != null) {
@@ -57,39 +56,50 @@ export const sequence = <T>(
 		currentSeqTime += note.duration * secPerBeat
 	})
 
-	const currentLoop = Math.floor((currentTime - startTime) / seqDuration)
+	noteIntervals = noteIntervals
+		.map((n) => ({
+			...n,
+			start: n.start - seqDuration,
+			end: n.end - seqDuration,
+		}))
+		.concat(noteIntervals)
+		.filter((n) => n.end > 0)
 
-	if (repetitions === 0 || currentLoop < repetitions) {
-		const seqTime = currentTime - currentLoop * seqDuration
-		const currentNotes = noteIntervals.filter(
-			(n) => n.start - 0.2 <= seqTime && n.end + 0.2 > seqTime,
-		)
+	return (currentTime: number) => {
+		const currentLoop = Math.floor((currentTime - startTime) / seqDuration)
 
-		return currentNotes.map((n) => {
-			const note = seq[n.idx]
-			const start = n.start + currentLoop * seqDuration
-			return {
-				data: note.data!,
-				idx: n.idx,
-				triggerSignal: el.mul(
-					el.ge(
-						el.div(el.time(), el.sr()),
-						el.const({
-							key: seqTriggerKey + '_start' + n.idx,
-							value: start,
-						}),
+		if (repetitions === 0 || currentLoop < repetitions) {
+			const seqTime = currentTime - currentLoop * seqDuration
+			const currentNotes = noteIntervals.filter(
+				(n) => n.start - 0.2 <= seqTime && n.end + 0.2 > seqTime,
+			)
+
+			return currentNotes.map((n) => {
+				const note = seq[n.idx]
+				const start = n.start + currentLoop * seqDuration
+				return {
+					data: note.data!,
+					idx: n.idx,
+					triggerSignal: el.mul(
+						el.ge(
+							el.div(el.time(), el.sr()),
+							el.const({
+								key: seqTriggerKey + '_start' + n.idx,
+								value: start,
+							}),
+						),
+						el.le(
+							el.div(el.time(), el.sr()),
+							el.const({
+								key: seqTriggerKey + '_end' + n.idx,
+								value: start + note.duration * secPerBeat,
+							}),
+						),
 					),
-					el.le(
-						el.div(el.time(), el.sr()),
-						el.const({
-							key: seqTriggerKey + '_end' + n.idx,
-							value: start + note.duration * secPerBeat,
-						}),
-					),
-				),
-			}
-		})
+				}
+			})
+		}
+
+		return []
 	}
-
-	return []
 }
