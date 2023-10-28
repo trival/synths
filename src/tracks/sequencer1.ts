@@ -16,13 +16,13 @@ const notes = [
 	null,
 ]
 
-const releaseTime = 1
+const releaseTime = 0.5
 
 const sequencer = createSequencer(
 	notes.map((n) => ({ data: n, duration: 1 })),
 	{
 		releaseTime,
-		bpm: 160,
+		bpm: 140,
 	},
 )
 
@@ -40,7 +40,7 @@ export default {
 		return el.mul(
 			composePolySynth(
 				activeNotes.map((n) => ({
-					env: el.adsr(0.1, 0.2, 0.6, 2, n.triggerSignal),
+					env: el.adsr(0.1, 0.2, 0.6, releaseTime, n.triggerSignal),
 					sound: el.cycle(midiToFc(n.data)),
 				})),
 			),

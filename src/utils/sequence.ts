@@ -1,4 +1,5 @@
-import { AudioNode, timedTrigger } from './elemaudio'
+import { ElemNode } from '@elemaudio/core'
+import { timedTrigger } from './elemaudio'
 
 export interface SeqNote<T> {
 	data: T | null
@@ -10,7 +11,7 @@ export type Sequence<T> = SeqNote<T>[]
 export interface PlayableNote<T> {
 	data: T
 	idx: number
-	triggerSignal: AudioNode
+	triggerSignal: ElemNode
 }
 
 interface SequenceProps {

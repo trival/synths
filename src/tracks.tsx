@@ -1,4 +1,4 @@
-import { el } from '@elemaudio/core'
+import { ElemNode, el } from '@elemaudio/core'
 import { InputType } from './input'
 import {
 	NoteName,
@@ -9,7 +9,6 @@ import {
 import {
 	fit1011,
 	fit1110,
-	AudioNode,
 	composePolySynth,
 	timedTrigger,
 } from './utils/elemaudio'
@@ -169,12 +168,14 @@ const basicSchedule: Track = {
 
 		const envs = playingNotes.map((note, i) => {
 			const s = timedTrigger(note.start, note.start + duration, '' + i)
-			return el.adsr(0.1, 0.2, 0.6, release, s)
+
+			return {
+				env: el.adsr(0.1, 0.2, 0.6, release, s),
+				sound: el.cycle(note.fc),
+			}
 		})
 
-		const ns = playingNotes.map((note) => el.cycle(note.fc))
-
-		const n = composePolySynth(envs.map((env, i) => ({ env, sound: ns[i] })))
+		const n = composePolySynth(envs)
 
 		return el.mul(n, 0.7)
 	},
@@ -359,7 +360,7 @@ export const basicGainModulation: Track = {
 		},
 	],
 	renderAudio([eq, waveType, fc, modFc, modAmount]) {
-		let wave: AudioNode
+		let wave: ElemNode
 		if (eq === 0) {
 			switch (WaveTypeOptions[waveType]) {
 				case 'sine':
