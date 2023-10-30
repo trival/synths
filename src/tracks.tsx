@@ -320,12 +320,16 @@ const basicPulseModulation: Track = {
 
 const WaveTypeOptions = ['sine', 'square', 'saw', 'triangle'] as const
 export const basicGainModulation: Track = {
-	text: 'gain modulation',
+	text: 'amplitude modulation',
 	inputs: [
 		{
 			type: InputType.SELECT,
 			label: 'modulation equation',
-			options: ['simple mul', 'complex, add difference and sum'],
+			options: [
+				'naive mul intuition',
+				'initial modulation equation',
+				'transformed equation, added difference and sum',
+			],
 			initialValue: 0,
 		},
 		{
@@ -361,69 +365,68 @@ export const basicGainModulation: Track = {
 	],
 	renderAudio([eq, waveType, fc, modFc, modAmount]) {
 		let wave: ElemNode
+
 		if (eq === 0) {
+			const n = (waveFn: (fc: number) => ElemNode) =>
+				el.mul(waveFn(fc), el.sub(1, el.mul(fit1110(waveFn(modFc)), modAmount)))
+
 			switch (WaveTypeOptions[waveType]) {
 				case 'sine':
-					wave = el.add(
-						el.cycle(fc),
-						el.mul(el.cycle(fc), el.cycle(modFc), modAmount),
-					)
+					wave = n(el.cycle)
 					break
-
 				case 'square':
-					wave = el.add(
-						el.square(fc),
-						el.mul(el.square(fc), el.square(modFc), modAmount),
-					)
+					wave = n(el.square)
 					break
-
 				case 'saw':
-					wave = el.add(
-						el.saw(fc),
-						el.mul(el.saw(fc), el.saw(modFc), modAmount),
-					)
+					wave = n(el.saw)
 					break
-
 				case 'triangle':
-					wave = el.add(
-						el.triangle(fc),
-						el.mul(el.triangle(fc), el.triangle(modFc), modAmount),
-					)
+					wave = n(el.triangle)
+					break
+			}
+		} else if (eq === 1) {
+			// A1=(a1 + a2 * cos(w2t)) * cos(w1t)
+			const n = (waveFn: (fc: number) => ElemNode) =>
+				el.mul(el.add(1, el.mul(waveFn(modFc), modAmount)), waveFn(fc), 0.5)
+
+			switch (WaveTypeOptions[waveType]) {
+				case 'sine':
+					wave = n(el.cycle)
+					break
+				case 'square':
+					wave = n(el.square)
+					break
+				case 'saw':
+					wave = n(el.saw)
+					break
+				case 'triangle':
+					wave = n(el.triangle)
 					break
 			}
 		} else {
 			// A1=a1cos(w1t) + 1/2 [a2cos(w1+w2)t] + 1/2[a2cos(w1-w2)t]
+			const n = (waveFn: (fc: number) => ElemNode) =>
+				el.mul(
+					el.add(
+						waveFn(fc),
+						el.mul(waveFn(fc + modFc), modAmount, 0.5),
+						el.mul(waveFn(fc - modFc), modAmount, 0.5),
+					),
+					0.5,
+				)
+
 			switch (WaveTypeOptions[waveType]) {
 				case 'sine':
-					wave = el.add(
-						el.cycle(fc),
-						el.mul(el.cycle(fc + modFc), modAmount, 0.5),
-						el.mul(el.cycle(fc - modFc), modAmount, 0.5),
-					)
+					wave = n(el.cycle)
 					break
-
 				case 'square':
-					wave = el.add(
-						el.square(fc),
-						el.mul(el.square(fc + modFc), modAmount, 0.5),
-						el.mul(el.square(fc - modFc), modAmount, 0.5),
-					)
+					wave = n(el.square)
 					break
-
 				case 'saw':
-					wave = el.add(
-						el.saw(fc),
-						el.mul(el.saw(fc + modFc), modAmount, 0.5),
-						el.mul(el.saw(fc - modFc), modAmount, 0.5),
-					)
+					wave = n(el.saw)
 					break
-
 				case 'triangle':
-					wave = el.add(
-						el.triangle(fc),
-						el.mul(el.triangle(fc + modFc), modAmount, 0.5),
-						el.mul(el.triangle(fc - modFc), modAmount, 0.5),
-					)
+					wave = n(el.triangle)
 					break
 			}
 		}
