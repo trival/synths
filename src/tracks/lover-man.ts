@@ -24,9 +24,7 @@ export default {
 	text: 'Standards/Lover Man',
 	inputs: [{ type: InputType.TICK }],
 
-	renderAudio(inputs) {
-		const [tick] = inputs
-
+	renderAudio([tick]) {
 		const activeNotes = sequencer(tick)
 
 		if (activeNotes.length === 0) return 0

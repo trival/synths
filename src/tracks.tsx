@@ -2,7 +2,9 @@ import { ElemNode, el } from '@elemaudio/core'
 import { InputType } from './input'
 import {
 	NoteName,
+	chord,
 	harmonicMajorScale,
+	invert,
 	midiToFc,
 	noteToMidi,
 } from './utils/music'
@@ -319,7 +321,8 @@ const basicPulseModulation: Track = {
 }
 
 const WaveTypeOptions = ['sine', 'square', 'saw', 'triangle'] as const
-export const basicGainModulation: Track = {
+
+export const basicAmplitudeModulation: Track = {
 	text: 'amplitude modulation',
 	inputs: [
 		{
@@ -435,8 +438,89 @@ export const basicGainModulation: Track = {
 	},
 }
 
+const bassPattern = [2, , , 2, , , 1.5, ,]
+
+const notes = combine(
+	withBeat(chord('D-3', 'min'), beat(4, bassPattern)),
+	withBeat(chord('D-4', 'min'), beat(4, bassPattern)),
+	withBeat(reverse(invert(chord('G-4', 'maj'), -2)), beat(4, bassPattern)),
+	withBeat(reverse(invert(chord('G-3', 'maj'), -2)), beat(4, bassPattern)),
+)
+
+const fmBpm = 100
+const fmReleaseTime = 1.5
+
+const fmSequencer = createSequencer(notes, {
+	releaseTime: fmReleaseTime,
+	bpm: fmBpm,
+})
+const basicFrequencyModulation: Track = {
+	text: 'frequency modulation',
+	inputs: [
+		{
+			type: InputType.SELECT,
+			label: 'wave type',
+			options: WaveTypeOptions,
+			initialValue: 0,
+		},
+		{
+			type: InputType.TICK,
+		},
+		{
+			type: InputType.SLIDER,
+			label: 'modulator factor',
+			min: 0.5,
+			max: 20,
+			step: 0.05,
+			initialValue: 1,
+		},
+		{
+			type: InputType.SLIDER,
+			label: 'modulation amount',
+			min: 0,
+			max: 20,
+			step: 0.01,
+			initialValue: 0,
+		},
+	],
+	renderAudio([waveType, tick, fcFactor, amount]) {
+		const activeNotes = fmSequencer(tick)
+
+		if (activeNotes.length === 0) return 0
+
+		const waveFn = (fc: ElemNode) => {
+			switch (WaveTypeOptions[waveType]) {
+				case 'sine':
+					return el.cycle(fc)
+				case 'square':
+					return el.square(fc)
+				case 'saw':
+					return el.saw(fc)
+				case 'triangle':
+					return el.triangle(fc)
+			}
+		}
+
+		return el.mul(
+			composePolySynth(
+				activeNotes.map((n) => {
+					const fc = midiToFc(n.data.note)
+					return {
+						env: el.adsr(0.1, 0.2, 0.6, fmReleaseTime, n.triggerSignal),
+						sound: waveFn(
+							el.add(fc, el.mul(fc ** amount, waveFn(fc / fcFactor))),
+						),
+					}
+				}),
+			),
+			0.7,
+		)
+	},
+}
+
 import { tracks as advancedTracks } from './tracks/tracks'
-import { Track } from './utils/base'
+import { Track, reverse } from './utils/base'
+import { combine, withBeat, beat, createSequencer } from './utils/sequence'
 
 export const tracks: Track[] = advancedTracks.concat([
 	basic,
@@ -451,5 +535,6 @@ export const tracks: Track[] = advancedTracks.concat([
 	basicSchedule,
 	basicSynth,
 	basicPulseModulation,
-	basicGainModulation,
+	basicAmplitudeModulation,
+	basicFrequencyModulation,
 ])
