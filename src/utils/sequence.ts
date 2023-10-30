@@ -1,12 +1,66 @@
 import { ElemNode } from '@elemaudio/core'
 import { timedTrigger } from './elemaudio'
+import { rotate } from './base'
+
+export interface MelodyNote<T> {
+	duration: number
+	data: T | null
+}
+
+export type Melody<T> = MelodyNote<T>[]
 
 export interface SeqNote<T> {
-	data: T | null
+	start: number
+	duration: number
+	data: T
+}
+
+export interface Sequence<T> {
+	notes: SeqNote<T>[]
 	duration: number
 }
 
-export type Sequence<T> = SeqNote<T>[]
+export function melodyToSeq<T>(melody: Melody<T>): Sequence<T> {
+	const notes: SeqNote<T>[] = []
+	let duration = 0
+
+	melody.forEach((note) => {
+		if (note.data != null) {
+			notes.push({
+				start: duration,
+				duration: note.duration,
+				data: note.data,
+			})
+		}
+		duration += note.duration
+	})
+
+	return {
+		notes,
+		duration,
+	}
+}
+
+export function combine<T>(...seqs: Sequence<T>[]) {
+	const notes: SeqNote<T>[] = []
+	let duration = 0
+
+	seqs.forEach((seq) => {
+		seq.notes.forEach((note) => {
+			notes.push({
+				start: duration + note.start,
+				duration: note.duration,
+				data: note.data,
+			})
+		})
+		duration += seq.duration
+	})
+
+	return {
+		notes,
+		duration,
+	}
+}
 
 export interface PlayableNote<T> {
 	data: T
@@ -40,21 +94,19 @@ export const createSequencer = <T>(
 	}
 	const secPerBeat = 60 / bpm
 
-	const seqDuration =
-		seq.reduce((acc, note) => acc + note.duration, 0) * secPerBeat
-
 	let noteIntervals: { start: number; end: number; idx: number }[] = []
-	let currentSeqTime = 0
-	seq.forEach((note, i) => {
+	seq.notes.forEach((note, i) => {
+		const start = note.start * secPerBeat
 		if (note.data != null) {
 			noteIntervals.push({
-				start: currentSeqTime,
-				end: currentSeqTime + note.duration * secPerBeat + releaseTime,
+				start: start,
+				end: start + note.duration * secPerBeat + releaseTime,
 				idx: i,
 			})
 		}
-		currentSeqTime += note.duration * secPerBeat
 	})
+
+	const seqDuration = seq.duration * secPerBeat
 
 	noteIntervals = noteIntervals
 		.map((n) => ({
@@ -75,7 +127,7 @@ export const createSequencer = <T>(
 			)
 
 			return currentNotes.map((n) => {
-				const note = seq[n.idx]
+				const note = seq.notes[n.idx]
 				const start = n.start + currentLoop * seqDuration
 				return {
 					data: note.data!,
@@ -90,5 +142,59 @@ export const createSequencer = <T>(
 		}
 
 		return []
+	}
+}
+
+export type Pattern<Data extends { duration?: number }> = (
+	| undefined
+	| number
+	| Data
+)[]
+
+export interface Beat<Data extends { duration?: number }> {
+	duration: number
+	pattern: Pattern<Data>
+}
+
+export function beat<Data extends { duration?: number }>(
+	duration: number,
+	pattern: Pattern<Data>,
+): Beat<Data> {
+	return {
+		duration,
+		pattern,
+	}
+}
+
+export function withBeat<NoteData, BeatData extends { duration?: number }>(
+	data: NoteData[],
+	beat: Beat<BeatData>,
+): Sequence<{ note: NoteData; pattern: number | BeatData }> {
+	const notes: SeqNote<{ note: NoteData; pattern: number | BeatData }>[] = []
+
+	const durationRatio = beat.duration / beat.pattern.length
+	let start = 0
+
+	for (const b of beat.pattern) {
+		if (b) {
+			const duration = typeof b === 'number' ? b : b.duration
+			notes.push({
+				start,
+				duration: duration ? duration * durationRatio : durationRatio,
+				data: {
+					note: data[0],
+					pattern: b,
+				},
+			})
+
+			data = rotate(data)
+		}
+
+		start += durationRatio
+	}
+
+	return {
+		notes: notes,
+		duration: beat.duration,
 	}
 }

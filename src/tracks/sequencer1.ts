@@ -2,7 +2,7 @@ import { el } from '@elemaudio/core'
 import { InputType } from '../input'
 import { Track } from '../utils/base'
 import { chord, midiToFc } from '../utils/music'
-import { createSequencer } from '../utils/sequence'
+import { createSequencer, melodyToSeq } from '../utils/sequence'
 import { composePolySynth } from '../utils/elemaudio'
 
 const notes = [
@@ -19,7 +19,7 @@ const notes = [
 const releaseTime = 0.5
 
 const sequencer = createSequencer(
-	notes.map((n) => ({ data: n, duration: 1 })),
+	melodyToSeq(notes.map((n) => ({ data: n, duration: 1 }))),
 	{
 		releaseTime,
 		bpm: 140,

@@ -12,6 +12,7 @@
   },
   "rules": {
     "no-unused-vars": "off",
-    "prefer-const": "warn"
+    "prefer-const": "warn",
+    "no-sparse-arrays": "off"
   }
 }

@@ -156,7 +156,7 @@ const basicSchedule: Track = {
 		playingNotes.push(
 			{
 				fc: pick(scale),
-				start: t,
+				start: t + 0.1,
 			},
 			{
 				fc: pick(scale),
