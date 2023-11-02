@@ -13,8 +13,8 @@ tracks are set up to allow live coding using vite hot reloading, so sound change
 on the fly as you modify the audio code.
 
 The resulting UI is published to https://synths.pages.dev using cloudflare. But
-the core value and lies inside the code. So feel free to checkout and tweak the
-code for extended fun.
+the core value and lies in the code. Feel free to checkout and tweak the code
+for extended fun.
 
 ## Starting locally
 
@@ -22,6 +22,8 @@ code for extended fun.
 npm i
 npm run start
 ```
+
+Then open http://localhost:3000
 
 ## License
 
