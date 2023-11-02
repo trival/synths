@@ -1,5 +1,7 @@
+import { Track, reverse } from '../utils/base'
+import { combine, withBeat, beat, createSequencer } from '../utils/sequence'
 import { ElemNode, el } from '@elemaudio/core'
-import { InputType } from './input'
+import { InputType } from '../input'
 import {
 	NoteName,
 	chord,
@@ -7,13 +9,13 @@ import {
 	invert,
 	midiToFc,
 	noteToMidi,
-} from './utils/music'
+} from '../utils/music'
 import {
 	fit1011,
 	fit1110,
 	composePolySynth,
 	timedTrigger,
-} from './utils/elemaudio'
+} from '../utils/elemaudio'
 
 const basic: Track = {
 	text: 'Basic stereo',
@@ -518,11 +520,13 @@ const basicFrequencyModulation: Track = {
 	},
 }
 
-import { tracks as advancedTracks } from './tracks/tracks'
-import { Track, reverse } from './utils/base'
-import { combine, withBeat, beat, createSequencer } from './utils/sequence'
+import sequencer1 from './sequencer1'
+import loverMan from './standards/lover-man'
 
-export const tracks: Track[] = advancedTracks.concat([
+export const tracks: Track[] = [
+	sequencer1,
+	loverMan,
+
 	basic,
 	basicMul,
 	basicAdd,
@@ -537,4 +541,4 @@ export const tracks: Track[] = advancedTracks.concat([
 	basicPulseModulation,
 	basicAmplitudeModulation,
 	basicFrequencyModulation,
-])
+]

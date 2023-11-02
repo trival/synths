@@ -1,7 +1,7 @@
 import { For, Show, createEffect, createSignal } from 'solid-js'
 import { Track } from './utils/base'
 import { TrackPlayer } from './Player'
-import { tracks as trackData } from './tracks'
+import { tracks as trackData } from './tracks/basic'
 import Container from './Container'
 
 function setTrack(track: Track) {
