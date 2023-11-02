@@ -177,7 +177,7 @@ export function Inputs(props: InputsProps) {
 	}
 
 	return (
-		<div>
+		<div class="max-w-xl">
 			<For each={props.inputs}>
 				{(input, i) => {
 					switch (input.type) {

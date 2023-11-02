@@ -2,6 +2,7 @@ import { For, Show, createEffect, createSignal } from 'solid-js'
 import { Track } from './utils/base'
 import { TrackPlayer } from './Player'
 import { tracks as trackData } from './tracks'
+import Container from './Container'
 
 function setTrack(track: Track) {
 	window.history.replaceState({}, '', `?${paramName}=${track.text}`)
@@ -34,31 +35,32 @@ export function App() {
 	})
 
 	return (
-		<div class="flex h-full w-full">
-			<div class="m-8 mr-16 h-full overflow-y-auto">
-				<For each={tracks()}>
-					{(track) => (
-						<div class="mb-4">
-							<button
-								class="block font-bold text-blue-500 underline"
-								type="button"
-								onClick={() => {
-									setTrack(track)
-									setTrackFromQuery()
-								}}
-							>
-								{track.text}
-							</button>
-						</div>
-					)}
-				</For>
-			</div>
-			<div class="auto m-8 h-full overflow-y-auto">
-				<Show when={trackIdx() !== -1}>
-					<TrackPlayer track={tracks()[trackIdx()]} />
-				</Show>
-			</div>
-		</div>
+		<Container
+			sidebar={
+				<ul class="py-6">
+					<For each={tracks()}>
+						{(track) => (
+							<li class="mb-4">
+								<button
+									class="block font-bold text-blue-500 underline"
+									type="button"
+									onClick={() => {
+										setTrack(track)
+										setTrackFromQuery()
+									}}
+								>
+									{track.text}
+								</button>
+							</li>
+						)}
+					</For>
+				</ul>
+			}
+		>
+			<Show when={trackIdx() !== -1}>
+				<TrackPlayer track={tracks()[trackIdx()]} />
+			</Show>
+		</Container>
 	)
 }
 

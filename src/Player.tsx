@@ -121,7 +121,7 @@ export function TrackPlayer(props: TrackPlayerProps) {
 
 	return (
 		<div>
-			<div class="flex">
+			<div class="ml-12 flex lg:ml-0">
 				<button
 					type="button"
 					class="my-auto mr-4 rounded-sm bg-slate-100 p-2 shadow-md"

@@ -33,6 +33,7 @@
     "clsx": "^2.0.0",
     "solid-heroicons": "^3.2.4",
     "solid-js": "^1.7.12",
+    "solid-transition-group": "^0.2.3",
     "webaudio-oscilloscope": "^3.2.1"
   }
 }
