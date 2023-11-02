@@ -1,9 +1,45 @@
 import { el } from '@elemaudio/core'
-import { InputType } from '../input'
-import { Track, reverse } from '../utils/base'
-import { composePolySynth } from '../utils/elemaudio'
-import { chord, invert, midiToFc } from '../utils/music'
-import { beat, combine, createSequencer, withBeat } from '../utils/sequence'
+import { InputType } from '../../input'
+import { Track, reverse } from '../../utils/base'
+import { composePolySynth } from '../../utils/elemaudio'
+import { chord, invert, midiToFc } from '../../utils/music'
+import { beat, combine, createSequencer, withBeat } from '../../utils/sequence'
+
+// === A === (2 times)
+
+// Dm7 G7
+// Dm7 G7
+// Gm7 C7
+// Gm7 C7
+
+// F7
+// Bb7
+// Abm7 Db7 Gm7 C7
+// 1. Fmaj7 E0 A7, 2. Fmaj7 E7b9
+
+// === B ===
+
+// Am Am#7
+// Am7 D7
+// Gmaj7 Am7
+// Bm7 Am7 D7
+
+// Gm Gm#7
+// Gm7 C7
+// Fmaj7
+// E07 A7b9
+
+// === A ===
+
+// Dm7 G7
+// Dm7 G7
+// Gm7 C7
+// Gm7 C7
+
+// F7
+// Bb7
+// Abm7 Db7 Gm7 C7
+// Fmaj7
 
 const dm = chord('D-2', 'min')
 const g7 = chord('G-2', 'maj')
