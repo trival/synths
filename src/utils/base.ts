@@ -14,3 +14,7 @@ export function rotate<T>(arr: T[], count: number = 1) {
 export function reverse<T>(arr: T[]) {
 	return arr.slice().reverse()
 }
+
+export function mod(n: number, m: number) {
+	return ((n % m) + m) % m
+}

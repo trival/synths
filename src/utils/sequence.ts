@@ -20,6 +20,13 @@ export interface Sequence<T> {
 	duration: number
 }
 
+export function melodyNote<T>(duration: number, data: T | null = null) {
+	return {
+		duration,
+		data,
+	}
+}
+
 export function melodyToSeq<T>(melody: Melody<T>): Sequence<T> {
 	const notes: SeqNote<T>[] = []
 	let duration = 0

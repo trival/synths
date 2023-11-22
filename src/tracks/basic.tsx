@@ -522,10 +522,12 @@ const basicFrequencyModulation: Track = {
 
 import sequencer1 from './sequencer1'
 import loverMan from './standards/lover-man'
+import aloneTogether from './standards/alone-together'
 
 export const tracks: Track[] = [
 	sequencer1,
 	loverMan,
+	aloneTogether,
 
 	basic,
 	basicMul,

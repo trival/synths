@@ -1,3 +1,5 @@
+import { mod } from './base'
+
 export const midiToFc = (midi: number) => {
 	return 2 ** ((midi - 69) / 12) * 440
 }
@@ -129,4 +131,43 @@ export function harmonicMajorScale(baseFrequency: number) {
 		(((baseFrequency * 3) / 2) * 7) / 6,
 		(((baseFrequency * 3) / 2) * 5) / 4,
 	]
+}
+
+export enum ScaleType {
+	MAJOR = 'major',
+	MINOR = 'minor',
+	HARMONIC_MINOR = 'harmonicMinor',
+}
+
+export function scaleIntervals(type: ScaleType) {
+	switch (type) {
+		case ScaleType.MAJOR:
+			return [0, 2, 4, 5, 7, 9, 11]
+		case ScaleType.MINOR:
+			return [0, 2, 3, 5, 7, 8, 10]
+		case ScaleType.HARMONIC_MINOR:
+			return [0, 2, 3, 5, 7, 8, 11]
+	}
+}
+
+export function scale(baseNote: NoteValue, type: ScaleType) {
+	const intervals = scaleIntervals(type)
+	const notes = intervals
+		.map((i) => i + noteToMidi(baseNote) - 12)
+		.concat(intervals.map((i) => i + noteToMidi(baseNote)))
+		.concat(intervals.map((i) => i + noteToMidi(baseNote) + 12))
+		.concat(intervals.map((i) => i + noteToMidi(baseNote) + 24))
+
+	console.log(notes)
+
+	return function (value: number, prefix?: '#' | 'b') {
+		const val = value + intervals.length
+		const note = notes[val]
+		if (prefix === '#') {
+			return note + 1
+		} else if (prefix === 'b') {
+			return note - 1
+		}
+		return note
+	}
 }
