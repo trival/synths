@@ -1,5 +1,3 @@
-import { mod } from './base'
-
 export const midiToFc = (midi: number) => {
 	return 2 ** ((midi - 69) / 12) * 440
 }
@@ -153,16 +151,14 @@ export function scaleIntervals(type: ScaleType) {
 export function scale(baseNote: NoteValue, type: ScaleType) {
 	const intervals = scaleIntervals(type)
 	const notes = intervals
-		.map((i) => i + noteToMidi(baseNote) - 12)
-		.concat(intervals.map((i) => i + noteToMidi(baseNote)))
+		.map((i) => i + noteToMidi(baseNote))
 		.concat(intervals.map((i) => i + noteToMidi(baseNote) + 12))
 		.concat(intervals.map((i) => i + noteToMidi(baseNote) + 24))
 
 	console.log(notes)
 
 	return function (value: number, prefix?: '#' | 'b') {
-		const val = value + intervals.length
-		const note = notes[val]
+		const note = notes[value - 1]
 		if (prefix === '#') {
 			return note + 1
 		} else if (prefix === 'b') {

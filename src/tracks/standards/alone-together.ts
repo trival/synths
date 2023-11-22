@@ -55,8 +55,42 @@ const s = scale('A-2', ScaleType.MINOR)
 
 const n = melodyNote
 
-const bassMelody: Melody<number> = [n(3, s(0)), n(1), n(3, s(1)), n(1, s(5))]
-console.log(bassMelody)
+const bassMelody: Melody<number> = [
+	n(3, s(1)),
+	n(1),
+	n(3, s(2)),
+	n(1, s(5)),
+
+	n(3, s(1)),
+	n(1),
+	n(3, s(2)),
+	n(1, s(5)),
+
+	n(3, s(1)),
+	n(1),
+	n(3, s(5)),
+	n(1, s(1)),
+
+	n(3, s(4)),
+	n(1),
+	n(3, s(4)),
+	n(1),
+
+	n(3, s(6, '#')),
+	n(1, s(2)),
+	n(3, s(4)),
+	n(1, s(7)),
+
+	n(3, s(3)),
+	n(1),
+	n(3, s(2)),
+	n(1, s(5)),
+
+	n(2, s(1)),
+	n(2, s(3, '#')),
+	n(3, s(2)),
+	n(1, s(5)),
+]
 
 const bpm = 100
 const releaseTime = 1.5
