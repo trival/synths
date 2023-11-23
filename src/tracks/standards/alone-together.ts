@@ -1,4 +1,4 @@
-// Transposed to Am (A minor) in Trumpet key
+// Transposed to Am (A minor) in Trumpet key (Bb)
 
 import { el } from '@elemaudio/core'
 import { InputType } from '../../input'
@@ -51,7 +51,7 @@ import {
 // Am6
 // B07 E7b9
 
-const s = scale('A-2', ScaleType.MINOR)
+const s = scale('G-2', ScaleType.MINOR)
 
 const n = melodyNote
 
