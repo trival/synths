@@ -4,7 +4,7 @@ import { el } from '@elemaudio/core'
 import { InputType } from '../../input'
 import { Track } from '../../utils/base'
 import { composePolySynth } from '../../utils/elemaudio'
-import { ScaleType, midiToFc, scale } from '../../utils/music'
+import { ScaleType, chord, midiToFc, scale } from '../../utils/music'
 import {
 	Melody,
 	createSequencer,
@@ -52,10 +52,9 @@ import {
 // B07 E7b9
 
 const s = scale('G-2', ScaleType.MINOR)
-
 const n = melodyNote
 
-const bassMelody: Melody<number> = [
+const bassMelodyA: Melody<number> = [
 	n(3, s(1)),
 	n(1),
 	n(3, s(2)),
@@ -92,12 +91,90 @@ const bassMelody: Melody<number> = [
 	n(1, s(5)),
 ]
 
+const c6 = (n: number) => [s(n + 2), s(n + 4), s(n + 5)].map((n) => n + 12)
+const c7 = (n: number) => [s(n + 2), s(n + 4), s(n + 6)].map((n) => n + 12)
+
+const harmonyMelodyA: Melody<number[]> = [
+	n(1),
+	n(2, c6(1)),
+	n(1),
+
+	n(1),
+	n(2, c7(2)),
+	n(1),
+
+	n(1),
+	n(2, c6(1)),
+	n(1),
+
+	n(1),
+	n(2, c7(2)),
+	n(1),
+
+	n(1),
+	n(2, c6(1)),
+	n(1),
+
+	n(1),
+	n(
+		2,
+		chord(s(7), 'min').map((n) => n + 12),
+	),
+	n(1),
+
+	n(1),
+	n(2, c7(4)),
+	n(1),
+
+	n(1),
+	n(2, c7(4)),
+	n(1),
+
+	n(1),
+	n(
+		2,
+		chord(s(1), 'maj').map((n) => n + 12),
+	),
+	n(1),
+
+	n(1),
+	n(2, c7(4)),
+	n(1),
+
+	n(1),
+	n(2, c7(3)),
+	n(1),
+
+	n(1),
+	n(2, c7(2)),
+	n(1),
+
+	n(1),
+	n(
+		2,
+		chord(s(3, '#'), 'min').map((n) => n + 12),
+	),
+	n(1),
+
+	n(1),
+	n(
+		2,
+		chord(s(3, '#'), 'min').map((n) => n + 12),
+	),
+	n(1),
+]
+
 const bpm = 100
 const releaseTime = 1.5
 
-const bassSequencer = createSequencer(melodyToSeq(bassMelody), {
+const bassSequencer = createSequencer(melodyToSeq(bassMelodyA), {
 	releaseTime,
 	bpm,
+})
+
+const chordSequencer = createSequencer(melodyToSeq(harmonyMelodyA), {
+	bpm,
+	releaseTime,
 })
 
 export default {
@@ -106,20 +183,38 @@ export default {
 
 	renderAudio([tick]) {
 		const bassNotes = bassSequencer(tick)
+		const chordNotes = chordSequencer(tick)
 
 		if (bassNotes.length === 0) return 0
 
-		return el.mul(
-			composePolySynth(
-				bassNotes.map((n) => ({
-					env: el.adsr(0.1, 0.2, 0.6, releaseTime, n.triggerSignal),
-					sound: el.mul(
-						el.add(el.cycle(midiToFc(n.data)), el.cycle(midiToFc(n.data + 12))),
-						0.5,
-					),
-				})),
+		return el.add(
+			el.mul(
+				composePolySynth(
+					bassNotes.map((n) => ({
+						env: el.adsr(0.1, 0.2, 0.6, releaseTime, n.triggerSignal),
+						sound: el.mul(
+							el.add(
+								el.cycle(midiToFc(n.data)),
+								el.cycle(midiToFc(n.data + 12)),
+							),
+							0.5,
+						),
+					})),
+				),
+				0.9,
 			),
-			0.7,
+			el.mul(
+				composePolySynth(
+					chordNotes.map((n) => ({
+						env: el.adsr(0.1, 0.2, 0.6, releaseTime, n.triggerSignal),
+						sound: el.mul(
+							el.add(...n.data.map((note) => el.cycle(midiToFc(note)))),
+							0.3,
+						),
+					})),
+				),
+				0.7,
+			),
 		)
 	},
 } as Track
