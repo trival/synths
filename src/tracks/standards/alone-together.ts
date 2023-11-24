@@ -170,11 +170,13 @@ const releaseTime = 1.5
 const bassSequencer = createSequencer(melodyToSeq(bassMelodyA), {
 	releaseTime,
 	bpm,
+	seqTriggerKey: 'bassTrigger',
 })
 
 const chordSequencer = createSequencer(melodyToSeq(harmonyMelodyA), {
 	bpm,
 	releaseTime,
+	seqTriggerKey: 'chordTrigger',
 })
 
 export default {
