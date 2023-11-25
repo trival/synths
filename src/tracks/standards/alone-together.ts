@@ -54,7 +54,7 @@ import {
 const s = scale('G-2', ScaleType.MINOR)
 const n = melodyNote
 
-const bassMelodyA: Melody<number> = [
+const bassA: Melody<number> = [
 	n(3, s(1)),
 	n(1),
 	n(3, s(2)),
@@ -91,10 +91,54 @@ const bassMelodyA: Melody<number> = [
 	n(1, s(5)),
 ]
 
+const bassB: Melody<number> = [
+	n(3, s(5)),
+	n(1),
+	n(2, s(1)),
+	n(2, s(3, '#')),
+
+	n(3, s(4)),
+	n(1),
+	n(3, s(4)),
+	n(1),
+
+	n(3, s(4)),
+	n(1, s(1, '#')),
+	n(3, s(7)),
+	n(1),
+
+	n(3, s(3)),
+	n(1),
+	n(3, s(2)),
+	n(1, s(5)),
+]
+
+const bassA2: Melody<number> = [
+	n(3, s(1)),
+	n(1),
+	n(3, s(2)),
+	n(1, s(5)),
+
+	n(3, s(1)),
+	n(1),
+	n(3, s(2)),
+	n(1, s(5)),
+
+	n(3, s(1)),
+	n(1, s(6, '#')),
+	n(3, s(6)),
+	n(1, s(5)),
+
+	n(3, s(1)),
+	n(1),
+	n(3, s(2)),
+	n(1, s(5)),
+]
+
 const c6 = (n: number) => [s(n + 2), s(n + 4), s(n + 5)].map((n) => n + 12)
 const c7 = (n: number) => [s(n + 2), s(n + 4), s(n + 6)].map((n) => n + 12)
 
-const harmonyMelodyA: Melody<number[]> = [
+const harmonyA: Melody<number[]> = [
 	n(1),
 	n(2, c6(1)),
 	n(1),
@@ -164,16 +208,107 @@ const harmonyMelodyA: Melody<number[]> = [
 	n(1),
 ]
 
+const harmonyB: Melody<number[]> = [
+	n(1),
+	n(
+		2,
+		chord(s(5), 'min').map((n) => n + 12),
+	),
+	n(1),
+
+	n(1),
+	n(
+		2,
+		chord(s(3, '#'), 'min').map((n) => n + 12),
+	),
+	n(1),
+
+	n(1),
+	n(2, c6(6)),
+	n(1),
+
+	n(1),
+	n(2, c6(6)),
+	n(1),
+
+	n(1),
+	n(
+		2,
+		chord(s(6), 'min').map((n) => n + 12),
+	),
+	n(1),
+
+	n(1),
+	n(2, c7(7)),
+	n(1),
+
+	n(1),
+	n(2, c7(3)),
+	n(1),
+
+	n(1),
+	n(2, c7(2)),
+	n(1),
+]
+
+const harmonyA2: Melody<number[]> = [
+	n(1),
+	n(2, c6(1)),
+	n(1),
+
+	n(1),
+	n(2, c7(2)),
+	n(1),
+
+	n(1),
+	n(2, c6(1)),
+	n(1),
+
+	n(1),
+	n(2, c7(2)),
+	n(1),
+
+	n(1),
+	n(2, c6(1)),
+	n(1),
+
+	n(1),
+	n(
+		2,
+		chord(s(6), 'dim').map((n) => n + 12),
+	),
+	n(1),
+
+	n(1),
+	n(2, c6(1)),
+	n(1),
+
+	n(1),
+	n(2, c7(1)),
+	n(1),
+]
+
 const bpm = 100
 const releaseTime = 1.5
 
-const bassSequencer = createSequencer(melodyToSeq(bassMelodyA), {
+// const bass = bassA2
+const bass = bassA
+	//.concat(bassA)
+	.concat(bassB)
+	.concat(bassA2)
+// const harmony = harmonyA2
+const harmony = harmonyA
+	// .concat(harmonyA)
+	.concat(harmonyB)
+	.concat(harmonyA2)
+
+const bassSequencer = createSequencer(melodyToSeq(bass), {
 	releaseTime,
 	bpm,
 	seqTriggerKey: 'bassTrigger',
 })
 
-const chordSequencer = createSequencer(melodyToSeq(harmonyMelodyA), {
+const chordSequencer = createSequencer(melodyToSeq(harmony), {
 	bpm,
 	releaseTime,
 	seqTriggerKey: 'chordTrigger',
@@ -193,7 +328,7 @@ export default {
 			el.mul(
 				composePolySynth(
 					bassNotes.map((n) => ({
-						env: el.adsr(0.1, 0.2, 0.6, releaseTime, n.triggerSignal),
+						env: el.adsr(0.3, 0.3, 0.6, releaseTime, n.triggerSignal),
 						sound: el.mul(
 							el.add(
 								el.cycle(midiToFc(n.data)),
@@ -203,7 +338,7 @@ export default {
 						),
 					})),
 				),
-				0.9,
+				0.7,
 			),
 			el.mul(
 				composePolySynth(
@@ -215,7 +350,7 @@ export default {
 						),
 					})),
 				),
-				0.7,
+				0.5,
 			),
 		)
 	},
