@@ -42,3 +42,11 @@ export const timedTrigger = (
 		),
 	)
 }
+
+export const am = (o: ElemNode, lfo: ElemNode, modAmount: ElemNode) => {
+	return el.mul(
+		o,
+		el.add(1, el.mul(lfo, modAmount)),
+		el.div(1, el.add(1, modAmount)),
+	)
+}

@@ -3,7 +3,7 @@
 import { el } from '@elemaudio/core'
 import { InputType } from '../../input'
 import { Track } from '../../utils/base'
-import { composePolySynth } from '../../utils/elemaudio'
+import { am, composePolySynth } from '../../utils/elemaudio'
 import { ScaleType, chord, midiToFc, scale } from '../../utils/music'
 import {
 	Melody,
@@ -292,13 +292,16 @@ const bpm = 100
 const releaseTime = 2.5
 
 // const bass = bassA2
-const bass = bassA
-	//.concat(bassA)
+const bass = [n<number>(0)]
+	.concat(bassA)
+	.concat(bassA)
 	.concat(bassB)
 	.concat(bassA2)
+
 // const harmony = harmonyA2
-const harmony = harmonyA
-	// .concat(harmonyA)
+const harmony = [n<number[]>(0)]
+	.concat(harmonyA)
+	.concat(harmonyA)
 	.concat(harmonyB)
 	.concat(harmonyA2)
 
@@ -329,7 +332,6 @@ export default {
 				composePolySynth(
 					bassNotes.map((n) => {
 						const fq = midiToFc(n.data)
-
 						const amount = fq * 2.41
 
 						const fq2 = el.add(
@@ -352,21 +354,39 @@ export default {
 				composePolySynth(
 					chordNotes.map((n) => {
 						return {
-							env: el.adsr(0.3, 0.2, 0.6, releaseTime, n.triggerSignal),
-							sound: el.mul(
+							env: el.adsr(0.3, 0.6, 0.5, releaseTime, n.triggerSignal),
+							sound: am(
 								el.add(
-									...n.data.map((note) => {
-										const fc = midiToFc(note)
-										return el.lowpass(fc * 1.2, 1, el.square(fc))
-									}),
+									el.mul(
+										el.add(
+											...n.data.map((note) => {
+												const fc = midiToFc(note)
+												return el.lowpass(fc * 1.2, 1, el.square(fc))
+											}),
+										),
+										0.2,
+									),
+									el.mul(
+										el.add(
+											...n.data
+												.map((n) => n + 12)
+												.map((note) => {
+													const fc = midiToFc(note)
+													return el.lowpass(fc * 1.5, 2.5, el.saw(fc))
+												}),
+										),
+										0.061,
+									),
 								),
-								0.2,
+								el.cycle((bpm / 60) * 3),
+								el.mul(0.3, el.adsr(0.8, 0, 1, releaseTime, n.triggerSignal)),
 							),
 						}
 					}),
 				),
-				0.7,
+				0.6,
 			),
+			el.mul(el.pinknoise(), 0.021, el.add(3.5, el.cycle(bpm / 60))),
 		)
 	},
 } as Track

@@ -392,7 +392,11 @@ export const basicAmplitudeModulation: Track = {
 		} else if (eq === 1) {
 			// A1=(a1 + a2 * cos(w2t)) * cos(w1t)
 			const n = (waveFn: (fc: number) => ElemNode) =>
-				el.mul(el.add(1, el.mul(waveFn(modFc), modAmount)), waveFn(fc), 0.5)
+				el.mul(
+					el.add(1, el.mul(waveFn(modFc), modAmount)),
+					waveFn(fc),
+					1 / (1 + modAmount),
+				)
 
 			switch (WaveTypeOptions[waveType]) {
 				case 'sine':
