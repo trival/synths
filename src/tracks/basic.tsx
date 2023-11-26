@@ -509,9 +509,14 @@ const basicFrequencyModulation: Track = {
 					const fc = midiToFc(n.data.note)
 					return {
 						env: el.adsr(0.1, 0.2, 0.6, fmReleaseTime, n.triggerSignal),
-						sound: waveFn(
-							el.add(fc, el.mul(fc ** amount, waveFn(fc / fcFactor))),
-						),
+						sound:
+							// el.lowpass(
+							// fc,
+							// 3,
+							waveFn(
+								el.add(fc, el.mul(fc * 2 ** amount, waveFn(fc / fcFactor))),
+								// ),
+							),
 					}
 				}),
 			),

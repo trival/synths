@@ -289,7 +289,7 @@ const harmonyA2: Melody<number[]> = [
 ]
 
 const bpm = 100
-const releaseTime = 1.5
+const releaseTime = 2.5
 
 // const bass = bassA2
 const bass = bassA
@@ -327,30 +327,45 @@ export default {
 		return el.add(
 			el.mul(
 				composePolySynth(
-					bassNotes.map((n) => ({
-						env: el.adsr(0.3, 0.3, 0.6, releaseTime, n.triggerSignal),
-						sound: el.mul(
-							el.add(
-								el.cycle(midiToFc(n.data)),
-								el.cycle(midiToFc(n.data + 12)),
+					bassNotes.map((n) => {
+						const fq = midiToFc(n.data)
+
+						const amount = fq * 2.41
+
+						const fq2 = el.add(
+							fq,
+							el.mul(
+								el.saw(el.add(fq * 1.0, el.mul(el.cycle(0.5), fq * 0.015))),
+								amount,
 							),
-							0.5,
-						),
-					})),
+						)
+
+						return {
+							env: el.adsr(0.3, 0.3, 0.6, releaseTime, n.triggerSignal),
+							sound: el.lowpass(fq * 3, 2, el.mul(el.triangle(fq2), 0.5)),
+						}
+					}),
 				),
-				0.7,
+				0.8,
 			),
 			el.mul(
 				composePolySynth(
-					chordNotes.map((n) => ({
-						env: el.adsr(0.1, 0.2, 0.6, releaseTime, n.triggerSignal),
-						sound: el.mul(
-							el.add(...n.data.map((note) => el.cycle(midiToFc(note)))),
-							0.3,
-						),
-					})),
+					chordNotes.map((n) => {
+						return {
+							env: el.adsr(0.3, 0.2, 0.6, releaseTime, n.triggerSignal),
+							sound: el.mul(
+								el.add(
+									...n.data.map((note) => {
+										const fc = midiToFc(note)
+										return el.lowpass(fc * 1.2, 1, el.square(fc))
+									}),
+								),
+								0.2,
+							),
+						}
+					}),
 				),
-				0.5,
+				0.7,
 			),
 		)
 	},
