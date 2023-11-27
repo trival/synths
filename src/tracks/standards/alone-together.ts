@@ -257,7 +257,7 @@ export default {
 						return {
 							env: el.adsr(0.3, 0.3, 0.6, releaseTime, n.triggerSignal),
 							sound: el.lowpass(
-								el.mul(fq, 3),
+								el.mul(fq, 2.5),
 								2,
 								el.mul(el.triangle(fq2), 0.5),
 							),
