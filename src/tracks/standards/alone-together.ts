@@ -198,11 +198,13 @@ const releaseTime = 2.5
 const bassSong = bassA.concat(bassA).concat(bassB).concat(bassA2)
 
 // const bass = bassB
+// const bass = bassB.concat(bassA2)
 const bass = [n<number>(8)].concat(bassSong).concat(bassSong).concat(bassSong)
 
 const harmonySong = harmonyA.concat(harmonyA).concat(harmonyB).concat(harmonyA2)
 
 // const harmony = harmonyB
+// const harmony = harmonyB.concat(harmonyA2)
 const harmony = [n<number[]>(8)]
 	.concat(harmonySong)
 	.concat(harmonySong)
