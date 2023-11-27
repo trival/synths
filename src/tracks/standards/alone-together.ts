@@ -313,7 +313,7 @@ export default {
 			el.lowpass(
 				8000,
 				0.6,
-				el.mul(el.pinknoise(), el.add(3.0, el.cycle(bpm / 60)), 0.025),
+				el.mul(el.pinknoise(), el.add(3.0, el.cycle(bpm / 60)), 0.03),
 			),
 		)
 	},
