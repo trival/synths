@@ -4,7 +4,14 @@ import { el } from '@elemaudio/core'
 import { InputType } from '../../input'
 import { Track } from '../../utils/base'
 import { am, composePolySynth } from '../../utils/elemaudio'
-import { ScaleType, chord, invert, midiToFc, scale } from '../../utils/music'
+import {
+	ScaleType,
+	chord,
+	invert,
+	midiToFc,
+	octaveTransposedScale,
+	scale,
+} from '../../utils/music'
 import {
 	Melody,
 	createSequencer,
@@ -52,6 +59,7 @@ import {
 // B07 E7b9
 
 const s = scale('G-2', ScaleType.MINOR)
+const s2 = octaveTransposedScale(s)
 const n = melodyNote
 
 const bassA: Melody<number> = [
@@ -139,7 +147,6 @@ const c6 = (n: number) => [s(n + 2), s(n + 4), s(n + 5)].map((n) => n + 12)
 const c7 = (n: number) => [s(n + 2), s(n + 4), s(n + 6)].map((n) => n + 12)
 
 const c = (ns: number[]) => [n(1), n(2, ns), n(1)]
-const o = (ns: number[]) => ns.map((n) => n + 12)
 
 const harmonyA = [
 	c6(1),
@@ -148,30 +155,30 @@ const harmonyA = [
 	c7(2),
 
 	c6(1),
-	o(chord(s(7), 'min')),
+	chord(s2(7), 'min'),
 	c7(4),
 	c7(4),
 
-	o(chord(s(1), 'maj')),
+	chord(s2(1), 'maj'),
 	c7(4),
 	c7(3),
 	c7(2),
 
-	o(chord(s(3, '#'), 'min')),
-	o(chord(s(3, '#'), 'min')),
-].flatMap((n) => c(n)) as Melody<number[]>
+	chord(s2(3, '#'), 'min'),
+	chord(s2(3, '#'), 'min'),
+].flatMap(c) as Melody<number[]>
 
 const harmonyB = [
-	o(chord(s(5), 'min')),
-	o(chord(s(3, '#'), 'dim')),
+	chord(s2(5), 'min'),
+	chord(s2(3, '#'), 'dim'),
 	c6(4),
 	c6(4),
 
-	o(chord(s(6), 'min')),
+	chord(s2(6), 'min'),
 	invert(c7(7), -1),
 	c7(3),
 	c7(2),
-].flatMap((n) => c(n)) as Melody<number[]>
+].flatMap(c) as Melody<number[]>
 
 const harmonyA2 = [
 	c6(1),
@@ -180,26 +187,26 @@ const harmonyA2 = [
 	c7(2),
 
 	c6(1),
-	o(chord(s(1), 'dim')),
+	chord(s2(1), 'dim'),
 	c6(1),
 	c7(2),
-].flatMap((n) => c(n)) as Melody<number[]>
+].flatMap(c) as Melody<number[]>
 
 const bpm = 100
 const releaseTime = 2.5
 
 const bassSong = bassA.concat(bassA).concat(bassB).concat(bassA2)
 
-const bass = bassB
-// const bass = [n<number>(8)].concat(bassSong).concat(bassSong).concat(bassSong)
+// const bass = bassB
+const bass = [n<number>(8)].concat(bassSong).concat(bassSong).concat(bassSong)
 
 const harmonySong = harmonyA.concat(harmonyA).concat(harmonyB).concat(harmonyA2)
 
-const harmony = harmonyB
-// const harmony = [n<number[]>(8)]
-// 	.concat(harmonySong)
-// 	.concat(harmonySong)
-// 	.concat(harmonySong)
+// const harmony = harmonyB
+const harmony = [n<number[]>(8)]
+	.concat(harmonySong)
+	.concat(harmonySong)
+	.concat(harmonySong)
 
 const bassSequencer = createSequencer(melodyToSeq(bass), {
 	releaseTime,
