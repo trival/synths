@@ -14,6 +14,9 @@ interface SynthSignal {
 }
 
 export const composePolySynth = (signals: SynthSignal[]) => {
+	if (signals.length === 0) {
+		return 0
+	}
 	const sum = el.add(...signals.map((s) => el.mul(s.sound, s.env, s.env)))
 	const volume = el.add(...signals.map((s) => s.env))
 	return el.div(sum, volume)

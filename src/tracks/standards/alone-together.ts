@@ -4,7 +4,7 @@ import { el } from '@elemaudio/core'
 import { InputType } from '../../input'
 import { Track } from '../../utils/base'
 import { am, composePolySynth } from '../../utils/elemaudio'
-import { ScaleType, chord, midiToFc, scale } from '../../utils/music'
+import { ScaleType, chord, invert, midiToFc, scale } from '../../utils/music'
 import {
 	Melody,
 	createSequencer,
@@ -88,7 +88,7 @@ const bassA: Melody<number> = [
 	n(2, s(1)),
 	n(2, s(3, '#')),
 	n(3, s(2)),
-	n(1, s(5)),
+	n(1),
 ]
 
 const bassB: Melody<number> = [
@@ -132,178 +132,74 @@ const bassA2: Melody<number> = [
 	n(3, s(1)),
 	n(1),
 	n(3, s(2)),
-	n(1, s(5)),
+	n(1),
 ]
 
 const c6 = (n: number) => [s(n + 2), s(n + 4), s(n + 5)].map((n) => n + 12)
 const c7 = (n: number) => [s(n + 2), s(n + 4), s(n + 6)].map((n) => n + 12)
 
-const harmonyA: Melody<number[]> = [
-	n(1),
-	n(2, c6(1)),
-	n(1),
+const c = (ns: number[]) => [n(1), n(2, ns), n(1)]
+const o = (ns: number[]) => ns.map((n) => n + 12)
 
-	n(1),
-	n(2, c7(2)),
-	n(1),
+const harmonyA = [
+	c6(1),
+	c7(2),
+	c6(1),
+	c7(2),
 
-	n(1),
-	n(2, c6(1)),
-	n(1),
+	c6(1),
+	o(chord(s(7), 'min')),
+	c7(4),
+	c7(4),
 
-	n(1),
-	n(2, c7(2)),
-	n(1),
+	o(chord(s(1), 'maj')),
+	c7(4),
+	c7(3),
+	c7(2),
 
-	n(1),
-	n(2, c6(1)),
-	n(1),
+	o(chord(s(3, '#'), 'min')),
+	o(chord(s(3, '#'), 'min')),
+].flatMap((n) => c(n)) as Melody<number[]>
 
-	n(1),
-	n(
-		2,
-		chord(s(7), 'min').map((n) => n + 12),
-	),
-	n(1),
+const harmonyB = [
+	o(chord(s(5), 'min')),
+	o(chord(s(3, '#'), 'dim')),
+	c6(4),
+	c6(4),
 
-	n(1),
-	n(2, c7(4)),
-	n(1),
+	o(chord(s(6), 'min')),
+	invert(c7(7), -1),
+	c7(3),
+	c7(2),
+].flatMap((n) => c(n)) as Melody<number[]>
 
-	n(1),
-	n(2, c7(4)),
-	n(1),
+const harmonyA2 = [
+	c6(1),
+	c7(2),
+	c6(1),
+	c7(2),
 
-	n(1),
-	n(
-		2,
-		chord(s(1), 'maj').map((n) => n + 12),
-	),
-	n(1),
-
-	n(1),
-	n(2, c7(4)),
-	n(1),
-
-	n(1),
-	n(2, c7(3)),
-	n(1),
-
-	n(1),
-	n(2, c7(2)),
-	n(1),
-
-	n(1),
-	n(
-		2,
-		chord(s(3, '#'), 'min').map((n) => n + 12),
-	),
-	n(1),
-
-	n(1),
-	n(
-		2,
-		chord(s(3, '#'), 'min').map((n) => n + 12),
-	),
-	n(1),
-]
-
-const harmonyB: Melody<number[]> = [
-	n(1),
-	n(
-		2,
-		chord(s(5), 'min').map((n) => n + 12),
-	),
-	n(1),
-
-	n(1),
-	n(
-		2,
-		chord(s(3, '#'), 'min').map((n) => n + 12),
-	),
-	n(1),
-
-	n(1),
-	n(2, c6(6)),
-	n(1),
-
-	n(1),
-	n(2, c6(6)),
-	n(1),
-
-	n(1),
-	n(
-		2,
-		chord(s(6), 'min').map((n) => n + 12),
-	),
-	n(1),
-
-	n(1),
-	n(2, c7(7)),
-	n(1),
-
-	n(1),
-	n(2, c7(3)),
-	n(1),
-
-	n(1),
-	n(2, c7(2)),
-	n(1),
-]
-
-const harmonyA2: Melody<number[]> = [
-	n(1),
-	n(2, c6(1)),
-	n(1),
-
-	n(1),
-	n(2, c7(2)),
-	n(1),
-
-	n(1),
-	n(2, c6(1)),
-	n(1),
-
-	n(1),
-	n(2, c7(2)),
-	n(1),
-
-	n(1),
-	n(2, c6(1)),
-	n(1),
-
-	n(1),
-	n(
-		2,
-		chord(s(6), 'dim').map((n) => n + 12),
-	),
-	n(1),
-
-	n(1),
-	n(2, c6(1)),
-	n(1),
-
-	n(1),
-	n(2, c7(1)),
-	n(1),
-]
+	c6(1),
+	o(chord(s(1), 'dim')),
+	c6(1),
+	c7(2),
+].flatMap((n) => c(n)) as Melody<number[]>
 
 const bpm = 100
 const releaseTime = 2.5
 
-// const bass = bassA2
-const bass = [n<number>(0)]
-	.concat(bassA)
-	.concat(bassA)
-	.concat(bassB)
-	.concat(bassA2)
+const bassSong = bassA.concat(bassA).concat(bassB).concat(bassA2)
 
-// const harmony = harmonyA2
-const harmony = [n<number[]>(0)]
-	.concat(harmonyA)
-	.concat(harmonyA)
-	.concat(harmonyB)
-	.concat(harmonyA2)
+const bass = bassB
+// const bass = [n<number>(8)].concat(bassSong).concat(bassSong).concat(bassSong)
+
+const harmonySong = harmonyA.concat(harmonyA).concat(harmonyB).concat(harmonyA2)
+
+const harmony = harmonyB
+// const harmony = [n<number[]>(8)]
+// 	.concat(harmonySong)
+// 	.concat(harmonySong)
+// 	.concat(harmonySong)
 
 const bassSequencer = createSequencer(melodyToSeq(bass), {
 	releaseTime,
@@ -322,29 +218,42 @@ export default {
 	inputs: [{ type: InputType.TICK }],
 
 	renderAudio([tick]) {
+		if (tick < 0.0001) {
+			return 0
+		}
+
 		const bassNotes = bassSequencer(tick)
 		const chordNotes = chordSequencer(tick)
 
-		if (bassNotes.length === 0) return 0
+		console.log(bassNotes, chordNotes)
 
 		return el.add(
 			el.mul(
 				composePolySynth(
 					bassNotes.map((n) => {
-						const fq = midiToFc(n.data)
-						const amount = fq * 2.41
+						const fq = el.const({ key: 'b' + n.idx, value: midiToFc(n.data) })
+						const amount = el.mul(fq, 2.41)
 
 						const fq2 = el.add(
 							fq,
 							el.mul(
-								el.saw(el.add(fq * 1.0, el.mul(el.cycle(0.5), fq * 0.015))),
+								el.saw(
+									el.add(
+										el.mul(fq, 1.0),
+										el.mul(el.cycle(0.5), el.mul(fq, 0.015)),
+									),
+								),
 								amount,
 							),
 						)
 
 						return {
 							env: el.adsr(0.3, 0.3, 0.6, releaseTime, n.triggerSignal),
-							sound: el.lowpass(fq * 3, 2, el.mul(el.triangle(fq2), 0.5)),
+							sound: el.lowpass(
+								el.mul(fq, 3),
+								2,
+								el.mul(el.triangle(fq2), 0.5),
+							),
 						}
 					}),
 				),
@@ -359,9 +268,12 @@ export default {
 								el.add(
 									el.mul(
 										el.add(
-											...n.data.map((note) => {
-												const fc = midiToFc(note)
-												return el.lowpass(fc * 1.2, 1, el.square(fc))
+											...n.data.map((note, i) => {
+												const fc = el.const({
+													key: 'c1' + n.idx + '_' + i,
+													value: midiToFc(note),
+												})
+												return el.lowpass(el.mul(fc, 1.2), 1, el.square(fc))
 											}),
 										),
 										0.2,
@@ -370,9 +282,12 @@ export default {
 										el.add(
 											...n.data
 												.map((n) => n + 12)
-												.map((note) => {
-													const fc = midiToFc(note)
-													return el.lowpass(fc * 1.5, 2.5, el.saw(fc))
+												.map((note, i) => {
+													const fc = el.const({
+														key: 'c2' + n.idx + '_' + i,
+														value: midiToFc(note),
+													})
+													return el.lowpass(el.mul(fc, 1.5), 2.5, el.saw(fc))
 												}),
 										),
 										0.061,
