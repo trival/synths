@@ -3,14 +3,7 @@ import { InputType } from '../../input'
 import { Track, reverse } from '../../utils/base'
 import { composePolySynth } from '../../utils/elemaudio'
 import { chord, invert, midiToFc, noteToMidi } from '../../utils/music'
-import {
-	beat,
-	combine,
-	createSequencer,
-	melodyNote,
-	melodyToSeq,
-	withBeat,
-} from '../../utils/sequence'
+import { beat, combine, createSequencer, withBeat } from '../../utils/sequence'
 
 // === A === (2 times)
 
