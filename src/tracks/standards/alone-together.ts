@@ -267,6 +267,7 @@ export default {
 					}),
 				),
 				0.8,
+				// 0,
 			),
 			el.mul(
 				composePolySynth(
@@ -308,12 +309,28 @@ export default {
 						}
 					}),
 				),
+				// 0.0,
 				0.6,
 			),
 			el.lowpass(
 				8000,
 				0.6,
 				el.mul(el.pinknoise(), el.add(3.0, el.cycle(bpm / 60)), 0.03),
+			),
+			el.lowpass(
+				el.mul(
+					el.sub(1, el.train(bpm / (60 * 2))),
+					el.add(0.1, el.phasor(bpm / (60 * 2))),
+					8000,
+				),
+				1,
+				el.mul(
+					el.sub(1, el.train(bpm / (60 * 2))),
+					el.noise(),
+					el.sub(1, el.phasor(bpm / (60 * 2))),
+					0.03,
+					el.add(1, el.mul(0.4, el.cycle(bpm / (60 * 4)))),
+				),
 			),
 		)
 	},
