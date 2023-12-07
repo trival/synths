@@ -192,7 +192,7 @@ const harmonyA2 = [
 	c7(2),
 ].flatMap(c) as Melody<number[]>
 
-const bpm = 100
+const bpm = 105
 const releaseTime = 2.5
 
 const bassSong = bassA.concat(bassA).concat(bassB).concat(bassA2)
@@ -320,16 +320,16 @@ export default {
 			el.lowpass(
 				el.mul(
 					el.sub(1, el.train(bpm / (60 * 2))),
-					el.add(0.1, el.phasor(bpm / (60 * 2))),
-					8000,
+					el.add(0.2, el.phasor(bpm / (60 * 2))),
+					10000,
 				),
-				1,
+				0.8,
 				el.mul(
 					el.sub(1, el.train(bpm / (60 * 2))),
 					el.noise(),
-					el.sub(1, el.phasor(bpm / (60 * 2))),
-					0.03,
-					el.add(1, el.mul(0.4, el.cycle(bpm / (60 * 4)))),
+					el.sub(1, el.pow(el.phasor(bpm / (60 * 2)), 0.3)),
+					0.06,
+					el.add(0.8, el.mul(0.4, el.sub(1, el.cycle(bpm / (60 * 4))))),
 				),
 			),
 		)
