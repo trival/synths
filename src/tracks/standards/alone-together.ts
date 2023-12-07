@@ -199,7 +199,11 @@ const bassSong = bassA.concat(bassA).concat(bassB).concat(bassA2)
 
 // const bass = bassB
 // const bass = bassB.concat(bassA2)
-const bass = [n<number>(8)].concat(bassSong).concat(bassSong).concat(bassSong)
+const bass = [n<number>(8)]
+	.concat(bassSong)
+	.concat(bassSong)
+	.concat(bassSong)
+	.concat([n(6, s(1)), n(2)])
 
 const harmonySong = harmonyA.concat(harmonyA).concat(harmonyB).concat(harmonyA2)
 
@@ -214,12 +218,14 @@ const bassSequencer = createSequencer(melodyToSeq(bass), {
 	releaseTime,
 	bpm,
 	seqTriggerKey: 'bassTrigger',
+	repetitions: 1,
 })
 
 const chordSequencer = createSequencer(melodyToSeq(harmony), {
 	bpm,
 	releaseTime,
 	seqTriggerKey: 'chordTrigger',
+	repetitions: 1,
 })
 
 export default {
@@ -328,8 +334,8 @@ export default {
 					el.sub(1, el.train(bpm / (60 * 2))),
 					el.noise(),
 					el.sub(1, el.pow(el.phasor(bpm / (60 * 2)), 0.3)),
-					0.06,
-					el.add(0.8, el.mul(0.4, el.sub(1, el.cycle(bpm / (60 * 4))))),
+					0.07,
+					el.add(1, el.mul(0.3, el.mul(-1, el.cycle(bpm / (60 * 4))))),
 				),
 			),
 		)
