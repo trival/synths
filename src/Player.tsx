@@ -138,7 +138,7 @@ export function TrackPlayer(props: TrackPlayerProps) {
 				</button>
 				<h3 class="my-4 grow">{props.track.text}</h3>
 			</div>
-			<canvas ref={canvas} width="600" height="400" />
+			<canvas ref={canvas} width="600" height="400" class="h-auto max-w-full" />
 			<Show when={props.track.inputs}>
 				<Inputs
 					inputs={props.track.inputs!}
