@@ -21,7 +21,7 @@ const releaseTime = 0.5
 const sequencer = createSequencer(
 	melodyToSeq(notes.map((n) => ({ data: n, duration: 1 }))),
 	{
-		releaseTime,
+		initData: 0,
 		bpm: 140,
 	},
 )

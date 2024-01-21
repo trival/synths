@@ -215,15 +215,16 @@ const harmony = [n<number[]>(8)]
 	.concat(harmonySong)
 
 const bassSequencer = createSequencer(melodyToSeq(bass), {
-	releaseTime,
+	initData: 0,
 	bpm,
 	seqTriggerKey: 'bassTrigger',
 	repetitions: 1,
+	// debug: true,
 })
 
 const chordSequencer = createSequencer(melodyToSeq(harmony), {
+	initData: [0, 0],
 	bpm,
-	releaseTime,
 	seqTriggerKey: 'chordTrigger',
 	repetitions: 1,
 })
@@ -239,8 +240,6 @@ export default {
 
 		const bassNotes = bassSequencer(tick)
 		const chordNotes = chordSequencer(tick)
-
-		console.log(bassNotes, chordNotes)
 
 		return el.add(
 			el.mul(

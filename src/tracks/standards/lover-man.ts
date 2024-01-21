@@ -117,7 +117,10 @@ const bass = combine(
 	bassAEnd3,
 )
 
-const sequencer = createSequencer(bass, { releaseTime, bpm })
+const sequencer = createSequencer(bass, {
+	initData: { note: 0, pattern: 0 },
+	bpm,
+})
 
 export default {
 	text: 'Standards/Lover Man',

@@ -48,7 +48,7 @@ export function melodyToSeq<T>(melody: Melody<T>): Sequence<T> {
 	}
 }
 
-export function combine<T>(...seqs: Sequence<T>[]) {
+export function combine<T>(...seqs: Sequence<T>[]): Sequence<T> {
 	const notes: SeqNote<T>[] = []
 	let duration = 0
 
@@ -75,27 +75,37 @@ export interface PlayableNote<T> {
 	triggerSignal: ElemNode
 }
 
-interface SequenceProps {
+interface SequenceProps<T> {
+	initData: T
+	trackCount: number
 	bpm: number
 	repetitions: number
 	startTime: number
-	releaseTime: number
 	seqTriggerKey: string
+	debug?: boolean
 }
 
-const defaultSequenceProps: SequenceProps = {
+const defaultSequenceProps: Omit<SequenceProps<any>, 'initData'> = {
 	bpm: 120,
 	repetitions: 0,
-	releaseTime: 1,
 	startTime: 0,
 	seqTriggerKey: 'trigger',
+	trackCount: 2,
 }
 
-export const createSequencer = <T>(
+export function createSequencer<T>(
 	seq: Sequence<T>,
-	props: Partial<SequenceProps> = {},
-): ((currentTime: number) => PlayableNote<T>[]) => {
-	const { bpm, repetitions, startTime, releaseTime, seqTriggerKey } = {
+	props: Partial<SequenceProps<T>> & { initData: T },
+): (currentTime: number) => PlayableNote<T>[] {
+	const {
+		bpm,
+		repetitions,
+		startTime,
+		seqTriggerKey,
+		trackCount,
+		initData,
+		debug,
+	} = {
 		...defaultSequenceProps,
 		...props,
 	}
@@ -107,7 +117,7 @@ export const createSequencer = <T>(
 		if (note.data != null) {
 			noteIntervals.push({
 				start: start,
-				end: start + note.duration * secPerBeat + releaseTime,
+				end: start + note.duration * secPerBeat,
 				idx: i,
 			})
 		}
@@ -124,31 +134,61 @@ export const createSequencer = <T>(
 		.concat(noteIntervals)
 		.filter((n) => n.end > 0)
 
+	const tracks: PlayableNote<T>[] = Array.from(
+		{ length: trackCount },
+		(_, i) => ({
+			idx: i,
+			data: initData,
+			triggerSignal: timedTrigger(0, 0, seqTriggerKey + i),
+		}),
+	)
+
+	let currentTrackIdx = 0
+
+	const getNextTrackIdx = () => {
+		const idx = currentTrackIdx
+		currentTrackIdx = (currentTrackIdx + 1) % trackCount
+		return idx
+	}
+
+	const playingNotes: { [idx: number]: boolean } = {}
+
 	return (currentTime: number) => {
 		const currentLoop = Math.floor((currentTime - startTime) / seqDuration)
 
 		if (repetitions === 0 || currentLoop < repetitions) {
 			const seqTime = currentTime - currentLoop * seqDuration
-			const currentNotes = noteIntervals.filter(
-				(n) => n.start - 0.2 <= seqTime && n.end + 0.2 > seqTime,
-			)
 
-			return currentNotes.map((n) => {
-				const note = seq.notes[n.idx]
-				const start = n.start + currentLoop * seqDuration
-				return {
-					data: note.data!,
-					idx: n.idx,
-					triggerSignal: timedTrigger(
-						start,
-						start + note.duration * secPerBeat,
-						seqTriggerKey + n.idx,
-					),
+			noteIntervals.forEach((n) => {
+				if (n.start - 0.1 <= seqTime && n.end > seqTime) {
+					if (!playingNotes[n.idx]) {
+						const note = seq.notes[n.idx]
+						const start = n.start + currentLoop * seqDuration
+						const nextTrackIdx = getNextTrackIdx()
+						tracks[nextTrackIdx].data = note.data!
+						tracks[nextTrackIdx].triggerSignal = timedTrigger(
+							start,
+							start + note.duration * secPerBeat,
+							seqTriggerKey + nextTrackIdx,
+						)
+						playingNotes[n.idx] = true
+						console.log('adding seq note', seqTriggerKey, n.idx, nextTrackIdx)
+					}
+				} else {
+					playingNotes[n.idx] = false
 				}
 			})
+
+			debug &&
+				console.log(
+					seqTriggerKey,
+					Object.entries(playingNotes)
+						.filter(([_, v]) => v)
+						.map(([k]) => k),
+				)
 		}
 
-		return []
+		return tracks
 	}
 }
 

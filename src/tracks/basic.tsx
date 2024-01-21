@@ -457,7 +457,7 @@ const fmBpm = 100
 const fmReleaseTime = 1.5
 
 const fmSequencer = createSequencer(notes, {
-	releaseTime: fmReleaseTime,
+	initData: { note: 0, pattern: 0 },
 	bpm: fmBpm,
 })
 const basicFrequencyModulation: Track = {
