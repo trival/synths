@@ -460,6 +460,7 @@ const fmSequencer = createSequencer(notes, {
 	initData: { note: 0, pattern: 0 },
 	bpm: fmBpm,
 })
+
 const basicFrequencyModulation: Track = {
 	text: 'frequency modulation',
 	inputs: [
@@ -490,9 +491,7 @@ const basicFrequencyModulation: Track = {
 		},
 	],
 	renderAudio([waveType, tick, fcFactor, amount]) {
-		const activeNotes = fmSequencer(tick)
-
-		if (activeNotes.length === 0) return 0
+		const tracks = fmSequencer(tick)
 
 		const waveFn = (fc: ElemNode) => {
 			switch (WaveTypeOptions[waveType]) {
@@ -509,7 +508,7 @@ const basicFrequencyModulation: Track = {
 
 		return el.mul(
 			composePolySynth(
-				activeNotes.map((n) => {
+				tracks.map((n) => {
 					const fc = midiToFc(n.data.note)
 					return {
 						env: el.adsr(0.1, 0.2, 0.6, fmReleaseTime, n.triggerSignal),
@@ -521,6 +520,65 @@ const basicFrequencyModulation: Track = {
 								el.add(fc, el.mul(fc * 2 ** amount, waveFn(fc / fcFactor))),
 								// ),
 							),
+					}
+				}),
+			),
+			0.7,
+		)
+	},
+}
+
+const basicRingModulation: Track = {
+	text: 'ring modulation',
+	inputs: [
+		{
+			type: InputType.TOGGLE,
+			label: 'toggle ring modulation',
+			initialValue: 0,
+		},
+		{
+			type: InputType.SELECT,
+			label: 'wave type',
+			options: WaveTypeOptions,
+			initialValue: 0,
+		},
+		{
+			type: InputType.SLIDER,
+			label: 'modulator fc factor',
+			min: 0.1,
+			max: 10,
+			step: 0.01,
+			initialValue: 2,
+		},
+		{
+			type: InputType.TICK,
+		},
+	],
+	renderAudio([toggle, waveType, factor, tick]) {
+		const trackNotes = fmSequencer(tick)
+
+		const waveFn = (fc: ElemNode) => {
+			switch (WaveTypeOptions[waveType]) {
+				case 'sine':
+					return el.cycle(fc)
+				case 'square':
+					return el.square(fc)
+				case 'saw':
+					return el.saw(fc)
+				case 'triangle':
+					return el.triangle(fc)
+			}
+		}
+
+		return el.mul(
+			composePolySynth(
+				trackNotes.map((n) => {
+					const fc = midiToFc(n.data.note)
+					return {
+						env: el.adsr(0.1, 0.2, 0.6, fmReleaseTime, n.triggerSignal),
+						sound: toggle
+							? el.mul(waveFn(fc), waveFn(el.mul(fc, factor)))
+							: waveFn(fc),
 					}
 				}),
 			),
@@ -552,4 +610,5 @@ export const tracks: Track[] = [
 	basicPulseModulation,
 	basicAmplitudeModulation,
 	basicFrequencyModulation,
+	basicRingModulation,
 ]
