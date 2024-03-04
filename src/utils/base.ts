@@ -1,10 +1,20 @@
 import { ElemNode } from '@elemaudio/core'
 import { InputDeclaration } from '../input'
 
+export interface MidiNote {
+	note: number
+	attack: number
+}
+
 export interface Track {
 	text: string
 	inputs?: InputDeclaration[]
-	renderAudio: (inputVals: number[], ctx: AudioContext) => ElemNode | ElemNode[]
+	useMidi?: boolean
+	renderAudio: (
+		inputVals: number[],
+		ctx: AudioContext,
+		midi: MidiNote[],
+	) => ElemNode | ElemNode[]
 }
 
 export function rotate<T>(arr: T[], count: number = 1) {

@@ -587,6 +587,23 @@ const basicRingModulation: Track = {
 	},
 }
 
+const basicMidi: Track = {
+	text: 'midi WIP',
+	useMidi: true,
+	renderAudio(_, __, midi) {
+		console.log(midi)
+		const notes = midi.map((n) => {
+			const fc = midiToFc(n.note)
+			return {
+				env: el.adsr(0.1, 0.2, 0.6, 1.5, n.attack),
+				sound: el.cycle(fc),
+			}
+		})
+
+		return el.mul(composePolySynth(notes), 0.7)
+	},
+}
+
 import sequencer1 from './sequencer1'
 import loverMan from './standards/lover-man'
 import aloneTogether from './standards/alone-together'
@@ -611,4 +628,5 @@ export const tracks: Track[] = [
 	basicAmplitudeModulation,
 	basicFrequencyModulation,
 	basicRingModulation,
+	basicMidi,
 ]

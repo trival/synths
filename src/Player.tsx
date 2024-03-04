@@ -5,6 +5,7 @@ import { Oscilloscope } from 'webaudio-oscilloscope/index.js'
 import { InputType, Inputs } from './input'
 import { Track } from './utils/base'
 import WebRenderer from '@elemaudio/web-renderer'
+import { MidiController } from './midi'
 
 const ctx = new AudioContext()
 ctx.suspend()
@@ -52,6 +53,19 @@ interface TrackPlayerProps {
 
 export function TrackPlayer(props: TrackPlayerProps) {
 	let canvas: HTMLCanvasElement | undefined
+
+	const [midiNotes, setMidiNotes] = createSignal<Record<number, number>>({})
+
+	function noteOn(note: number, attack: number) {
+		setMidiNotes((prev) => ({ ...prev, [note]: attack }))
+	}
+	function noteOff(note: number) {
+		setMidiNotes((prev) => {
+			const newNotes = { ...prev }
+			delete newNotes[note]
+			return newNotes
+		})
+	}
 
 	createEffect(() => {
 		if (initialized() && canvas && node) {
@@ -105,7 +119,14 @@ export function TrackPlayer(props: TrackPlayerProps) {
 				const is = inputs()
 				console.log('rendering', t.text, is)
 
-				const el = t.renderAudio(is, ctx)
+				const el = t.renderAudio(
+					is,
+					ctx,
+					Object.entries(midiNotes()).map(([note, attack]) => ({
+						note: Number(note),
+						attack,
+					})),
+				)
 				if (Array.isArray(el)) {
 					core.render(...el)
 				} else {
@@ -139,6 +160,9 @@ export function TrackPlayer(props: TrackPlayerProps) {
 				<h3 class="my-4 grow">{props.track.text}</h3>
 			</div>
 			<canvas ref={canvas} width="600" height="400" class="h-auto max-w-full" />
+			<Show when={props.track.useMidi}>
+				<MidiController onMidiNoteOff={noteOff} onMidiNoteOn={noteOn} />
+			</Show>
 			<Show when={props.track.inputs}>
 				<Inputs
 					inputs={props.track.inputs!}

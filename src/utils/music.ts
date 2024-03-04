@@ -81,8 +81,8 @@ export function chord(baseNote: number | NoteValue, chordName: ChordName) {
 	const chord = chordName.includes('min')
 		? [0, 3, 7]
 		: chordName.includes('dim')
-		? [0, 3, 6]
-		: [0, 4, 7]
+			? [0, 3, 6]
+			: [0, 4, 7]
 	if (chordName === 'maj7') {
 		chord.push(11)
 	} else if (chordName.includes('7')) {
@@ -154,8 +154,6 @@ export function scale(baseNote: NoteValue, type: ScaleType) {
 		.map((i) => i + noteToMidi(baseNote))
 		.concat(intervals.map((i) => i + noteToMidi(baseNote) + 12))
 		.concat(intervals.map((i) => i + noteToMidi(baseNote) + 24))
-
-	console.log(notes)
 
 	return function (value: number, prefix?: '#' | 'b') {
 		const note = notes[value - 1]
