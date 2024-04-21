@@ -2,8 +2,8 @@
 
 import { el } from '@elemaudio/core'
 import { InputType } from '../../input'
-import { Track } from '../../utils/base'
-import { am, composePolySynth } from '../../utils/elemaudio'
+import { Track } from '../../lib/base'
+import { am, composePolySynth } from '../../lib/elemaudio'
 import {
 	ScaleType,
 	chord,
@@ -11,13 +11,13 @@ import {
 	midiToFc,
 	octaveTransposedScale,
 	scale,
-} from '../../utils/music'
+} from '../../lib/music'
 import {
 	Melody,
 	createSequencer,
 	melodyNote,
 	melodyToSeq,
-} from '../../utils/sequence'
+} from '../../lib/sequence'
 
 // === A === (2 times)
 

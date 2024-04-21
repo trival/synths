@@ -166,11 +166,7 @@ export function scale(baseNote: NoteValue, type: ScaleType) {
 	}
 }
 
-export function octaveTransposedScale(
-	s: ReturnType<typeof scale>,
-	octaves = 1,
-) {
-	return function (value: number, prefix?: '#' | 'b') {
-		return s(value, prefix) + 12 * octaves
-	}
-}
+export const octaveTransposedScale =
+	(s: ReturnType<typeof scale>, octaves = 1) =>
+	(value: number, prefix?: '#' | 'b') =>
+		s(value, prefix) + 12 * octaves

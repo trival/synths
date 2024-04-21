@@ -1,9 +1,9 @@
 import { el } from '@elemaudio/core'
 import { InputType } from '../input'
-import { Track } from '../utils/base'
-import { chord, midiToFc } from '../utils/music'
-import { createSequencer, melodyToSeq } from '../utils/sequence'
-import { composePolySynth } from '../utils/elemaudio'
+import { Track } from '../lib/base'
+import { chord, midiToFc } from '../lib/music'
+import { createSequencer, melodyToSeq } from '../lib/sequence'
+import { composePolySynth } from '../lib/elemaudio'
 
 const notes = [
 	...chord('C-3', 'maj'),

@@ -23,6 +23,17 @@ npm i
 npm run start
 ```
 
+## Using nim language
+
+Some tracks use the nim language, because it is nice to write DSLs with operator
+overloading and shortcuts to using elementary.
+
+To compile the track to js, please compile the `play.nim` file like so:
+
+```
+nim js -d:danger src/.../play.nim
+```
+
 Then open http://localhost:3000
 
 ## License

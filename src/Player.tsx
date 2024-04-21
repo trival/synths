@@ -3,7 +3,7 @@ import { play, pause } from 'solid-heroicons/solid'
 import { Show, createEffect, createSignal, onCleanup } from 'solid-js'
 import { Oscilloscope } from 'webaudio-oscilloscope/index.js'
 import { InputType, Inputs } from './input'
-import { Track } from './utils/base'
+import { Track } from './lib/base'
 import WebRenderer from '@elemaudio/web-renderer'
 import { MidiController } from './midi'
 

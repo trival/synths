@@ -1,5 +1,5 @@
-import { Track, reverse } from '../utils/base'
-import { combine, withBeat, beat, createSequencer } from '../utils/sequence'
+import { Track, reverse } from '../lib/base'
+import { combine, withBeat, beat, createSequencer } from '../lib/sequence'
 import { ElemNode, el } from '@elemaudio/core'
 import { InputType } from '../input'
 import {
@@ -9,13 +9,13 @@ import {
 	invert,
 	midiToFc,
 	noteToMidi,
-} from '../utils/music'
+} from '../lib/music'
 import {
 	fit1011,
 	fit1110,
 	composePolySynth,
 	timedTrigger,
-} from '../utils/elemaudio'
+} from '../lib/elemaudio'
 
 const basic: Track = {
 	text: 'Basic stereo',
@@ -604,15 +604,7 @@ const basicMidi: Track = {
 	},
 }
 
-import sequencer1 from './sequencer1'
-import loverMan from './standards/lover-man'
-import aloneTogether from './standards/alone-together'
-
-export const tracks: Track[] = [
-	sequencer1,
-	loverMan,
-	aloneTogether,
-
+export default [
 	basic,
 	basicMul,
 	basicAdd,
