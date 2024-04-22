@@ -2,9 +2,9 @@ import { Icon } from 'solid-heroicons'
 import { play, pause } from 'solid-heroicons/solid'
 import { Show, createEffect, createSignal, onCleanup } from 'solid-js'
 import { InputType, Inputs } from './input'
-import { Track } from './lib/base'
+import { Track } from '../lib/base'
 import WebRenderer from '@elemaudio/web-renderer'
-import { MidiController } from './midi'
+import { MidiController } from '../midi'
 import { Oscilloscope } from './Visualization'
 
 const ctx = new AudioContext()

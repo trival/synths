@@ -1,7 +1,7 @@
 // Transposed to Am (A minor) in Trumpet key (Bb)
 
 import { el } from '@elemaudio/core'
-import { InputType } from '../../input'
+import { InputType } from '../../ui/input'
 import { Track } from '../../lib/base'
 import { am, composePolySynth } from '../../lib/elemaudio'
 import {

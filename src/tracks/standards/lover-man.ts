@@ -1,5 +1,5 @@
 import { el } from '@elemaudio/core'
-import { InputType } from '../../input'
+import { InputType } from '../../ui/input'
 import { Track, reverse } from '../../lib/base'
 import { composePolySynth } from '../../lib/elemaudio'
 import { chord, invert, midiToFc, noteToMidi } from '../../lib/music'

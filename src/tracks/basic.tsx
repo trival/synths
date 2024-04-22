@@ -1,7 +1,7 @@
 import { Track, reverse } from '../lib/base'
 import { combine, withBeat, beat, createSequencer } from '../lib/sequence'
 import { ElemNode, el } from '@elemaudio/core'
-import { InputType } from '../input'
+import { InputType } from '../ui/input'
 import {
 	NoteName,
 	chord,
@@ -18,7 +18,7 @@ import {
 } from '../lib/elemaudio'
 
 const basic: Track = {
-	text: 'Basic stereo',
+	text: 'basic/Basic stereo',
 	inputs: [
 		{
 			type: InputType.SLIDER,
@@ -38,14 +38,14 @@ const basic: Track = {
 }
 
 const basicMul: Track = {
-	text: 'Fq mul',
+	text: 'basic/Fq mul',
 	renderAudio() {
 		return el.mul(el.cycle(440), el.cycle(441))
 	},
 }
 
 const basicAdd: Track = {
-	text: 'Fq add',
+	text: 'basic/Fq add',
 	renderAudio() {
 		const added = el.add(el.cycle(440), el.cycle(441))
 		return el.mul(added, 0.5)
@@ -53,7 +53,7 @@ const basicAdd: Track = {
 }
 
 const basicChordSin: Track = {
-	text: 'Chord cycle',
+	text: 'basic/Chord cycle',
 	renderAudio() {
 		const baseNote = 110
 		const chord = el.add(
@@ -68,7 +68,7 @@ const basicChordSin: Track = {
 }
 
 const basicChordSaw: Track = {
-	text: 'Chord saw',
+	text: 'basic/Chord saw',
 	renderAudio() {
 		const baseNote = 110
 		const chord = el.add(
@@ -83,7 +83,7 @@ const basicChordSaw: Track = {
 }
 
 const basicChordSquare: Track = {
-	text: 'Chord square',
+	text: 'basic/Chord square',
 	renderAudio() {
 		const baseNote = 110
 		const chord = el.add(
@@ -98,7 +98,7 @@ const basicChordSquare: Track = {
 }
 
 const basicEnv: Track = {
-	text: 'Gain Env',
+	text: 'basic/Gain Env',
 	renderAudio() {
 		const t = el.train(0.7)
 		const env1 = el.env(el.tau2pole(0.2), el.tau2pole(0.05), t)
@@ -109,7 +109,7 @@ const basicEnv: Track = {
 }
 
 const basicNoiseFilter: Track = {
-	text: 'seq noise Filter',
+	text: 'basic/seq noise Filter',
 	renderAudio() {
 		const t = el.le(el.phasor(6), 0.6)
 		const s = el.seq({ seq: [1, 0, 0, 1, 0, 1] }, t, 0)
@@ -121,7 +121,7 @@ const basicNoiseFilter: Track = {
 }
 
 const basicSeq: Track = {
-	text: 'seq',
+	text: 'basic/seq',
 	renderAudio() {
 		const t = el.le(el.phasor(3), 0.999)
 		const s = el.seq({ seq: [1, 0, 0, 1, 0, 1] }, t, 0)
@@ -143,7 +143,7 @@ const duration = 0.5
 const release = 1.5
 
 const basicSchedule: Track = {
-	text: 'schedule',
+	text: 'basic/schedule',
 	inputs: [
 		{
 			type: InputType.TOGGLE,
@@ -186,7 +186,7 @@ const basicSchedule: Track = {
 }
 
 const basicSynth: Track = {
-	text: 'synth',
+	text: 'basic/synth',
 	inputs: [
 		{
 			type: InputType.SLIDER,
@@ -296,7 +296,7 @@ const basicSynth: Track = {
 }
 
 const basicPulseModulation: Track = {
-	text: 'pulse modulation',
+	text: 'basic/pulse modulation',
 	inputs: [
 		{
 			type: InputType.SLIDER,
@@ -325,7 +325,7 @@ const basicPulseModulation: Track = {
 const WaveTypeOptions = ['sine', 'square', 'saw', 'triangle'] as const
 
 export const basicAmplitudeModulation: Track = {
-	text: 'amplitude modulation',
+	text: 'basic/amplitude modulation',
 	inputs: [
 		{
 			type: InputType.SELECT,
@@ -462,7 +462,7 @@ const fmSequencer = createSequencer(notes, {
 })
 
 const basicFrequencyModulation: Track = {
-	text: 'frequency modulation',
+	text: 'basic/frequency modulation',
 	inputs: [
 		{
 			type: InputType.SELECT,
@@ -529,7 +529,7 @@ const basicFrequencyModulation: Track = {
 }
 
 const basicRingModulation: Track = {
-	text: 'ring modulation',
+	text: 'basic/ring modulation',
 	inputs: [
 		{
 			type: InputType.TOGGLE,
@@ -588,7 +588,7 @@ const basicRingModulation: Track = {
 }
 
 const basicMidi: Track = {
-	text: 'midi WIP',
+	text: 'basic/midi WIP',
 	useMidi: true,
 	renderAudio(_, __, midi) {
 		console.log(midi)

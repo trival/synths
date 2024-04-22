@@ -1,4 +1,4 @@
-import { InputType } from '../../../input'
+import { InputType } from '../../../ui/input'
 import { Track } from '../../../lib/base'
 import { play } from './play'
 

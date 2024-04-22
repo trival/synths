@@ -1,5 +1,5 @@
 import { ElemNode } from '@elemaudio/core'
-import { InputDeclaration } from '../input'
+import { InputDeclaration } from '../ui/input'
 
 export interface MidiNote {
 	note: number

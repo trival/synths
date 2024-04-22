@@ -26,6 +26,13 @@ export function Oscilloscope(props: Props) {
 		canvasCtx.fillStyle = 'rgb(250, 250, 250)'
 		canvasCtx.fillRect(0, 0, width, height)
 
+		canvasCtx.lineWidth = 1.2
+		canvasCtx.strokeStyle = 'rgb(0, 50, 100)'
+		canvasCtx.beginPath()
+		canvasCtx.moveTo(0, height / 2)
+		canvasCtx.lineTo(width, height / 2)
+		canvasCtx.stroke()
+
 		const analyser = props.analyser
 		analyser.minDecibels = -90
 		analyser.maxDecibels = -10

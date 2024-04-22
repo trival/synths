@@ -78,7 +78,7 @@ export default function Container(props: Props) {
 										</button>
 									</div>
 
-									<div class="flex grow flex-col gap-y-5 overflow-y-auto bg-white px-6 pb-2">
+									<div class="flex grow flex-col gap-y-5 overflow-y-auto bg-white pb-2 pl-3 pr-6">
 										{props.sidebar}
 									</div>
 								</div>
@@ -90,7 +90,7 @@ export default function Container(props: Props) {
 
 			{/* <!-- Static sidebar for desktop --> */}
 			<div class="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
-				<div class="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6">
+				<div class="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white pl-3 pr-6">
 					{props.sidebar}
 				</div>
 			</div>

@@ -1,5 +1,5 @@
 import { el } from '@elemaudio/core'
-import { InputType } from '../input'
+import { InputType } from '../ui/input'
 import { Track } from '../lib/base'
 import { chord, midiToFc } from '../lib/music'
 import { createSequencer, melodyToSeq } from '../lib/sequence'
