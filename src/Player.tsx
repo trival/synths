@@ -1,15 +1,18 @@
 import { Icon } from 'solid-heroicons'
 import { play, pause } from 'solid-heroicons/solid'
 import { Show, createEffect, createSignal, onCleanup } from 'solid-js'
-import { Oscilloscope } from 'webaudio-oscilloscope/index.js'
 import { InputType, Inputs } from './input'
 import { Track } from './lib/base'
 import WebRenderer from '@elemaudio/web-renderer'
 import { MidiController } from './midi'
+import { Oscilloscope } from './Visualization'
 
 const ctx = new AudioContext()
 ctx.suspend()
 const core = new WebRenderer()
+
+const analyser = ctx.createAnalyser()
+analyser.connect(ctx.destination)
 
 const [isPlaying, setIsPlaying] = createSignal(false)
 function playCtx() {
@@ -41,7 +44,7 @@ async function main() {
 		numberOfOutputs: 1,
 		outputChannelCount: [2],
 	})
-	node.connect(ctx.destination)
+	node.connect(analyser)
 	setInitialized(true)
 }
 
@@ -52,8 +55,6 @@ interface TrackPlayerProps {
 }
 
 export function TrackPlayer(props: TrackPlayerProps) {
-	let canvas: HTMLCanvasElement | undefined
-
 	const [midiNotes, setMidiNotes] = createSignal<Record<number, number>>({})
 
 	function noteOn(note: number, attack: number) {
@@ -66,13 +67,6 @@ export function TrackPlayer(props: TrackPlayerProps) {
 			return newNotes
 		})
 	}
-
-	createEffect(() => {
-		if (initialized() && canvas && node) {
-			const o = new Oscilloscope(ctx, node, canvas)
-			o.start()
-		}
-	})
 
 	const [inputs, setInputs] = createSignal<number[]>([])
 
@@ -159,7 +153,14 @@ export function TrackPlayer(props: TrackPlayerProps) {
 				</button>
 				<h3 class="my-4 grow">{props.track.text}</h3>
 			</div>
-			<canvas ref={canvas} width="600" height="400" class="h-auto max-w-full" />
+			<Oscilloscope
+				analyser={analyser}
+				highres
+				isPlaying={isPlaying()}
+				width={800}
+				height={400}
+				class="h-auto max-w-full rounded-md shadow-lg"
+			/>
 			<Show when={props.track.useMidi}>
 				<MidiController onMidiNoteOff={noteOff} onMidiNoteOn={noteOn} />
 			</Show>
