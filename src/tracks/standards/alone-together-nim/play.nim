@@ -130,9 +130,8 @@ proc play* (time: float): AudioNode =
       10000.0,
     @0.8,
     (1.0 - bpm2.train) *
-      noise() *
+      noise() * 0.07 *
       (1.0 - bpm2.phasor ** 0.3) *
-      0.07 *
       (1.0 + 0.3 * -1.0 * bpm4.cycle)
   )
 

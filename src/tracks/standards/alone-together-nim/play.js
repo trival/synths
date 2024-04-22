@@ -849,7 +849,7 @@ function play_536871348(time_536871349) {
     var noise1_536871595 = el.lowpass(el.const({value: 8000.0}), el.const({value: 0.6}), el.mul(el.mul(el.pinknoise(), el.add(el.cycle((bpm_536871026 / 60.0)), 3.0)), el.const({value: 0.03})));
     var bpm2_536871596 = (bpm_536871026 / 120.0);
     var bpm4_536871597 = (bpm_536871026 / 240.0);
-    var noise2_536871598 = el.lowpass(el.mul(el.mul(el.sub(1.0, el.train(bpm2_536871596)), el.add(0.2, el.phasor(bpm2_536871596))), 10000.0), el.const({value: 0.8}), el.mul(el.mul(el.mul(el.mul(el.sub(1.0, el.train(bpm2_536871596)), el.noise()), el.sub(1.0, el.pow(el.phasor(bpm2_536871596), 0.3))), 0.07), el.add(1.0, el.mul(-0.3, el.cycle(bpm4_536871597)))));
+    var noise2_536871598 = el.lowpass(el.mul(el.mul(el.sub(1.0, el.train(bpm2_536871596)), el.add(0.2, el.phasor(bpm2_536871596))), 10000.0), el.const({value: 0.8}), el.mul(el.mul(el.mul(el.mul(el.sub(1.0, el.train(bpm2_536871596)), el.noise()), 0.07), el.sub(1.0, el.pow(el.phasor(bpm2_536871596), 0.3))), el.add(1.0, el.mul(-0.3, el.cycle(bpm4_536871597)))));
     result_536871350 = el.add(el.add(el.mul(bass_536871594, 0.8), noise1_536871595), noise2_536871598);
 
   return result_536871350;
