@@ -19,6 +19,8 @@ func saw* (fq: float): AudioNode {. importjs: "el.saw(@)" .}
 func saw* (a: AudioNode): AudioNode {. importjs: "el.saw(@)" .}
 func phasor* (fq: float): AudioNode {. importjs: "el.phasor(@)" .}
 func phasor* (fq: AudioNode): AudioNode {. importjs: "el.phasor(@)" .}
+func train* (fq: float): AudioNode {. importjs: "el.train(@)" .}
+func train* (fq: AudioNode): AudioNode {. importjs: "el.train(@)" .}
 
 # noise
 func noise* (): AudioNode {. importjs: "el.noise()" .}
@@ -47,7 +49,17 @@ func `>`* (a: AudioNode, b: AudioNode ): AudioNode {. importjs: "el.ge(@)" .}
 func `>`* (a: AudioNode, b: float ): AudioNode {. importjs: "el.ge(@)" .}
 func `>`* (a: float, b: AudioNode ): AudioNode {. importjs: "el.ge(@)" .}
 func `<=`* (a: AudioNode, b: AudioNode ): AudioNode {. importjs: "el.leq(@)" .}
+func `<=`* (a: AudioNode, b: float ): AudioNode {. importjs: "el.leq(@)" .}
+func `<=`* (a: float, b: AudioNode ): AudioNode {. importjs: "el.leq(@)" .}
 func `>=`* (a: AudioNode, b: AudioNode ): AudioNode {. importjs: "el.geq(@)" .}
+func `>=`* (a: AudioNode, b: float ): AudioNode {. importjs: "el.geq(@)" .}
+func `>=`* (a: float, b: AudioNode ): AudioNode {. importjs: "el.geq(@)" .}
+func pow* (a: AudioNode, b: AudioNode): AudioNode {. importjs: "el.pow(@)" .}
+func pow* (a: AudioNode, b: float): AudioNode {. importjs: "el.pow(@)" .}
+func pow* (a: float, b: AudioNode): AudioNode {. importjs: "el.pow(@)" .}
+func `**`* (a: AudioNode, b: AudioNode): AudioNode {. importjs: "el.pow(@)" .}
+func `**`* (a: AudioNode, b: float): AudioNode {. importjs: "el.pow(@)" .}
+func `**`* (a: float, b: AudioNode): AudioNode {. importjs: "el.pow(@)" .}
 
 # utils
 func adsr* (attack: AudioNode, decay: AudioNode, sustain: AudioNode, release: AudioNode, gate: AudioNode): AudioNode {. importjs: "el.adsr(@)" .}

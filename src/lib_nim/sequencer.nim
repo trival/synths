@@ -1,10 +1,10 @@
-import elemaudio 
+import elemaudio
 import math
 
-type 
+type
   MelodyNote*[T] = tuple
     duration: float = 0.0
-    data: T 
+    data: T
 
   Melody*[T] = seq[MelodyNote[T]]
 
@@ -40,7 +40,7 @@ type
     idx*: int
     gate*: elemaudio.AudioNode
 
-  Period = tuple 
+  Period = tuple
     start: float
     finish: float
 
@@ -55,7 +55,7 @@ type
     seqKey: string
     debug: bool
 
-    secPerBeat: float 
+    secPerBeat: float
     seqDuration: float
     noteIntervals: seq[Period]
     tracks: seq[PlayableNote[T]]
@@ -93,13 +93,13 @@ func createSequencer*[T](
   for i, note in s.notes:
     let start = note.start * secPerBeat - seqDuration
     let finish = start + note.duration * secPerBeat
-    if finish > 0.0: 
+    if finish > 0.0:
       noteIntervals.add((start, finish))
 
   var playingNotes: seq[bool] = @[]
 
   for i, note in s.notes:
-    let start = note.start * secPerBeat 
+    let start = note.start * secPerBeat
     let finish = start + note.duration * secPerBeat
     noteIntervals.add((start, finish))
     playingNotes.add(false)
@@ -141,10 +141,10 @@ proc currentNotes*[T](s: var Sequencer[T], currentTime: float): seq[PlayableNote
             s.seqKey & $nextTrackIdx
           )
           s.playingNotes[i] = true
-      else: 
+      else:
         if s.playingNotes[i]:
           s.playingNotes[i] = false
-      
+
 
     if s.debug:
       var playing: seq[int] = @[]
