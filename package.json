@@ -19,7 +19,6 @@
     "solid-heroicons": "^3.2.4",
     "solid-js": "^1.8.15",
     "solid-transition-group": "^0.2.3",
-    "webaudio-oscilloscope": "^3.2.1",
     "webmidi": "^3.1.8"
   },
   "devDependencies": {

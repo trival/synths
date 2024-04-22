@@ -54,20 +54,22 @@ var bassSeq = createSequencer(bassA, null, bpm=bpm, seqKey="bass")
 proc play* (time: float): AudioNode =
   let bassNotes = bassSeq.currentNotes time
 
-  var bass = @0.0
+  var bass = 0.0 @ "bass"
+  var bassGain = 0.0 @ "bass_gain"
+
   for n in bassNotes:
     let fq = n.data.toFrequency @ ("b" & $n.idx)
     let amount = fq * 2.41
 
-    let fq2 = fq + saw(fq + 0.5.cycle * fq * 0.015) * amount
+    let fq2 = fq + saw(fq + 0.3.cycle * fq * 0.010) * amount
 
     let sound = lowpass(fq * 2.5, @2.0, fq2.triangle * 0.5)
 
     let env = adsr(@0.3, @0.3, @0.6, @release, n.gate)
 
     bass += sound * env
+    bassGain += env
 
-  bass * 0.5
-  # (G, 2).toFrequency.cycle
+  bass / bassGain
 
 {. emit: "export {`play` as play}" .}

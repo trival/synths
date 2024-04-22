@@ -5,6 +5,8 @@ type AudioNode* = ref object
 # constants
 func `@`* (val: float): AudioNode {.importjs: "el.const({value: #})" .}
 func `@`* (val: float, key: cstring): AudioNode {. importjs: "el.const({value: #, key: #})" .}
+func `@`* (val: float, key: string): AudioNode {. inline .} =
+  `@`(val, key.cstring)
 
 # oscillators
 func cycle* (fq: float): AudioNode {. importjs: "el.cycle(@)" .}
