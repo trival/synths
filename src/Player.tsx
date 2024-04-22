@@ -30,7 +30,6 @@ function pauseCtx() {
 }
 
 const [loaded, setLoaded] = createSignal(false)
-const [initialized, setInitialized] = createSignal(false)
 
 core.on('load', function () {
 	setLoaded(true)
@@ -45,7 +44,6 @@ async function main() {
 		outputChannelCount: [2],
 	})
 	node.connect(analyser)
-	setInitialized(true)
 }
 
 main().catch(console.error)

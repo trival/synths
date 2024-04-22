@@ -33,7 +33,7 @@ export function Oscilloscope(props: Props) {
 
 		if (props.isPlaying) {
 			visualize()
-		} else if (drawVisual) {
+		} else if (drawVisual != null) {
 			cancelAnimationFrame(drawVisual)
 		}
 

@@ -443,7 +443,7 @@ function note_536870918(duration_536870919, scaleIndex_536870920) {
   var result_536870924 = {Field0: 0.0, Field1: 0};
 
     var colontmp__536871619 = duration_536870919;
-    var colontmp__536871620 = s_536870916[scaleIndex_536870920];
+    var colontmp__536871620 = s_536870916[(scaleIndex_536870920 - 1)];
     result_536870924 = nimCopy(result_536870924, {Field0: colontmp__536871619, Field1: colontmp__536871620}, NTI536870926);
 
   return result_536870924;

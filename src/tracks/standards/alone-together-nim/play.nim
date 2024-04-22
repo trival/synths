@@ -5,7 +5,7 @@ import ../../../lib_nim/sequencer
 let s = (G, 2).scale minor
 
 let null = 0
-proc note (duration: float, scaleIndex: int): MelodyNote[int] = (duration, s[scaleIndex])
+proc note (duration: float, scaleIndex: int): MelodyNote[int] = (duration, s[scaleIndex - 1])
 proc sharp (n: MelodyNote[int]): MelodyNote[int] = (n[0], n[1] + 1)
 proc brk (duration: float): MelodyNote[int] = (duration, null)
 
@@ -68,5 +68,6 @@ proc play* (time: float): AudioNode =
     bass += sound * env
 
   bass * 0.5
+  # (G, 2).toFrequency.cycle
 
 {. emit: "export {`play` as play}" .}
