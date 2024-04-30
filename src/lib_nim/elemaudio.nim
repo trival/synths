@@ -25,7 +25,7 @@ func train* (fq: AudioNode): AudioNode {. importjs: "el.train(@)" .}
 # noise
 func noise* (): AudioNode {. importjs: "el.noise()" .}
 func pink* (n: AudioNode): AudioNode {. importjs: "el.pink(@)" .}
-func pinkNoise* (): AudioNode {. importjs: "el.pinknoise()" .}
+func pinknoise* (): AudioNode {. importjs: "el.pinknoise()" .}
 
 # operators
 func `+`* (a: AudioNode, b: AudioNode ): AudioNode {. importjs: "el.add(@)" .}

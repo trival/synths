@@ -96,6 +96,7 @@ let bpm = 105.0
 let release = 2.5
 
 var bassSeq = createSequencer(bassSong.toSequence(bassNull), bassNull, bpm=bpm, seqKey="bass")
+let bps = bpm / 60.0
 
 proc play* (time: float): AudioNode =
   let bassNotes = bassSeq.currentNotes time
@@ -118,21 +119,21 @@ proc play* (time: float): AudioNode =
   let noise1 = lowpass(
     @8000.0,
     @0.6,
-    pinkNoise() * (cycle(bpm / 60.0) + 3.0) *  @0.03
+    pinkNoise() * (bps.cycle + 3.0) * @0.03
   )
 
-  let bpm2 = bpm / (60.0 * 2.0)
-  let bpm4 = bpm / (60.0 * 4.0)
+  let bps2 = bps / 2.0
+  let bps4 = bps / 4.0
 
   let noise2 = lowpass(
-    (1.0 - bpm2.train) *
-      (0.2 + bpm2.phasor) *
+    (1.0 - bps2.train) *
+      (0.2 + bps2.phasor) *
       10000.0,
     @0.8,
-    (1.0 - bpm2.train) *
+    (1.0 - bps2.train) *
       noise() * 0.07 *
-      (1.0 - bpm2.phasor ** 0.3) *
-      (1.0 + 0.3 * -1.0 * bpm4.cycle)
+      (1.0 - bps2.phasor ** 0.3) *
+      (1.0 + 0.3 * -1.0 * bps4.cycle)
   )
 
   bass * 0.8 + noise1 + noise2
