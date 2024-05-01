@@ -1,6 +1,6 @@
 import { ElemNode } from '@elemaudio/core'
-import { timedTrigger } from './elemaudio'
-import { rotate } from './base'
+import { rotate } from './base.js'
+import { timedTrigger } from './elemaudio.js'
 
 export interface MelodyNote<T> {
 	duration: number

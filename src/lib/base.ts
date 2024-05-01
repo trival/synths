@@ -1,5 +1,5 @@
 import { ElemNode } from '@elemaudio/core'
-import { InputDeclaration } from '../ui/input'
+import { InputDeclaration } from '../ui/input.jsx'
 
 export interface MidiNote {
 	note: number
@@ -10,9 +10,11 @@ export interface Track {
 	text: string
 	inputs?: InputDeclaration[]
 	useMidi?: boolean
+	withKeyboardStartingAt?: number
 	renderAudio: (
 		inputVals: number[],
 		ctx: AudioContext,
+		keysPressed: number[],
 		midi: MidiNote[],
 	) => ElemNode | ElemNode[]
 }

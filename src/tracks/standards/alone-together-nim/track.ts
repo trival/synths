@@ -1,6 +1,6 @@
-import { InputType } from '../../../ui/input'
-import { Track } from '../../../lib/base'
-import { play } from './play'
+import { Track } from '../../../lib/base.js'
+import { InputType } from '../../../ui/input.jsx'
+import { play } from './play.js'
 
 export default {
 	text: 'Standards/Alone Together (nim)',

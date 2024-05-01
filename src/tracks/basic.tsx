@@ -1,7 +1,11 @@
-import { Track, reverse } from '../lib/base'
-import { combine, withBeat, beat, createSequencer } from '../lib/sequence'
 import { ElemNode, el } from '@elemaudio/core'
-import { InputType } from '../ui/input'
+import { Track, reverse } from '../lib/base.js'
+import {
+	composePolySynth,
+	fit1011,
+	fit1110,
+	timedTrigger,
+} from '../lib/elemaudio.js'
 import {
 	NoteName,
 	chord,
@@ -9,13 +13,9 @@ import {
 	invert,
 	midiToFc,
 	noteToMidi,
-} from '../lib/music'
-import {
-	fit1011,
-	fit1110,
-	composePolySynth,
-	timedTrigger,
-} from '../lib/elemaudio'
+} from '../lib/music.js'
+import { beat, combine, createSequencer, withBeat } from '../lib/sequence.js'
+import { InputType } from '../ui/input.jsx'
 
 const basic: Track = {
 	text: 'basic/Basic stereo',
@@ -590,12 +590,29 @@ const basicRingModulation: Track = {
 const basicMidi: Track = {
 	text: 'basic/midi WIP',
 	useMidi: true,
-	renderAudio(_, __, midi) {
+	renderAudio(_, __, ___, midi) {
 		console.log(midi)
 		const notes = midi.map((n) => {
 			const fc = midiToFc(n.note)
 			return {
 				env: el.adsr(0.1, 0.2, 0.6, 1.5, n.attack),
+				sound: el.cycle(fc),
+			}
+		})
+
+		return el.mul(composePolySynth(notes), 0.7)
+	},
+}
+
+const basicKeyboard: Track = {
+	text: 'basic/keyboard',
+	withKeyboardStartingAt: 50,
+	renderAudio(_, __, keysPressed) {
+		const notes = keysPressed.map((key) => {
+			const gate = key === 0 ? 0 : 1
+			const fc = midiToFc(key)
+			return {
+				env: el.adsr(0.1, 0.2, 0.6, 1.5, gate),
 				sound: el.cycle(fc),
 			}
 		})
@@ -621,4 +638,5 @@ export default [
 	basicFrequencyModulation,
 	basicRingModulation,
 	basicMidi,
+	basicKeyboard,
 ]

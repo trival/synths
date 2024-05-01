@@ -1,9 +1,8 @@
 // Transposed to Am (A minor) in Trumpet key (Bb)
 
 import { el } from '@elemaudio/core'
-import { InputType } from '../../ui/input'
-import { Track } from '../../lib/base'
-import { am, composePolySynth } from '../../lib/elemaudio'
+import { Track } from '../../lib/base.js'
+import { am, composePolySynth } from '../../lib/elemaudio.js'
 import {
 	ScaleType,
 	chord,
@@ -11,13 +10,14 @@ import {
 	midiToFc,
 	octaveTransposedScale,
 	scale,
-} from '../../lib/music'
+} from '../../lib/music.js'
 import {
 	Melody,
 	createSequencer,
 	melodyNote,
 	melodyToSeq,
-} from '../../lib/sequence'
+} from '../../lib/sequence.js'
+import { InputType } from '../../ui/input.jsx'
 
 // === A === (2 times)
 

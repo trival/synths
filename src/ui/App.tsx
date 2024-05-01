@@ -1,9 +1,9 @@
 import { Show, createEffect, createSignal } from 'solid-js'
-import { Track } from '../lib/base'
-import { TrackPlayer } from './Player'
-import trackData from '../tracks/tracks'
-import Container from './Container'
-import { TrackMenu } from './TrackMenu'
+import { Track } from '../lib/base.js'
+import trackData from '../tracks/tracks.jsx'
+import Container from './Container.jsx'
+import { TrackPlayer } from './Player.jsx'
+import { TrackMenu } from './TrackMenu.jsx'
 
 function setTrack(track: Track) {
 	window.history.replaceState({}, '', `?${paramName}=${track.text}`)

@@ -1,5 +1,5 @@
-import { For, createSignal, Show } from 'solid-js'
-import { Track } from '../lib/base'
+import { For, Show, createSignal } from 'solid-js'
+import { Track } from '../lib/base.js'
 
 interface MenuItem {
 	track: Track

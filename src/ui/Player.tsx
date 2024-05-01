@@ -1,11 +1,11 @@
-import { Icon } from 'solid-heroicons'
-import { play, pause } from 'solid-heroicons/solid'
-import { Show, createEffect, createSignal, onCleanup } from 'solid-js'
-import { InputType, Inputs } from './input'
-import { Track } from '../lib/base'
 import WebRenderer from '@elemaudio/web-renderer'
-import { MidiController } from '../midi'
-import { Oscilloscope } from './Visualization'
+import { Icon } from 'solid-heroicons'
+import { pause, play } from 'solid-heroicons/solid'
+import { Show, createEffect, createSignal, onCleanup } from 'solid-js'
+import { Track } from '../lib/base.js'
+import { MidiController } from '../midi.jsx'
+import { Oscilloscope } from './Visualization.jsx'
+import { InputType, Inputs } from './input.jsx'
 
 const ctx = new AudioContext()
 ctx.suspend()
@@ -50,6 +50,49 @@ main().catch(console.error)
 
 interface TrackPlayerProps {
 	track: Track
+}
+
+const keyCodeMap = {
+	Digit1: 16, //
+	Digit2: 17, //
+	Digit3: 18, //
+	Digit4: 19, //
+	Digit5: 20, //
+	Digit6: 21, //
+	Digit7: 22, //
+	Digit8: 23, //
+	Digit9: 24, //
+	Digit0: 25, //
+	KeyQ: 11, //
+	KeyW: 12, //
+	KeyE: 13, //
+	KeyR: 14, //
+	KeyT: 15, //
+	KeyY: 16, //
+	KeyU: 17, //
+	KeyI: 18, //
+	KeyO: 19, //
+	KeyP: 20, //
+	KeyA: 6, //
+	KeyS: 7, //
+	KeyD: 8, //
+	KeyF: 9, //
+	KeyG: 10, //
+	KeyH: 11, //
+	KeyJ: 12, //
+	KeyK: 13, //
+	KeyL: 14, //
+	Semicolon: 15, //
+	KeyZ: 1, //
+	KeyX: 2, //
+	KeyC: 3, //
+	KeyV: 4, //
+	KeyB: 5, //
+	KeyN: 6, //
+	KeyM: 7, //
+	Comma: 8, //
+	Period: 9, //
+	Slash: 10, //
 }
 
 export function TrackPlayer(props: TrackPlayerProps) {
@@ -104,6 +147,51 @@ export function TrackPlayer(props: TrackPlayerProps) {
 		clearInterval(i)
 	})
 
+	const [pressedKeys, setPressedKeys] = createSignal([0, 0, 0, 0, 0])
+
+	const pressedMidiKeys = () =>
+		props.track.withKeyboardStartingAt
+			? pressedKeys().map((k) =>
+					k === 0 ? 0 : k + props.track.withKeyboardStartingAt!,
+				)
+			: [0, 0, 0, 0, 0]
+
+	function onKeydown(e: KeyboardEvent) {
+		if (e.code in keyCodeMap) {
+			const note = keyCodeMap[e.code as keyof typeof keyCodeMap]
+			const keys = [...pressedKeys()]
+			if (!keys.includes(note)) {
+				const idx = keys.indexOf(0)
+				if (idx !== -1) {
+					keys[idx] = note
+					setPressedKeys(keys)
+				}
+			}
+		}
+	}
+
+	function onKeyup(e: KeyboardEvent) {
+		if (e.code in keyCodeMap) {
+			const note = keyCodeMap[e.code as keyof typeof keyCodeMap]
+			const keys = [...pressedKeys()]
+			const idx = keys.indexOf(note)
+			if (idx !== -1) {
+				keys[idx] = 0
+				setPressedKeys(keys)
+			}
+		}
+	}
+
+	createEffect(() => {
+		if (props.track.withKeyboardStartingAt) {
+			window.addEventListener('keydown', onKeydown)
+			window.addEventListener('keyup', onKeyup)
+		} else {
+			window.removeEventListener('keydown', onKeydown)
+			window.removeEventListener('keyup', onKeyup)
+		}
+	})
+
 	createEffect(() => {
 		if (loaded()) {
 			const t = props.track
@@ -114,6 +202,7 @@ export function TrackPlayer(props: TrackPlayerProps) {
 				const el = t.renderAudio(
 					is,
 					ctx,
+					pressedMidiKeys(),
 					Object.entries(midiNotes()).map(([note, attack]) => ({
 						note: Number(note),
 						attack,

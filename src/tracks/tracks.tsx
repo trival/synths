@@ -1,8 +1,8 @@
-import basicTracks from './basic'
-import sequencer1 from './sequencer1'
-import loverMan from './standards/lover-man'
-import aloneTogether from './standards/alone-together'
-import aloneTogetherNim from './standards/alone-together-nim/track'
+import basicTracks from './basic.jsx'
+import sequencer1 from './sequencer1.js'
+import aloneTogetherNim from './standards/alone-together-nim/track.js'
+import aloneTogether from './standards/alone-together.js'
+import loverMan from './standards/lover-man.js'
 
 export default [
 	sequencer1,

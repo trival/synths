@@ -1,9 +1,9 @@
 import { el } from '@elemaudio/core'
-import { InputType } from '../../ui/input'
-import { Track, reverse } from '../../lib/base'
-import { composePolySynth } from '../../lib/elemaudio'
-import { chord, invert, midiToFc, noteToMidi } from '../../lib/music'
-import { beat, combine, createSequencer, withBeat } from '../../lib/sequence'
+import { Track, reverse } from '../../lib/base.js'
+import { composePolySynth } from '../../lib/elemaudio.js'
+import { chord, invert, midiToFc, noteToMidi } from '../../lib/music.js'
+import { beat, combine, createSequencer, withBeat } from '../../lib/sequence.js'
+import { InputType } from '../../ui/input.jsx'
 
 // === A === (2 times)
 
