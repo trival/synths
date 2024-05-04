@@ -3,7 +3,7 @@ import { play } from './play.js'
 
 export default {
 	text: 'Instruments/Timpani (use keyboard)',
-	withKeyboardStartingAt: 50,
+	withKeyboardStartingAt: 40,
 
 	renderAudio(_, __, keys) {
 		return play(keys) as any

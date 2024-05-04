@@ -16,7 +16,7 @@ let decay2 = 7.5
 let decay3 = 9.0
 let decay4 = 8.5
 
-let ampNoise = 0.1
+let ampNoise = 0.5
 let decayNoise = 2.0
 
 proc env (decay: float, gate: AudioNode): AudioNode =
@@ -42,7 +42,7 @@ proc timpani (baseFq: AudioNode, gate: AudioNode): AudioNode =
   let envNoise = env(decayNoise, gate)
   let noiseSig = noise() * envNoise * ampNoise
 
-  sig1 + sig2 + sig3 + sig4 + noiseSig
+  (sig1 + sig2 + sig3 + sig4 + noiseSig) / 3.0
 
 var lastNote = [0, 0, 0, 0, 0]
 

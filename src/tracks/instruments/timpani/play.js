@@ -463,7 +463,7 @@ function timpani_536870934(baseFq_536870935, gate_536870936) {
     var sig4_536870949 = el.mul(el.mul(el.cycle(fq4_536870941), env4_536870945), amp4_536870922);
     var envNoise_536870950 = env_536870929(decayNoise_536870928, gate_536870936);
     var noiseSig_536870951 = el.mul(el.mul(el.noise(), envNoise_536870950), ampNoise_536870927);
-    result_536870937 = el.add(el.add(el.add(el.add(sig1_536870946, sig2_536870947), sig3_536870948), sig4_536870949), noiseSig_536870951);
+    result_536870937 = el.div(el.add(el.add(el.add(el.add(sig1_536870946, sig2_536870947), sig3_536870948), sig4_536870949), noiseSig_536870951), 3.0);
 
   return result_536870937;
 
@@ -526,7 +526,7 @@ var decay1_536870923 = 4.5;
 var decay2_536870924 = 7.5;
 var decay3_536870925 = 9.0;
 var decay4_536870926 = 8.5;
-var ampNoise_536870927 = 0.1;
+var ampNoise_536870927 = 0.5;
 var decayNoise_536870928 = 2.0;
 var lastNote_536870952 = [new Int32Array([0, 0, 0, 0, 0])];
 export {play_536870953 as play}
