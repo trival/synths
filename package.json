@@ -8,15 +8,14 @@
     "build": "vite build",
     "serve": "vite preview",
     "types": "tsc --noEmit",
-    "update": "ncu -i",
-    "watch-nim": "node watch-nim.js"
+    "watch-nim": "node watch-nim.js",
+    "update": "ncu -i"
   },
   "license": "MIT",
   "dependencies": {
     "@elemaudio/core": "^3.2.1",
     "@elemaudio/web-renderer": "^3.2.3",
     "clsx": "^2.1.1",
-    "npm-check-updates": "^16.14.20",
     "solid-heroicons": "^3.2.4",
     "solid-js": "^1.8.17",
     "solid-transition-group": "^0.2.3",
@@ -30,6 +29,7 @@
     "chokidar": "^3.6.0",
     "eslint": "^8.57.0",
     "eslint-plugin-solid": "^0.14.0",
+    "npm-check-updates": "^16.14.20",
     "postcss": "^8.4.38",
     "prettier": "^3.2.5",
     "prettier-plugin-tailwindcss": "^0.5.14",

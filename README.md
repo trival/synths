@@ -26,10 +26,10 @@ Then open http://localhost:3000
 
 ## Using nim language
 
-Some tracks use the nim language, because it is nice to write DSLs with operator
-overloading and other shortcuts to using elementary.
+Some tracks use the [nim language](https://nim-lang.org/), because it is nice to
+write DSLs with operator overloading and other shortcuts to using elementary.
 
-To compile the nim tracks to js, please compile the `play.nim` file like so:
+To compile the nim tracks to js, please compile the file `play.nim` like so:
 
 ```
 nim js -d:danger src/.../play.nim
