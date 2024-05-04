@@ -604,13 +604,17 @@ const basicMidi: Track = {
 	},
 }
 
+const lastFqs: number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0]
 const basicKeyboard: Track = {
 	text: 'basic/keyboard',
 	withKeyboardStartingAt: 50,
 	renderAudio(_, __, keysPressed) {
-		const notes = keysPressed.map((key) => {
-			const gate = key === 0 ? 0 : 1
-			const fc = midiToFc(key)
+		const notes = keysPressed.map((key, i) => {
+			if (key > 0) {
+				lastFqs[i] = midiToFc(key)
+			}
+			const gate = el.const({ value: key > 0 ? 1 : 0, key: 'gate' + i })
+			const fc = el.const({ value: lastFqs[i], key: 'fc' + i })
 			return {
 				env: el.adsr(0.1, 0.2, 0.6, 1.5, gate),
 				sound: el.cycle(fc),
