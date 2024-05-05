@@ -483,15 +483,15 @@ function newSeq_33556919(len_33556921) {
 
 }
 
-function timedTrigger_671088802(start_671088803, dur_671088804, key_671088805) {
-  var result_671088806 = null;
+function timedTrigger_671088808(start_671088809, dur_671088810, key_671088811) {
+  var result_671088812 = null;
 
-    var t_671088807 = el.div(el.time(), el.sr());
-    var startNode_671088808 = el.const({value: start_671088803, key: toJSStr((key_671088805 || []).concat([95,115,116,97,114,116] || []))});
-    var endNode_671088809 = el.const({value: (start_671088803 + dur_671088804), key: toJSStr((key_671088805 || []).concat([95,101,110,100] || []))});
-    result_671088806 = el.mul(el.ge(t_671088807, startNode_671088808), el.le(t_671088807, endNode_671088809));
+    var t_671088813 = el.div(el.time(), el.sr());
+    var startNode_671088814 = el.const({value: start_671088809, key: toJSStr((key_671088811 || []).concat([95,115,116,97,114,116] || []))});
+    var endNode_671088815 = el.const({value: (start_671088809 + dur_671088810), key: toJSStr((key_671088811 || []).concat([95,101,110,100] || []))});
+    result_671088812 = el.mul(el.ge(t_671088813, startNode_671088814), el.le(t_671088813, endNode_671088815));
 
-  return result_671088806;
+  return result_671088812;
 
 }
 
@@ -609,7 +609,7 @@ function createSequencer_536871109(s_536871111, initData_536871112, trackCount_5
           Label9: while (true) {
           if (!(i_536871715 < trackCount_536871113)) break Label9;
             i_536871225 = i_536871715;
-            tracks_536871220.push({data: initData_536871112, idx: i_536871225, gate: timedTrigger_671088802(0.0, 0.0, (seqKey_536871117 || []).concat(HEX24_369098760(i_536871225) || []))});;
+            tracks_536871220.push({data: initData_536871112, idx: i_536871225, gate: timedTrigger_671088808(0.0, 0.0, (seqKey_536871117 || []).concat(HEX24_369098760(i_536871225) || []))});;
             i_536871715 += 1;
           }
       };
@@ -749,7 +749,7 @@ function currentNotes_536871374(s_536871376, currentTime_536871377) {
             var start_536871424 = (n_536871422.Field0 + (currentLoop_536871379 * s_536871376.seqDuration));
             var nextTrackIdx_536871451 = getNextTrackIdx_536871447(s_536871376);
             s_536871376.tracks[nextTrackIdx_536871451].data = note_536871423.data;
-            s_536871376.tracks[nextTrackIdx_536871451].gate = timedTrigger_671088802(start_536871424, (note_536871423.duration * s_536871376.secPerBeat), (s_536871376.seqKey || []).concat(HEX24_369098760(nextTrackIdx_536871451) || []));
+            s_536871376.tracks[nextTrackIdx_536871451].gate = timedTrigger_671088808(start_536871424, (note_536871423.duration * s_536871376.secPerBeat), (s_536871376.seqKey || []).concat(HEX24_369098760(nextTrackIdx_536871451) || []));
             s_536871376.playingNotes[i_536871421] = true;
             }
             
@@ -814,6 +814,15 @@ function toFrequency_687865986(midi_687865987) {
 
 }
 
+function lowpass_671088795(sig_671088796, fq_671088797, q_671088798) {
+  var result_671088799 = null;
+
+    return el.lowpass(fq_671088797, q_671088798, sig_671088796)
+
+  return result_671088799;
+
+}
+
 function HEX2BHEX3D_671088705(a_671088706, a_671088706_Idx, b_671088707) {
     a_671088706[a_671088706_Idx] = el.add(a_671088706[a_671088706_Idx], b_671088707);
 
@@ -837,7 +846,7 @@ function play_536871349(time_536871350) {
             var fq_536871590 = HEX40_671088648(toFrequency_687865986(n_536871589.data), ([98] || []).concat(HEX24_369098760(n_536871589.idx) || []));
             var amount_536871591 = el.mul(fq_536871590, 2.41);
             var fq2_536871592 = el.add(fq_536871590, el.mul(el.saw(el.add(fq_536871590, el.mul(el.mul(el.cycle(0.3), fq_536871590), 0.01))), amount_536871591));
-            var sound_536871593 = el.lowpass(el.mul(fq_536871590, 2.5), el.const({value: 2.0}), el.mul(el.triangle(fq2_536871592), 0.5));
+            var sound_536871593 = lowpass_671088795(el.triangle(el.mul(fq2_536871592, 0.5)), el.mul(fq_536871590, 2.5), el.const({value: 2.0}));
             var env_536871594 = el.adsr(el.const({value: 0.3}), el.const({value: 0.3}), el.const({value: 0.6}), el.const({value: release_536871027}), n_536871589.gate);
             HEX2BHEX3D_671088705(bassSound_536871567, 0, el.mul(sound_536871593, env_536871594));
             HEX2BHEX3D_671088705(bassGain_536871568, 0, env_536871594);
@@ -846,10 +855,10 @@ function play_536871349(time_536871350) {
       };
     };
     var bass_536871595 = el.div(bassSound_536871567[0], bassGain_536871568[0]);
-    var noise1_536871596 = el.lowpass(el.const({value: 8000.0}), el.const({value: 0.6}), el.mul(el.mul(el.pinknoise(), el.add(el.cycle(bps_536871348), 3.0)), el.const({value: 0.03})));
+    var noise1_536871596 = lowpass_671088795(el.mul(el.mul(el.pinknoise(), el.add(el.cycle(bps_536871348), 3.0)), el.const({value: 0.03})), el.const({value: 8000.0}), el.const({value: 0.6}));
     var bps2_536871597 = (bps_536871348 / 2.0);
     var bps4_536871598 = (bps_536871348 / 4.0);
-    var noise2_536871599 = el.lowpass(el.mul(el.mul(el.sub(1.0, el.train(bps2_536871597)), el.add(0.2, el.phasor(bps2_536871597))), 10000.0), el.const({value: 0.8}), el.mul(el.mul(el.mul(el.mul(el.sub(1.0, el.train(bps2_536871597)), el.noise()), 0.07), el.sub(1.0, el.pow(el.phasor(bps2_536871597), 0.3))), el.add(1.0, el.mul(-0.3, el.cycle(bps4_536871598)))));
+    var noise2_536871599 = lowpass_671088795(el.mul(el.mul(el.mul(el.mul(el.sub(1.0, el.train(bps2_536871597)), el.noise()), 0.07), el.sub(1.0, el.pow(el.phasor(bps2_536871597), 0.3))), el.add(1.0, el.mul(-0.3, el.cycle(bps4_536871598)))), el.mul(el.mul(el.sub(1.0, el.train(bps2_536871597)), el.add(0.2, el.phasor(bps2_536871597))), 10000.0), el.const({value: 0.8}));
     result_536871351 = el.add(el.add(el.mul(bass_536871595, 0.8), noise1_536871596), noise2_536871599);
 
   return result_536871351;

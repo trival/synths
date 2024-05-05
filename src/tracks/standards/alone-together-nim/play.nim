@@ -108,7 +108,7 @@ proc play* (time: float): AudioNode =
     let fq = n.data.toFrequency @ ("b" & $n.idx)
     let amount = fq * 2.41
     let fq2 = fq + saw(fq + 0.3.cycle * fq * 0.010) * amount
-    let sound = lowpass(fq * 2.5, @2.0, fq2.triangle * 0.5)
+    let sound = triangle(fq2 * 0.5).lowpass(fq * 2.5, @2.0)
     let env = adsr(@0.3, @0.3, @0.6, @release, n.gate)
 
     bassSound += sound * env
@@ -116,25 +116,21 @@ proc play* (time: float): AudioNode =
 
   let bass = bassSound / bassGain
 
-  let noise1 = lowpass(
-    @8000.0,
-    @0.6,
-    pinkNoise() * (bps.cycle + 3.0) * @0.03
-  )
+  let noise1 = (pinkNoise() * (bps.cycle + 3.0) * @0.03)
+    .lowpass(@8000.0, @0.6)
 
   let bps2 = bps / 2.0
   let bps4 = bps / 4.0
 
-  let noise2 = lowpass(
-    (1.0 - bps2.train) *
-      (0.2 + bps2.phasor) *
-      10000.0,
-    @0.8,
-    (1.0 - bps2.train) *
+  let noise2 = ((1.0 - bps2.train) *
       noise() * 0.07 *
       (1.0 - bps2.phasor ** 0.3) *
-      (1.0 + 0.3 * -1.0 * bps4.cycle)
-  )
+      (1.0 + 0.3 * -1.0 * bps4.cycle))
+    .lowpass(
+      (1.0 - bps2.train) *
+        (0.2 + bps2.phasor) *
+        10000.0,
+      @0.8)
 
   bass * 0.8 + noise1 + noise2
 

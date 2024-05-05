@@ -1,6 +1,7 @@
 import ../../../lib_nim/elemaudio
 import ../../../lib_nim/music
 
+
 let fqFactor1 = 1.0
 let fqFactor2 = 1.5
 let fqFactor3 = 1.98
@@ -11,13 +12,15 @@ let amp2 = 0.8
 let amp3 = 0.6
 let amp4 = 0.2
 
-let decay1 = 4.5
-let decay2 = 7.5
-let decay3 = 9.0
-let decay4 = 8.5
+let decayFactor = 0.25
+
+let decay1 = 4.5 * decayFactor
+let decay2 = 7.5 * decayFactor
+let decay3 = 9.0 * decayFactor
+let decay4 = 8.5 * decayFactor
 
 let ampNoise = 0.5
-let decayNoise = 2.0
+let decayNoise = 2.0 * decayFactor
 
 proc env (decay: float, gate: AudioNode): AudioNode =
   let d = @decay
@@ -34,15 +37,21 @@ proc timpani (baseFq: AudioNode, gate: AudioNode): AudioNode =
   let env3 = env(decay3, gate)
   let env4 = env(decay4, gate)
 
-  let sig1 = fq1.cycle * env1 * amp1
-  let sig2 = fq2.cycle * env2 * amp2
-  let sig3 = fq3.cycle * env3 * amp3
-  let sig4 = fq4.cycle * env4 * amp4
+  let sig1 = fq1.triangle.lowPass(fq1 * 1.0, @1.0) * env1 * amp1
+  let sig2 = fq2.triangle.lowPass(fq2 * 1.0, @1.0) * env2 * amp2
+  let sig3 = fq3.triangle.lowPass(fq3 * 1.0, @1.0) * env3 * amp3
+  let sig4 = fq4.triangle.lowPass(fq4 * 1.0, @1.0) * env4 * amp4
 
   let envNoise = env(decayNoise, gate)
-  let noiseSig = noise() * envNoise * ampNoise
+  let noiseSound =
+    (100.0.square * 87.0.square)
+    # pinknoise()
+    .highpass(baseFq * 0.5, @1.0)
+    .lowpass(baseFq * 8.0, @2.0)
+  let noiseSig = noiseSound * envNoise * ampNoise
 
   (sig1 + sig2 + sig3 + sig4 + noiseSig) / 3.0
+  # ( noiseSig) / 3.0
 
 var lastNote = [0, 0, 0, 0, 0]
 

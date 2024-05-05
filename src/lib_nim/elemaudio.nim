@@ -63,7 +63,10 @@ func `**`* (a: float, b: AudioNode): AudioNode {. importjs: "el.pow(@)" .}
 
 # utils
 func adsr* (attack: AudioNode, decay: AudioNode, sustain: AudioNode, release: AudioNode, gate: AudioNode): AudioNode {. importjs: "el.adsr(@)" .}
-func lowpass* (freq: AudioNode, q: AudioNode, sig: AudioNode): AudioNode {. importjs: "el.lowpass(@)" .}
+func lowpass* (sig: AudioNode, fq: AudioNode, q: AudioNode, ): AudioNode =
+   {. emit: "return el.lowpass(`fq`, `q`, `sig`)" .}
+func highpass* (sig: AudioNode, fq: AudioNode, q: AudioNode, ): AudioNode =
+  {. emit: "return el.highpass(`fq`, `q`, `sig`)" .}
 func sr* (): AudioNode {. importjs: "el.sr()" .}
 func sampleRate* (): AudioNode {. importjs: "el.sr()" .}
 func time* (): AudioNode {. importjs: "el.time()" .}
