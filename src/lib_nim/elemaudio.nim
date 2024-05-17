@@ -70,6 +70,7 @@ func highpass* (sig: AudioNode, fq: AudioNode, q: AudioNode, ): AudioNode =
 func sr* (): AudioNode {. importjs: "el.sr()" .}
 func sampleRate* (): AudioNode {. importjs: "el.sr()" .}
 func time* (): AudioNode {. importjs: "el.time()" .}
+func max* (a: AudioNode, b: AudioNode): AudioNode {. importjs: "el.max(@)" .}
 
 # helpers
 

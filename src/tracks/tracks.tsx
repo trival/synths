@@ -4,6 +4,7 @@ import aloneTogetherNim from './standards/alone-together-nim/track.js'
 import aloneTogether from './standards/alone-together.js'
 import loverMan from './standards/lover-man.js'
 import timpani from './instruments/timpani/track.js'
+import bassdrum from './instruments/bassdrum/track.js'
 
 export default [
 	sequencer1,
@@ -12,6 +13,7 @@ export default [
 	aloneTogetherNim,
 
 	timpani,
+	bassdrum,
 
 	...basicTracks,
 ]
