@@ -361,10 +361,10 @@ function bassdrum_536870914(gate_536870915) {
     var noiseDuration_536870918 = el.const({value: 0.01});
     var env_536870919 = el.adsr(el.const({value: 0.01}), duration_536870917, el.const({value: 0.0}), duration_536870917, gate_536870915);
     var envNoise_536870920 = el.adsr(el.const({value: 0.01}), noiseDuration_536870918, el.const({value: 0.0}), noiseDuration_536870918, gate_536870915);
-    var fq_536870921 = el.add(50.0, el.mul(env_536870919, 100.0));
-    var spectrum_536870922 = highpass_671088800(lowpass_671088795(el.cycle(el.add(fq_536870921, el.mul(400.0, el.cycle(45.0)))), el.add(fq_536870921, 45.0), el.const({value: 1.0})), el.const({value: 45.0}), el.const({value: 1.0}));
+    var fq_536870921 = el.add(22.5, el.mul(env_536870919, 90.0));
+    var spectrum_536870922 = highpass_671088800(lowpass_671088795(el.cycle(el.add(fq_536870921, el.mul(450.0, el.cycle(45.0)))), el.add(fq_536870921, 45.0), el.const({value: 1.0})), el.const({value: 45.0}), el.const({value: 1.0}));
     var noise_536870923 = highpass_671088800(lowpass_671088795(el.noise(), el.add(800.0, el.mul(8000.0, envNoise_536870920)), el.const({value: 1.0})), el.const({value: 400.0}), el.const({value: 1.0}));
-    result_536870916 = el.mul(el.mul(el.add(el.mul(noise_536870923, 0.03), spectrum_536870922), env_536870919), 0.5);
+    result_536870916 = el.mul(el.mul(el.add(el.mul(noise_536870923, 0.015), spectrum_536870922), env_536870919), 0.8);
 
   return result_536870916;
 

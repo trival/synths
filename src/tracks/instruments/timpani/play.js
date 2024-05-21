@@ -202,21 +202,6 @@ function mnewString(len_33557003) {
   
 }
 import { el } from "@elemaudio/core" 
-var fqFactor1_872415234 = 1.0;
-var fqFactor2_872415235 = 1.5;
-var fqFactor3_872415236 = 1.98;
-var fqFactor4_872415237 = 2.44;
-var amp1_872415238 = 1.0;
-var amp2_872415239 = 0.8;
-var amp3_872415240 = 0.6;
-var amp4_872415241 = 0.2;
-var ampNoise_872415242 = 0.5;
-var decayFactor_872415243 = 0.25;
-var decay1_872415244 = (4.5 * decayFactor_872415243);
-var decay2_872415245 = (7.5 * decayFactor_872415243);
-var decay3_872415246 = (9.0 * decayFactor_872415243);
-var decay4_872415247 = (8.5 * decayFactor_872415243);
-var decayNoise_872415248 = (2.0 * decayFactor_872415243);
 
 function newSeq_33556919(len_33556921) {
   var result_33556922 = [];
@@ -302,52 +287,52 @@ function addFloat_33557563(result_33557565, result_33557565_Idx, x_33557566) {
   
 }
 
-function addQuoted_536871052(s_536871054, s_536871054_Idx, x_536871055) {
-    addFloat_33557563(s_536871054, s_536871054_Idx, x_536871055);
+function addQuoted_536871090(s_536871092, s_536871092_Idx, x_536871093) {
+    addFloat_33557563(s_536871092, s_536871092_Idx, x_536871093);
 
   
 }
 
-function collectionToString_536871014(x_536871016, prefix_536871017, separator_536871018, suffix_536871019) {
-  var result_536871020 = [[]];
+function collectionToString_536871052(x_536871054, prefix_536871055, separator_536871056, suffix_536871057) {
+  var result_536871058 = [[]];
 
-    result_536871020[0] = nimCopy(null, prefix_536871017, NTI33554449);
-    var firstElement_536871021 = true;
+    result_536871058[0] = nimCopy(null, prefix_536871055, NTI33554449);
+    var firstElement_536871059 = true;
     Label1: {
-      var value_536871048 = 0.0;
-      var i_536871104 = 0;
+      var value_536871086 = 0.0;
+      var i_536871142 = 0;
       Label2: {
           Label3: while (true) {
           if (!true) break Label3;
-            value_536871048 = x_536871016[i_536871104];
-            if (firstElement_536871021) {
-            firstElement_536871021 = false;
+            value_536871086 = x_536871054[i_536871142];
+            if (firstElement_536871059) {
+            firstElement_536871059 = false;
             }
             else {
-            result_536871020[0].push.apply(result_536871020[0], separator_536871018);;
+            result_536871058[0].push.apply(result_536871058[0], separator_536871056);;
             }
             
-            addQuoted_536871052(result_536871020, 0, value_536871048);
-            if ((4 <= i_536871104)) {
+            addQuoted_536871090(result_536871058, 0, value_536871086);
+            if ((4 <= i_536871142)) {
             break Label2;
             }
             
-            i_536871104 += 1;
+            i_536871142 += 1;
           }
       };
     };
-    result_536871020[0].push.apply(result_536871020[0], suffix_536871019);;
+    result_536871058[0].push.apply(result_536871058[0], suffix_536871057);;
 
-  return result_536871020[0];
+  return result_536871058[0];
 
 }
 
-function HEX24_536871009(x_536871012) {
-  var result_536871013 = [];
+function HEX24_536871047(x_536871050) {
+  var result_536871051 = [];
 
-    result_536871013 = nimCopy(null, collectionToString_536871014(x_536871012, [91], [44,32], [93]), NTI33554449);
+    result_536871051 = nimCopy(null, collectionToString_536871052(x_536871050, [91], [44,32], [93]), NTI33554449);
 
-  return result_536871013;
+  return result_536871051;
 
 }
 
@@ -386,13 +371,13 @@ function addChars_301990090(result_301990092, result_301990092_Idx, x_301990093,
          else {result_301990092[result_301990092_Idx].length = Temporary1; };
     Label2: {
       var iHEX60gensym4_301990110 = 0;
-      var i_536871110 = 0;
+      var i_536871148 = 0;
       Label3: {
           Label4: while (true) {
-          if (!(i_536871110 < n_301990095)) break Label4;
-            iHEX60gensym4_301990110 = i_536871110;
+          if (!(i_536871148 < n_301990095)) break Label4;
+            iHEX60gensym4_301990110 = i_536871148;
             result_301990092[result_301990092_Idx][(old_301990096 + iHEX60gensym4_301990110)] = x_301990093.charCodeAt((start_301990094 + iHEX60gensym4_301990110));
-            i_536871110 += 1;
+            i_536871148 += 1;
           }
       };
     };
@@ -445,13 +430,13 @@ function HEX40_671088648(val_671088649, key_671088650) {
 
 }
 
-function env_872415249(decay_872415250, gate_872415251) {
-  var result_872415252 = null;
+function env_536870930(decay_536870931, gate_536870932) {
+  var result_536870933 = null;
 
-    var d_872415253 = el.const({value: decay_872415250});
-    result_872415252 = el.adsr(el.const({value: 0.01}), d_872415253, el.const({value: 0.0}), d_872415253, gate_872415251);
+    var d_536870934 = el.const({value: decay_536870931});
+    result_536870933 = el.adsr(el.const({value: 0.01}), d_536870934, el.const({value: 0.0}), d_536870934, gate_536870932);
 
-  return result_872415252;
+  return result_536870933;
 
 }
 
@@ -473,27 +458,27 @@ function highpass_671088800(sig_671088801, fq_671088802, q_671088803) {
 
 }
 
-function timpani_872415254(baseFq_872415255, gate_872415256) {
-  var result_872415257 = null;
+function timpani_536870935(baseFq_536870936, gate_536870937) {
+  var result_536870938 = null;
 
-    var fq1_872415258 = el.mul(baseFq_872415255, fqFactor1_872415234);
-    var fq2_872415259 = el.mul(baseFq_872415255, fqFactor2_872415235);
-    var fq3_872415260 = el.mul(baseFq_872415255, fqFactor3_872415236);
-    var fq4_872415261 = el.mul(baseFq_872415255, fqFactor4_872415237);
-    var env1_872415262 = el.mul(env_872415249(decay1_872415244, gate_872415256), amp1_872415238);
-    var env2_872415263 = el.mul(env_872415249(decay2_872415245, gate_872415256), amp2_872415239);
-    var env3_872415264 = el.mul(env_872415249(decay3_872415246, gate_872415256), amp3_872415240);
-    var env4_872415265 = el.mul(env_872415249(decay4_872415247, gate_872415256), amp4_872415241);
-    var sig1_872415266 = el.mul(lowpass_671088795(el.triangle(fq1_872415258), el.mul(fq1_872415258, 1.0), el.const({value: 1.0})), env1_872415262);
-    var sig2_872415267 = el.mul(lowpass_671088795(el.triangle(fq2_872415259), el.mul(fq2_872415259, 1.0), el.const({value: 1.0})), env2_872415263);
-    var sig3_872415268 = el.mul(lowpass_671088795(el.triangle(fq3_872415260), el.mul(fq3_872415260, 1.0), el.const({value: 1.0})), env3_872415264);
-    var sig4_872415269 = el.mul(lowpass_671088795(el.triangle(fq4_872415261), el.mul(fq4_872415261, 1.0), el.const({value: 1.0})), env4_872415265);
-    var envNoise_872415270 = el.mul(env_872415249(decayNoise_872415248, gate_872415256), ampNoise_872415242);
-    var noiseSound_872415271 = lowpass_671088795(highpass_671088800(el.mul(el.square(100.0), el.square(87.0)), el.mul(baseFq_872415255, 0.5), el.const({value: 1.0})), el.mul(baseFq_872415255, 8.0), el.const({value: 2.0}));
-    var noiseSig_872415272 = el.mul(noiseSound_872415271, envNoise_872415270);
-    result_872415257 = el.div(el.add(el.add(el.add(el.add(sig1_872415266, sig2_872415267), sig3_872415268), sig4_872415269), noiseSig_872415272), 3.0);
+    var fq1_536870939 = el.mul(baseFq_536870936, fqFactor1_536870915);
+    var fq2_536870940 = el.mul(baseFq_536870936, fqFactor2_536870916);
+    var fq3_536870941 = el.mul(baseFq_536870936, fqFactor3_536870917);
+    var fq4_536870942 = el.mul(baseFq_536870936, fqFactor4_536870918);
+    var env1_536870943 = el.mul(env_536870930(decay1_536870925, gate_536870937), amp1_536870919);
+    var env2_536870944 = el.mul(env_536870930(decay2_536870926, gate_536870937), amp2_536870920);
+    var env3_536870945 = el.mul(env_536870930(decay3_536870927, gate_536870937), amp3_536870921);
+    var env4_536870946 = el.mul(env_536870930(decay4_536870928, gate_536870937), amp4_536870922);
+    var sig1_536870947 = el.mul(lowpass_671088795(el.triangle(fq1_536870939), el.mul(fq1_536870939, 1.0), el.const({value: 1.0})), env1_536870943);
+    var sig2_536870948 = el.mul(lowpass_671088795(el.triangle(fq2_536870940), el.mul(fq2_536870940, 1.0), el.const({value: 1.0})), env2_536870944);
+    var sig3_536870949 = el.mul(lowpass_671088795(el.triangle(fq3_536870941), el.mul(fq3_536870941, 1.0), el.const({value: 1.0})), env3_536870945);
+    var sig4_536870950 = el.mul(lowpass_671088795(el.triangle(fq4_536870942), el.mul(fq4_536870942, 1.0), el.const({value: 1.0})), env4_536870946);
+    var envNoise_536870951 = el.mul(env_536870930(decayNoise_536870929, gate_536870937), ampNoise_536870923);
+    var noiseSound_536870952 = lowpass_671088795(highpass_671088800(el.mul(el.square(100.0), el.square(87.0)), el.mul(baseFq_536870936, 0.5), el.const({value: 1.0})), el.mul(baseFq_536870936, 8.0), el.const({value: 2.0}));
+    var noiseSig_536870953 = el.mul(noiseSound_536870952, envNoise_536870951);
+    result_536870938 = el.div(el.add(el.add(el.add(el.add(sig1_536870947, sig2_536870948), sig3_536870949), sig4_536870950), noiseSig_536870953), 3.0);
 
-  return result_872415257;
+  return result_536870938;
 
 }
 
@@ -503,39 +488,54 @@ function HEX2BHEX3D_671088705(a_671088706, a_671088706_Idx, b_671088707) {
   
 }
 
-function play_536870917(midiNotes_536870918) {
-  var result_536870919 = null;
+function play_536870955(midiNotes_536870956) {
+  var result_536870957 = null;
 
-    rawEcho(HEX24_536871009(midiNotes_536870918));
-    var sig_536871062 = [el.const({value: 0.0})];
+    rawEcho(HEX24_536871047(midiNotes_536870956));
+    var sig_536871100 = [el.const({value: 0.0})];
     Label1: {
-      var i_536871067 = 0;
-      var res_536871098 = 0;
+      var i_536871105 = 0;
+      var res_536871136 = 0;
       Label2: {
           Label3: while (true) {
-          if (!(res_536871098 <= 4)) break Label3;
-            i_536871067 = res_536871098;
-            var note_536871068 = midiNotes_536870918[i_536871067];
-            var gate_536871069 = 0.0;
-            if ((0.0 < note_536871068)) {
-            gate_536871069 = 1.0;
-            lastNote_536870916[0][i_536871067] = toInt_33556014(note_536871068);
+          if (!(res_536871136 <= 4)) break Label3;
+            i_536871105 = res_536871136;
+            var note_536871106 = midiNotes_536870956[i_536871105];
+            var gate_536871107 = 0.0;
+            if ((0.0 < note_536871106)) {
+            gate_536871107 = 1.0;
+            lastNote_536870954[0][i_536871105] = toInt_33556014(note_536871106);
             }
             
-            var fq_536871070 = toFrequency_687865986(lastNote_536870916[0][i_536871067]);
-            rawEcho(HEX24_369098760(i_536871067), [32], HEX24_33557559(fq_536871070));
-            var fqNode_536871077 = HEX40_671088648(fq_536871070, ([102,113] || []).concat(HEX24_369098760(i_536871067) || []));
-            var gateNode_536871078 = HEX40_671088648(gate_536871069, ([103,97,116,101] || []).concat(HEX24_369098760(i_536871067) || []));
-            var noteSig_536871079 = timpani_872415254(fqNode_536871077, gateNode_536871078);
-            HEX2BHEX3D_671088705(sig_536871062, 0, noteSig_536871079);
-            res_536871098 += 1;
+            var fq_536871108 = toFrequency_687865986(lastNote_536870954[0][i_536871105]);
+            rawEcho(HEX24_369098760(i_536871105), [32], HEX24_33557559(fq_536871108));
+            var fqNode_536871115 = HEX40_671088648(fq_536871108, ([102,113] || []).concat(HEX24_369098760(i_536871105) || []));
+            var gateNode_536871116 = HEX40_671088648(gate_536871107, ([103,97,116,101] || []).concat(HEX24_369098760(i_536871105) || []));
+            var noteSig_536871117 = timpani_536870935(fqNode_536871115, gateNode_536871116);
+            HEX2BHEX3D_671088705(sig_536871100, 0, noteSig_536871117);
+            res_536871136 += 1;
           }
       };
     };
-    result_536870919 = sig_536871062[0];
+    result_536870957 = sig_536871100[0];
 
-  return result_536870919;
+  return result_536870957;
 
 }
-var lastNote_536870916 = [new Int32Array([0, 0, 0, 0, 0])];
-export {play_536870917 as play}
+var fqFactor1_536870915 = 1.0;
+var fqFactor2_536870916 = 1.5;
+var fqFactor3_536870917 = 1.98;
+var fqFactor4_536870918 = 2.44;
+var amp1_536870919 = 1.0;
+var amp2_536870920 = 0.8;
+var amp3_536870921 = 0.6;
+var amp4_536870922 = 0.2;
+var ampNoise_536870923 = 0.5;
+var decayFactor_536870924 = 0.25;
+var decay1_536870925 = (4.5 * decayFactor_536870924);
+var decay2_536870926 = (7.5 * decayFactor_536870924);
+var decay3_536870927 = (9.0 * decayFactor_536870924);
+var decay4_536870928 = (8.5 * decayFactor_536870924);
+var decayNoise_536870929 = (2.0 * decayFactor_536870924);
+var lastNote_536870954 = [new Int32Array([0, 0, 0, 0, 0])];
+export {play_536870955 as play}
