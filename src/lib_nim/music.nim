@@ -1,13 +1,13 @@
 
 import math
 
-type 
+type
   NoteName* = enum
     C, Cx, Db, D, Dx, Eb, E, F, Fx, Gb, G, Gx, Ab, A, Ax, Bb, B
 
   Note* = tuple[name: NoteName, octave: int]
 
-func toMidi* (note: Note): int = 
+func toMidi* (note: Note): int =
   const sharps = [C, Cx, D, Dx, E, F, Fx, G, Gx, A, Ax, B]
   const flats = [C, Db, D, Eb, E, F, Gb, G, Ab, A, Bb, B]
   var toneIndex = sharps.find(note.name)
@@ -15,10 +15,10 @@ func toMidi* (note: Note): int =
     toneIndex = flats.find(note.name)
   (note.octave + 1) * 12 + toneIndex
 
-func toFrequency* (midi: int): float = 
+func toFrequency* (midi: int): float =
   pow(2, float(midi - 69) / 12) * 440.0
 
-func toFrequency* (note: Note): float = 
+func toFrequency* (note: Note): float =
   note.toMidi.toFrequency
 
 func harmonicMajorScale* (baseFrequency: float): seq[float] =
@@ -33,9 +33,15 @@ func harmonicMajorScale* (baseFrequency: float): seq[float] =
     ((baseFrequency * 3) / 2 * 5) / 4
   ]
 
+func octave* (baseMidi: int, times = 1): int =
+  baseMidi + times * 12
+
+func octaveDown* (baseMidi: int, times = 1): int =
+  baseMidi - times * 12
+
 # midi chords
 
-type 
+type
   Chord* = enum
     maj, min, dim, maj7, d7, min7, dim7, aug, dimFull
 
@@ -69,7 +75,7 @@ func invert* (chord: seq[int], times = 1): seq[int] =
   if times < 0:
     for i in 1..abs(times):
       result = result.invertDown
-  else:
+  elif times > 0:
     for i in 1..times:
       result = result.invertUp
 
@@ -103,7 +109,7 @@ func scale* (baseNoteMidi: int, scale: Scale): seq[int] =
 func scale* (baseNote: Note, scaleType: Scale): seq[int] =
   baseNote.toMidi.scale(scaleType)
 
-func sharp* (note: int): int = 
+func sharp* (note: int): int =
   note + 1
 
 func flat* (note: int): int =

@@ -476,8 +476,8 @@ const basicFrequencyModulation: Track = {
 		{
 			type: InputType.SLIDER,
 			label: 'modulator factor',
-			min: 0.5,
-			max: 20,
+			min: 0,
+			max: 10,
 			step: 0.05,
 			initialValue: 1,
 		},
@@ -485,7 +485,7 @@ const basicFrequencyModulation: Track = {
 			type: InputType.SLIDER,
 			label: 'modulation amount',
 			min: 0,
-			max: 20,
+			max: 100,
 			step: 0.01,
 			initialValue: 0,
 		},
@@ -517,7 +517,7 @@ const basicFrequencyModulation: Track = {
 							// fc,
 							// 3,
 							waveFn(
-								el.add(fc, el.mul(fc * 2 ** amount, waveFn(fc / fcFactor))),
+								el.add(fc, el.mul(fc * amount, waveFn(fc * fcFactor))),
 								// ),
 							),
 					}
