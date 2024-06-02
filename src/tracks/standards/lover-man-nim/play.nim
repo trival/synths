@@ -42,18 +42,12 @@ import ../../../lib_nim/sequencer
 let s = (F, 2).scale major
 
 proc chrd (scaleNote: int, chordName: Chord, flat = false): seq[int] =
-  var note =
-    if scaleNote >= 1:
-      s[scaleNote - 1]
-    elif scaleNote == 0:
-      s[scaleNote]
-    else:
-      s[7 + scaleNote].octaveDown
+  var n = s.note scaleNote
 
   if flat:
-    note -= 1
+    n -= 1
 
-  note.chord chordName
+  n.chord chordName
 
 let
   c = -3.chrd maj # !
@@ -69,14 +63,85 @@ let
   bb = 4.chrd maj # !
   bm = 5.chrd(min, true)
 
+let beat = @[
+  (0/6, 1.5),
+  (4/6, 0.5),
+  (5/6, 0.5)
+]
 
-let bassNull = 0
-proc note (duration: int, scaleIndex: int): MelodyNote[int] = (duration.float, s[scaleIndex - 1])
-proc sharp (n: MelodyNote[int]): MelodyNote[int] = (n[0], n[1] + 1)
-proc brk (duration: float): MelodyNote[int] = (duration, bassNull)
+proc p (chord: seq[int]): Sequence[int] =
+  chord.withBeat(beat).toSequence(4.0)
+
+let bassNotesA =
+  dm.p &
+  g.invert(-2).reverse.p &
+  dm.p &
+  g.invert(-2).reverse.p &
+
+  gm.p &
+  c.invert.reverse.p &
+  gm.p &
+  c.invert.reverse.p &
+
+  f.p &
+  f.invert.reverse.p &
+  bb.p &
+  bb.invertDown.reverse.p &
+
+  @[s.note(3).flat, s.note(-2).flat, s.note(1)].p &
+  @[s.note(2), s.note(-3), s.note(-1)].p &
+  f.p
+
+let bassAEnd1 = @[s.note(-1), s.note(3), s.note(2)].p
+let bassAEnd2 = e.reverse.p
+let bassAEnd3 = @[s.note(1)].withBeat(@[(0.0, 1.5)]).toSequence(4.0)
+
+let bassNotesB =
+  am.p &
+  am.invertDown.reverse.p &
+  am.p &
+  d.reverse.p &
+
+  g.p &
+  am.reverse.p &
+  bm.p &
+  @[s.note(7), s.note(3), s.note(1).sharp].p &
+
+  gm.p &
+  gm.invertDown.reverse.p &
+  gm.p &
+  d.reverse.p &
+
+  f.p &
+  am.invertDown.reverse.p &
+  ed.p &
+  a.invertDown.reverse.p
+
+let bassSequence =
+  bassNotesA &
+  bassAEnd1 &
+  bassNotesA &
+  bassAEnd2 &
+  bassNotesB &
+  bassNotesA &
+  bassAEnd3
+
+var bassSeq = createSequencer(bassSequence, 0)
+
+let release = 1.5
 
 proc play* (time: float): AudioNode =
+  let bassNotes = bassSeq.currentNotes time
 
-  440.0.cycle
+  var bassSound = 0.0 @ "bass"
+
+  for n in bassNotes:
+    let env = adsr(@0.1, @0.2, @0.6, @release, n.gate)
+    let sound = (n.data.toFrequency.cycle + (n.data + 12).toFrequency.cycle) * 0.5
+
+    bassSound += sound * env
+
+  bassSound * 0.7
+
 
 {. emit: "export {`play` as play}" .}

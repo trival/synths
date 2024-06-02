@@ -1,13 +1,8 @@
 import elemaudio
 import math
+import std/sequtils
 
 type
-  MelodyNote*[T] = tuple
-    duration: float = 0.0
-    data: T
-
-  Melody*[T] = seq[MelodyNote[T]]
-
   SeqNote*[T] = object
     start: float = 0.0
     duration: float = 0.0
@@ -16,6 +11,30 @@ type
   Sequence*[T] = object
     notes: seq[SeqNote[T]]
     duration: float = 0.0
+
+func `&`*[T](s1: Sequence[T], s2: Sequence[T]): Sequence[T] =
+  result.duration = s1.duration + s2.duration
+  result.notes = s1.notes & s2.notes.mapIt(
+    SeqNote[T](
+      start: it.start + s1.duration,
+      duration: it.duration,
+      data: it.data
+    )
+  )
+
+func seqNote*[T](start: float, duration: float, data: T): SeqNote[T] =
+  result.start = start
+  result.duration = duration
+  result.data = data
+
+# Melody
+
+type
+  MelodyNote*[T] = tuple
+    duration: float = 0.0
+    data: T
+
+  Melody*[T] = seq[MelodyNote[T]]
 
 func toSequence*[T](melody: Melody[T], null: T) : Sequence[T] =
   for note in melody:
@@ -28,9 +47,34 @@ func toSequence*[T](melody: Melody[T], null: T) : Sequence[T] =
       result.notes.add(n)
     result.duration += note.duration
 
-func `&`*[T](s1: Sequence[T], s2: Sequence[T]): Sequence[T] =
-  result.duration = s1.duration + s2.duration
-  result.notes = s1.notes & s2.notes
+# Pattern
+
+type
+  PatternNote*[T] = tuple
+    position: float
+    duration: float
+    data: T
+
+  BeatNote* = tuple
+    position: float
+    duration: float
+
+proc withBeat*[T] (data: seq[T], beat: seq[BeatNote]): seq[PatternNote[T]] =
+  echo data.len, " ", beat.len
+  for i in 0..<beat.len:
+    let b = beat[i]
+    let d = data[i mod data.len]
+    result.add((b.position, b.duration, d))
+
+func toSequence*[T](pattern: seq[PatternNote[T]], duration: float) : Sequence[T] =
+  for note in pattern:
+    let n = SeqNote[T](
+      start: note.position * duration,
+      duration: note.duration,
+      data: note.data
+    )
+    result.notes.add(n)
+  result.duration = duration
 
 # Sequencer
 

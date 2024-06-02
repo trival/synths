@@ -1,9 +1,14 @@
 import { el } from '@elemaudio/core'
-import { Track, reverse } from '../../lib/base.js'
-import { composePolySynth } from '../../lib/elemaudio.js'
-import { chord, invert, midiToFc, noteToMidi } from '../../lib/music.js'
-import { beat, combine, createSequencer, withBeat } from '../../lib/sequence.js'
-import { InputType } from '../../ui/input.jsx'
+import { Track, reverse } from '../../../lib/base.js'
+import { composePolySynth } from '../../../lib/elemaudio.js'
+import { chord, invert, midiToFc, noteToMidi } from '../../../lib/music.js'
+import {
+	beat,
+	combine,
+	createSequencer,
+	withBeat,
+} from '../../../lib/sequence.js'
+import { InputType } from '../../../ui/input.js'
 
 // === A === (2 times)
 
@@ -123,7 +128,7 @@ const sequencer = createSequencer(bass, {
 })
 
 export default {
-	text: 'Standards/Lover Man',
+	text: 'Standards/Lover Man (old - js)',
 	inputs: [{ type: InputType.TICK }],
 
 	renderAudio([tick]) {

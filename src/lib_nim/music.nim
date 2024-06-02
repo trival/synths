@@ -65,10 +65,10 @@ func chord* (baseNote: Note, chordName: Chord): seq[int] =
   chord(baseNote.toMidi, chordName)
 
 func invertUp* (chord: seq[int]): seq[int] =
-  chord[1..^1] & @[chord[0] + 12]
+  chord[1..chord.high] & @[chord[0] + 12]
 
 func invertDown* (chord: seq[int]): seq[int] =
-  @[chord[-1] - 12] & chord[0..^1]
+  @[chord[chord.high] - 12] & chord[0..<chord.high]
 
 func invert* (chord: seq[int], times = 1): seq[int] =
   result = chord
@@ -114,3 +114,11 @@ func sharp* (note: int): int =
 
 func flat* (note: int): int =
   note - 1
+
+func note* (scale: seq[int], scaleNote: int): int =
+  if scaleNote >= 1:
+    scale[scaleNote - 1]
+  elif scaleNote == 0:
+    scale[scaleNote]
+  else:
+    scale[7 + scaleNote].octaveDown

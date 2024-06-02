@@ -3,7 +3,7 @@ import { InputType } from '../../../ui/input.jsx'
 import { play } from './play.js'
 
 export default {
-	text: 'Standards/Lover Man (nim)',
+	text: 'Standards/Lover Man',
 	inputs: [{ type: InputType.TICK }],
 
 	renderAudio([time]) {
