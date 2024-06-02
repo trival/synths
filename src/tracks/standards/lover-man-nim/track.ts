@@ -9,4 +9,4 @@ export default {
 	renderAudio([time]) {
 		return play(time)
 	},
-} as Track
+} satisfies Track
