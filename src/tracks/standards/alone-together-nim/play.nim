@@ -105,7 +105,7 @@ proc play* (time: float): AudioNode =
   var bassGain = 0.0 @ "bass_gain"
 
   for n in bassNotes:
-    let fq = n.data.toFrequency @ ("b" & $n.idx)
+    let fq = n.data.toFrequency @ ("b" & $n.idx).cstring
     let amount = fq * 2.41
     let fq2 = fq + saw(fq + 0.3.cycle * fq * 0.010) * amount
     let sound = triangle(fq2 * 0.5).lowpass(fq * 2.5, @2.0)

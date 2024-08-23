@@ -68,7 +68,7 @@ proc play (midiNotes: array[5, float], time: float): AudioNode =
     if hit.data == Kick:
       result += bassdrum(hit.gate)
     elif hit.data == Snare:
-      result += snare(hit.gate, @0.1)
+      result += snare(hit.gate, hit.gate.latch(noise()))
 
 
 {. emit: "export {`play` as play}" .}

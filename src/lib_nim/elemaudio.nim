@@ -5,8 +5,6 @@ type AudioNode* = ref object
 # constants
 func `@`* (val: float): AudioNode {.importjs: "el.const({value: #})" .}
 func `@`* (val: float, key: cstring): AudioNode {. importjs: "el.const({value: #, key: #})" .}
-func `@`* (val: float, key: string): AudioNode {. inline .} =
-  `@`(val, key.cstring)
 
 # oscillators
 func cycle* (fq: float): AudioNode {. importjs: "el.cycle(@)" .}
@@ -71,6 +69,8 @@ func sr* (): AudioNode {. importjs: "el.sr()" .}
 func sampleRate* (): AudioNode {. importjs: "el.sr()" .}
 func time* (): AudioNode {. importjs: "el.time()" .}
 func max* (a: AudioNode, b: AudioNode): AudioNode {. importjs: "el.max(@)" .}
+func min* (a: AudioNode, b: AudioNode): AudioNode {. importjs: "el.min(@)" .}
+func latch* (train: AudioNode, sig: AudioNode): AudioNode {. importjs: "el.latch(@)" .}
 
 # helpers
 

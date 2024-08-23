@@ -3,7 +3,7 @@ import { InputType } from '../../../ui/input.jsx'
 import { play } from './play.js'
 
 export default {
-	text: 'Instruments/Drums (use keyboard)',
+	text: 'Instruments/Drums',
 	withKeyboardStartingAt: 45,
 	inputs: [
 		{
