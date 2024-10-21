@@ -196,7 +196,7 @@ function toJSStr(s_33556901) {
     var res_33556943 = newSeq_33556919((s_33556901).length);
     var i_33556944 = 0;
     var j_33556945 = 0;
-    Label1: {
+    {
         Label2: while (true) {
         if (!(i_33556944 < (s_33556901).length)) break Label2;
           var c_33556946 = s_33556901[i_33556944];
@@ -345,18 +345,18 @@ function scale_687866487(baseNoteMidi_687866488, scale_687866489) {
   var result_687866490 = [];
 
     var offsets_687866491 = midiOffsets_687866412(scale_687866489);
-    Label1: {
+    {
       var j_687866496 = 0;
       var i_536872150 = 0;
-      Label2: {
+      {
           Label3: while (true) {
           if (!(i_536872150 < 3)) break Label3;
             j_687866496 = i_536872150;
-            Label4: {
+            {
               var i_687866500 = 0;
               var i_536872147 = 0;
               var L_536872148 = (offsets_687866491).length;
-              Label5: {
+              {
                   Label6: while (true) {
                   if (!(i_536872147 < L_536872148)) break Label6;
                     i_687866500 = offsets_687866491[i_536872147];
@@ -379,7 +379,7 @@ function find_687865889(a_687865892, item_687865893) {
 
   BeforeRet: {
     result_687865894 = 0;
-    Label1: {
+    {
       var i_687865937 = 0;
       var i_536872154 = 0;
       Label2: {
@@ -503,13 +503,13 @@ function midiOffsets_687866052(name_687866053) {
 function chord_687866139(baseNoteMidi_687866140, chordName_687866141) {
   var result_687866142 = [];
 
-    Label1: {
+    {
       var n_687866163 = 0;
       var colontmp__536872157 = [];
       colontmp__536872157 = midiOffsets_687866052(chordName_687866141);
       var i_536872158 = 0;
       var L_536872159 = (colontmp__536872157).length;
-      Label2: {
+      {
           Label3: while (true) {
           if (!(i_536872158 < L_536872159)) break Label3;
             n_687866163 = colontmp__536872157[i_536872158];
@@ -558,12 +558,12 @@ function HEX2F_33556020(x_33556021, y_33556022) {
 function HEX26_536871231(x_536871233, y_536871234) {
   var result_536871235 = [];
 
-    result_536871235 = new Array(((x_536871233).length + (y_536871234).length)); for (var i = 0 ; i < ((x_536871233).length + (y_536871234).length) ; ++i) { result_536871235[i] = ({start: 0.0, duration: 0.0, data: 0}); }    Label1: {
+    result_536871235 = new Array(((x_536871233).length + (y_536871234).length)); for (var i = 0 ; i < ((x_536871233).length + (y_536871234).length) ; ++i) { result_536871235[i] = ({start: 0.0, duration: 0.0, data: 0}); }    {
       var i_536871253 = 0;
       var colontmp__536872168 = 0;
       colontmp__536872168 = ((x_536871233).length - 1);
       var res_536872170 = 0;
-      Label2: {
+      {
           Label3: while (true) {
           if (!(res_536872170 <= colontmp__536872168)) break Label3;
             i_536871253 = res_536872170;
@@ -572,12 +572,12 @@ function HEX26_536871231(x_536871233, y_536871234) {
           }
       };
     };
-    Label4: {
+    {
       var i_536871261 = 0;
       var colontmp__536872173 = 0;
       colontmp__536872173 = ((y_536871234).length - 1);
       var res_536872174 = 0;
-      Label5: {
+      {
           Label6: while (true) {
           if (!(res_536872174 <= colontmp__536872173)) break Label6;
             i_536871261 = res_536872174;
@@ -603,15 +603,15 @@ function HEX26_536871145(s1_536871147, s2_536871148) {
   var result_536871149 = ({notes: [], duration: 0.0});
 
     result_536871149.duration = (s1_536871147.duration + s2_536871148.duration);
-    Label1: {
+    {
       var HEX3Atmp_536871202 = nimCopy(null, s2_536871148.notes, NTI536870953);
       var iHEX60gensym2_536871209 = 0;
       var resultHEX60gensym2_536871221 = newSeq_536871213((HEX3Atmp_536871202).length);
-      Label2: {
+      {
         var it_536871225 = ({start: 0.0, duration: 0.0, data: 0});
         var i_536872164 = 0;
         var L_536872165 = (HEX3Atmp_536871202).length;
-        Label3: {
+        {
             Label4: while (true) {
             if (!(i_536872164 < L_536872165)) break Label4;
               it_536871225 = HEX3Atmp_536871202[i_536872164];
@@ -631,11 +631,11 @@ function HEX26_536871145(s1_536871147, s2_536871148) {
 function toSequence_536871041(pattern_536871043, duration_536871044) {
   var result_536871045 = ({notes: [], duration: 0.0});
 
-    Label1: {
+    {
       var note_536871066 = {Field0: 0.0, Field1: 0.0, Field2: 0};
       var i_536872178 = 0;
       var L_536872179 = (pattern_536871043).length;
-      Label2: {
+      {
           Label3: while (true) {
           if (!(i_536872178 < L_536872179)) break Label3;
             note_536871066 = pattern_536871043[i_536872178];
@@ -666,10 +666,10 @@ function addChars_301990090(result_301990092, result_301990092_Idx, x_301990093,
     var old_301990096 = (result_301990092[result_301990092_Idx]).length;
     if (result_301990092[result_301990092_Idx].length < (Temporary1 = (old_301990096 + n_301990095), Temporary1)) { for (var i = result_301990092[result_301990092_Idx].length; i < Temporary1; ++i) result_301990092[result_301990092_Idx].push(0); }
          else {result_301990092[result_301990092_Idx].length = Temporary1; };
-    Label2: {
+    {
       var iHEX60gensym4_301990110 = 0;
       var i_536872191 = 0;
-      Label3: {
+      {
           Label4: while (true) {
           if (!(i_536872191 < n_301990095)) break Label4;
             iHEX60gensym4_301990110 = i_536872191;
@@ -713,12 +713,12 @@ function withBeat_536870953(data_536870955, beat_536870956) {
   var result_536870960 = [];
 
     rawEcho(HEX24_369098760((data_536870955).length), [32], HEX24_369098760((beat_536870956).length));
-    Label1: {
+    {
       var i_536870975 = 0;
       var colontmp__536872182 = 0;
       colontmp__536872182 = (beat_536870956).length;
       var i_536872183 = 0;
-      Label2: {
+      {
           Label3: while (true) {
           if (!(i_536872183 < colontmp__536872182)) break Label3;
             i_536870975 = i_536872183;
@@ -747,7 +747,7 @@ function reverse_687866383(chord_687866384) {
   var result_687866385 = [];
 
     var i_687866389 = (chord_687866384).length - 1;
-    Label1: {
+    {
         Label2: while (true) {
         if (!(0 <= i_687866389)) break Label2;
           result_687866385.push(chord_687866384[i_687866389]);;
@@ -762,12 +762,12 @@ function reverse_687866383(chord_687866384) {
 function HEX26_687866263(x_687866265, y_687866266) {
   var result_687866267 = [];
 
-    result_687866267 = new Array(((x_687866265).length + (y_687866266).length)); for (var i = 0 ; i < ((x_687866265).length + (y_687866266).length) ; ++i) { result_687866267[i] = 0; }    Label1: {
+    result_687866267 = new Array(((x_687866265).length + (y_687866266).length)); for (var i = 0 ; i < ((x_687866265).length + (y_687866266).length) ; ++i) { result_687866267[i] = 0; }    {
       var i_687866285 = 0;
       var colontmp__536872202 = 0;
       colontmp__536872202 = ((x_687866265).length - 1);
       var res_536872203 = 0;
-      Label2: {
+      {
           Label3: while (true) {
           if (!(res_536872203 <= colontmp__536872202)) break Label3;
             i_687866285 = res_536872203;
@@ -776,12 +776,12 @@ function HEX26_687866263(x_687866265, y_687866266) {
           }
       };
     };
-    Label4: {
+    {
       var i_687866293 = 0;
       var colontmp__536872206 = 0;
       colontmp__536872206 = ((y_687866266).length - 1);
       var res_536872207 = 0;
-      Label5: {
+      {
           Label6: while (true) {
           if (!(res_536872207 <= colontmp__536872206)) break Label6;
             i_687866293 = res_536872207;
@@ -800,10 +800,10 @@ function HEX5BHEX5D_687866239(s_687866243, x_687866244) {
 
     var a_687866247 = x_687866244.a;
     var L_687866249 = ((x_687866244.b - a_687866247) + 1);
-    result_687866245 = new Array(L_687866249); for (var i = 0 ; i < L_687866249 ; ++i) { result_687866245[i] = 0; }    Label1: {
+    result_687866245 = new Array(L_687866249); for (var i = 0 ; i < L_687866249 ; ++i) { result_687866245[i] = 0; }    {
       var i_687866258 = 0;
       var i_536872210 = 0;
-      Label2: {
+      {
           Label3: while (true) {
           if (!(i_536872210 < L_687866249)) break Label3;
             i_687866258 = i_536872210;
@@ -849,12 +849,12 @@ function invert_687866369(chord_687866370, times_687866371) {
 
     result_687866372 = nimCopy(null, chord_687866370, NTI687866241);
     if ((times_687866371 < 0)) {
-    Label1: {
+    {
       var i_687866377 = 0;
       var colontmp__536872195 = 0;
       colontmp__536872195 = Math.abs(times_687866371);
       var res_536872196 = 1;
-      Label2: {
+      {
           Label3: while (true) {
           if (!(res_536872196 <= colontmp__536872195)) break Label3;
             i_687866377 = res_536872196;
@@ -866,10 +866,10 @@ function invert_687866369(chord_687866370, times_687866371) {
     }
     else {
     if ((0 < times_687866371)) {
-    Label4: {
+    {
       var i_687866382 = 0;
       var res_536872199 = 1;
-      Label5: {
+      {
           Label6: while (true) {
           if (!(res_536872199 <= times_687866371)) break Label6;
             i_687866382 = res_536872199;
@@ -931,12 +931,12 @@ function createSequencer_536871635(s_536871637, initData_536871638, trackCount_5
     var seqDuration_536871664 = (s_536871637.duration * secPerBeat_536871663);
     result_536871662.seqDuration = seqDuration_536871664;
     var noteIntervals_536871669 = [];
-    Label1: {
+    {
       var i_536871710 = 0;
       var note_536871711 = ({start: 0.0, duration: 0.0, data: 0});
       var i_536872214 = 0;
       var L_536872215 = (s_536871637.notes).length;
-      Label2: {
+      {
           Label3: while (true) {
           if (!(i_536872214 < L_536872215)) break Label3;
             i_536871710 = i_536872214;
@@ -952,12 +952,12 @@ function createSequencer_536871635(s_536871637, initData_536871638, trackCount_5
       };
     };
     var playingNotes_536871722 = [];
-    Label4: {
+    {
       var i_536871728 = 0;
       var note_536871729 = ({start: 0.0, duration: 0.0, data: 0});
       var i_536872218 = 0;
       var L_536872219 = (s_536871637.notes).length;
-      Label5: {
+      {
           Label6: while (true) {
           if (!(i_536872218 < L_536872219)) break Label6;
             i_536871728 = i_536872218;
@@ -973,10 +973,10 @@ function createSequencer_536871635(s_536871637, initData_536871638, trackCount_5
     result_536871662.noteIntervals = nimCopy(null, noteIntervals_536871669, NTI536871457);
     result_536871662.playingNotes = nimCopy(null, playingNotes_536871722, NTI536871497);
     var tracks_536871745 = [];
-    Label7: {
+    {
       var i_536871750 = 0;
       var i_536872222 = 0;
-      Label8: {
+      {
           Label9: while (true) {
           if (!(i_536872222 < trackCount_536871639)) break Label9;
             i_536871750 = i_536872222;
@@ -1030,11 +1030,11 @@ function collectionToString_536872005(x_536872007, prefix_536872008, separator_5
 
     result_536872011[0] = nimCopy(null, prefix_536872008, NTI33554449);
     var firstElement_536872012 = true;
-    Label1: {
+    {
       var value_536872016 = 0;
       var i_536872240 = 0;
       var L_536872241 = (x_536872007).length;
-      Label2: {
+      {
           Label3: while (true) {
           if (!(i_536872240 < L_536872241)) break Label3;
             value_536872016 = x_536872007[i_536872240];
@@ -1071,12 +1071,12 @@ function currentNotes_536871849(s_536871851, currentTime_536871852) {
     var currentLoop_536871854 = Math.floor(((currentTime_536871852 - s_536871851.startTime) / s_536871851.seqDuration));
     if (((s_536871851.repetitions == 0) || (toInt_33556014(currentLoop_536871854) < s_536871851.repetitions))) {
     var seqTime_536871855 = (currentTime_536871852 - (currentLoop_536871854 * s_536871851.seqDuration));
-    Label1: {
+    {
       var i_536871896 = 0;
       var n_536871897 = {Field0: 0.0, Field1: 0.0};
       var i_536872231 = 0;
       var L_536872232 = (s_536871851.noteIntervals).length;
-      Label2: {
+      {
           Label3: while (true) {
           if (!(i_536872231 < L_536872232)) break Label3;
             i_536871896 = i_536872231;
@@ -1105,12 +1105,12 @@ function currentNotes_536871849(s_536871851, currentTime_536871852) {
     };
     if (s_536871851.debug) {
     var playing_536871931 = [];
-    Label4: {
+    {
       var i_536871971 = 0;
       var v_536871972 = false;
       var i_536872236 = 0;
       var L_536872237 = (s_536871851.playingNotes).length;
-      Label5: {
+      {
           Label6: while (true) {
           if (!(i_536872236 < L_536872237)) break Label6;
             i_536871971 = i_536872236;
@@ -1154,11 +1154,11 @@ function play_536871824(time_536871825) {
 
     var bassNotes_536872041 = currentNotes_536871849(bassSeq_536871822[0], time_536871825);
     var bassSound_536872042 = [el.const({value: 0.0, key: "bass"})];
-    Label1: {
+    {
       var n_536872063 = ({data: 0, idx: 0, gate: null});
       var i_536872226 = 0;
       var L_536872227 = (bassNotes_536872041).length;
-      Label2: {
+      {
           Label3: while (true) {
           if (!(i_536872226 < L_536872227)) break Label3;
             n_536872063 = bassNotes_536872041[i_536872226];

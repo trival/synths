@@ -40,6 +40,7 @@ export const MidiController = (props: MidiControllerProps) => {
 		if (selected) {
 			selected.removeListener()
 		}
+
 		const newSelected = inputs()[selectedInputIdx()]
 		if (newSelected) {
 			// eslint-disable-next-line solid/reactivity

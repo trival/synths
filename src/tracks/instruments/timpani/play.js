@@ -10,7 +10,7 @@ function toJSStr(s_33556901) {
     var res_33556943 = newSeq_33556919((s_33556901).length);
     var i_33556944 = 0;
     var j_33556945 = 0;
-    Label1: {
+    {
         Label2: while (true) {
         if (!(i_33556944 < (s_33556901).length)) break Label2;
           var c_33556946 = s_33556901[i_33556944];
@@ -298,7 +298,7 @@ function collectionToString_536871052(x_536871054, prefix_536871055, separator_5
 
     result_536871058[0] = nimCopy(null, prefix_536871055, NTI33554449);
     var firstElement_536871059 = true;
-    Label1: {
+    {
       var value_536871086 = 0.0;
       var i_536871142 = 0;
       Label2: {
@@ -369,10 +369,10 @@ function addChars_301990090(result_301990092, result_301990092_Idx, x_301990093,
     var old_301990096 = (result_301990092[result_301990092_Idx]).length;
     if (result_301990092[result_301990092_Idx].length < (Temporary1 = (old_301990096 + n_301990095), Temporary1)) { for (var i = result_301990092[result_301990092_Idx].length; i < Temporary1; ++i) result_301990092[result_301990092_Idx].push(0); }
          else {result_301990092[result_301990092_Idx].length = Temporary1; };
-    Label2: {
+    {
       var iHEX60gensym4_301990110 = 0;
       var i_536871148 = 0;
-      Label3: {
+      {
           Label4: while (true) {
           if (!(i_536871148 < n_301990095)) break Label4;
             iHEX60gensym4_301990110 = i_536871148;
@@ -493,10 +493,10 @@ function play_536870955(midiNotes_536870956) {
 
     rawEcho(HEX24_536871047(midiNotes_536870956));
     var sig_536871100 = [el.const({value: 0.0})];
-    Label1: {
+    {
       var i_536871105 = 0;
       var res_536871136 = 0;
-      Label2: {
+      {
           Label3: while (true) {
           if (!(res_536871136 <= 4)) break Label3;
             i_536871105 = res_536871136;

@@ -173,7 +173,7 @@ function toJSStr(s_33556901) {
     var res_33556943 = newSeq_33556919((s_33556901).length);
     var i_33556944 = 0;
     var j_33556945 = 0;
-    Label1: {
+    {
         Label2: while (true) {
         if (!(i_33556944 < (s_33556901).length)) break Label2;
           var c_33556946 = s_33556901[i_33556944];
@@ -322,18 +322,18 @@ function scale_687866487(baseNoteMidi_687866488, scale_687866489) {
   var result_687866490 = [];
 
     var offsets_687866491 = midiOffsets_687866412(scale_687866489);
-    Label1: {
+    {
       var j_687866496 = 0;
       var i_536871687 = 0;
-      Label2: {
+      {
           Label3: while (true) {
           if (!(i_536871687 < 3)) break Label3;
             j_687866496 = i_536871687;
-            Label4: {
+            {
               var i_687866500 = 0;
               var i_536871684 = 0;
               var L_536871685 = (offsets_687866491).length;
-              Label5: {
+              {
                   Label6: while (true) {
                   if (!(i_536871684 < L_536871685)) break Label6;
                     i_687866500 = offsets_687866491[i_536871684];
@@ -356,7 +356,7 @@ function find_687865889(a_687865892, item_687865893) {
 
   BeforeRet: {
     result_687865894 = 0;
-    Label1: {
+    {
       var i_687865937 = 0;
       var i_536871691 = 0;
       Label2: {
@@ -442,12 +442,12 @@ function sharp_536870942(n_536870944) {
 function HEX26_536870966(x_536870968, y_536870969) {
   var result_536870970 = [];
 
-    result_536870970 = new Array(((x_536870968).length + (y_536870969).length)); for (var i = 0 ; i < ((x_536870968).length + (y_536870969).length) ; ++i) { result_536870970[i] = {Field0: 0.0, Field1: 0}; }    Label1: {
+    result_536870970 = new Array(((x_536870968).length + (y_536870969).length)); for (var i = 0 ; i < ((x_536870968).length + (y_536870969).length) ; ++i) { result_536870970[i] = {Field0: 0.0, Field1: 0}; }    {
       var i_536870989 = 0;
       var colontmp__536871700 = 0;
       colontmp__536871700 = ((x_536870968).length - 1);
       var res_536871702 = 0;
-      Label2: {
+      {
           Label3: while (true) {
           if (!(res_536871702 <= colontmp__536871700)) break Label3;
             i_536870989 = res_536871702;
@@ -456,12 +456,12 @@ function HEX26_536870966(x_536870968, y_536870969) {
           }
       };
     };
-    Label4: {
+    {
       var i_536870997 = 0;
       var colontmp__536871705 = 0;
       colontmp__536871705 = ((y_536870969).length - 1);
       var res_536871706 = 0;
-      Label5: {
+      {
           Label6: while (true) {
           if (!(res_536871706 <= colontmp__536871705)) break Label6;
             i_536870997 = res_536871706;
@@ -501,10 +501,10 @@ function addChars_301990090(result_301990092, result_301990092_Idx, x_301990093,
     var old_301990096 = (result_301990092[result_301990092_Idx]).length;
     if (result_301990092[result_301990092_Idx].length < (Temporary1 = (old_301990096 + n_301990095), Temporary1)) { for (var i = result_301990092[result_301990092_Idx].length; i < Temporary1; ++i) result_301990092[result_301990092_Idx].push(0); }
          else {result_301990092[result_301990092_Idx].length = Temporary1; };
-    Label2: {
+    {
       var iHEX60gensym4_301990110 = 0;
       var i_536871726 = 0;
-      Label3: {
+      {
           Label4: while (true) {
           if (!(i_536871726 < n_301990095)) break Label4;
             iHEX60gensym4_301990110 = i_536871726;
@@ -560,12 +560,12 @@ function createSequencer_536871112(s_536871114, initData_536871115, trackCount_5
     var seqDuration_536871141 = (s_536871114.duration * secPerBeat_536871140);
     result_536871139.seqDuration = seqDuration_536871141;
     var noteIntervals_536871146 = [];
-    Label1: {
+    {
       var i_536871188 = 0;
       var note_536871189 = ({start: 0.0, duration: 0.0, data: 0});
       var i_536871710 = 0;
       var L_536871711 = (s_536871114.notes).length;
-      Label2: {
+      {
           Label3: while (true) {
           if (!(i_536871710 < L_536871711)) break Label3;
             i_536871188 = i_536871710;
@@ -581,12 +581,12 @@ function createSequencer_536871112(s_536871114, initData_536871115, trackCount_5
       };
     };
     var playingNotes_536871200 = [];
-    Label4: {
+    {
       var i_536871206 = 0;
       var note_536871207 = ({start: 0.0, duration: 0.0, data: 0});
       var i_536871714 = 0;
       var L_536871715 = (s_536871114.notes).length;
-      Label5: {
+      {
           Label6: while (true) {
           if (!(i_536871714 < L_536871715)) break Label6;
             i_536871206 = i_536871714;
@@ -602,10 +602,10 @@ function createSequencer_536871112(s_536871114, initData_536871115, trackCount_5
     result_536871139.noteIntervals = nimCopy(null, noteIntervals_536871146, NTI536871089);
     result_536871139.playingNotes = nimCopy(null, playingNotes_536871200, NTI536871129);
     var tracks_536871223 = [];
-    Label7: {
+    {
       var i_536871228 = 0;
       var i_536871718 = 0;
-      Label8: {
+      {
           Label9: while (true) {
           if (!(i_536871718 < trackCount_536871116)) break Label9;
             i_536871228 = i_536871718;
@@ -629,11 +629,11 @@ function HEX2BHEX3D_536871069(x_536871071, x_536871071_Idx, y_536871072) {
 function toSequence_536871033(melody_536871035, null_536871036) {
   var result_536871042 = ({notes: [], duration: 0.0});
 
-    Label1: {
+    {
       var note_536871062 = {Field0: 0.0, Field1: 0};
       var i_536871730 = 0;
       var L_536871731 = (melody_536871035).length;
-      Label2: {
+      {
           Label3: while (true) {
           if (!(i_536871730 < L_536871731)) break Label3;
             note_536871062 = melody_536871035[i_536871730];
@@ -692,11 +692,11 @@ function collectionToString_536871533(x_536871535, prefix_536871536, separator_5
 
     result_536871539[0] = nimCopy(null, prefix_536871536, NTI33554449);
     var firstElement_536871540 = true;
-    Label1: {
+    {
       var value_536871544 = 0;
       var i_536871749 = 0;
       var L_536871750 = (x_536871535).length;
-      Label2: {
+      {
           Label3: while (true) {
           if (!(i_536871749 < L_536871750)) break Label3;
             value_536871544 = x_536871535[i_536871749];
@@ -733,12 +733,12 @@ function currentNotes_536871377(s_536871379, currentTime_536871380) {
     var currentLoop_536871382 = Math.floor(((currentTime_536871380 - s_536871379.startTime) / s_536871379.seqDuration));
     if (((s_536871379.repetitions == 0) || (toInt_33556014(currentLoop_536871382) < s_536871379.repetitions))) {
     var seqTime_536871383 = (currentTime_536871380 - (currentLoop_536871382 * s_536871379.seqDuration));
-    Label1: {
+    {
       var i_536871424 = 0;
       var n_536871425 = {Field0: 0.0, Field1: 0.0};
       var i_536871740 = 0;
       var L_536871741 = (s_536871379.noteIntervals).length;
-      Label2: {
+      {
           Label3: while (true) {
           if (!(i_536871740 < L_536871741)) break Label3;
             i_536871424 = i_536871740;
@@ -767,12 +767,12 @@ function currentNotes_536871377(s_536871379, currentTime_536871380) {
     };
     if (s_536871379.debug) {
     var playing_536871459 = [];
-    Label4: {
+    {
       var i_536871499 = 0;
       var v_536871500 = false;
       var i_536871745 = 0;
       var L_536871746 = (s_536871379.playingNotes).length;
-      Label5: {
+      {
           Label6: while (true) {
           if (!(i_536871745 < L_536871746)) break Label6;
             i_536871499 = i_536871745;
@@ -826,11 +826,11 @@ function play_536871352(time_536871353) {
     var bassNotes_536871569 = currentNotes_536871377(bassSeq_536871350[0], time_536871353);
     var bassSound_536871570 = [el.const({value: 0.0, key: "bass"})];
     var bassGain_536871571 = [el.const({value: 0.0, key: "bass_gain"})];
-    Label1: {
+    {
       var n_536871592 = ({data: 0, idx: 0, gate: null});
       var i_536871735 = 0;
       var L_536871736 = (bassNotes_536871569).length;
-      Label2: {
+      {
           Label3: while (true) {
           if (!(i_536871735 < L_536871736)) break Label3;
             n_536871592 = bassNotes_536871569[i_536871735];

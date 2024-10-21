@@ -1,25 +1,20 @@
-/* eslint-disable no-undef */
 import chokidar from 'chokidar'
-import { exec } from 'child_process'
-
-const watcher = chokidar.watch('**/play.nim', {
-	cwd: process.cwd(),
-	ignoreInitial: true,
-})
-
-function compile(filePath) {
-	const command = `nim js -d:danger ${filePath}`
-	exec(command, (error, stdout, stderr) => {
-		if (error) {
-			console.error(`exec error: ${error}`)
-			return
-		}
-		console.log(`stdout: ${stdout}`)
-		console.error(`stderr: ${stderr}`)
-	})
-}
-
-watcher.on('add', compile)
-watcher.on('change', compile)
+import { exec } from 'node:child_process'
 
 console.log(`Watching for changes in */**/play.nim files...`)
+
+chokidar.watch('.').on('all', (event, path) => {
+	if (/.*\/play\.nim$/.test(path) && (event === 'change' || event === 'add')) {
+		console.log('nim file changed, recompiling:', path)
+
+		const command = `nim js -d:danger ${path}`
+		exec(command, (error, stdout, stderr) => {
+			if (error) {
+				console.error(`exec error: ${error}`)
+				return
+			}
+			console.log(`stdout: ${stdout}`)
+			console.error(`stderr: ${stderr}`)
+		})
+	}
+})

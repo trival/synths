@@ -168,7 +168,7 @@ function toJSStr(s_33556901) {
     var res_33556943 = newSeq_33556919((s_33556901).length);
     var i_33556944 = 0;
     var j_33556945 = 0;
-    Label1: {
+    {
         Label2: while (true) {
         if (!(i_33556944 < (s_33556901).length)) break Label2;
           var c_33556946 = s_33556901[i_33556944];
@@ -308,10 +308,10 @@ function addChars_301990090(result_301990092, result_301990092_Idx, x_301990093,
     var old_301990096 = (result_301990092[result_301990092_Idx]).length;
     if (result_301990092[result_301990092_Idx].length < (Temporary1 = (old_301990096 + n_301990095), Temporary1)) { for (var i = result_301990092[result_301990092_Idx].length; i < Temporary1; ++i) result_301990092[result_301990092_Idx].push(0); }
          else {result_301990092[result_301990092_Idx].length = Temporary1; };
-    Label2: {
+    {
       var iHEX60gensym4_301990110 = 0;
       var i_536871713 = 0;
-      Label3: {
+      {
           Label4: while (true) {
           if (!(i_536871713 < n_301990095)) break Label4;
             iHEX60gensym4_301990110 = i_536871713;
@@ -367,12 +367,12 @@ function createSequencer_536871080(s_536871082, initData_536871083, trackCount_5
     var seqDuration_536871109 = (s_536871082.duration * secPerBeat_536871108);
     result_536871107.seqDuration = seqDuration_536871109;
     var noteIntervals_536871114 = [];
-    Label1: {
+    {
       var i_536871156 = 0;
       var note_536871157 = ({start: 0.0, duration: 0.0, data: 0});
       var i_536871697 = 0;
       var L_536871698 = (s_536871082.notes).length;
-      Label2: {
+      {
           Label3: while (true) {
           if (!(i_536871697 < L_536871698)) break Label3;
             i_536871156 = i_536871697;
@@ -388,12 +388,12 @@ function createSequencer_536871080(s_536871082, initData_536871083, trackCount_5
       };
     };
     var playingNotes_536871168 = [];
-    Label4: {
+    {
       var i_536871174 = 0;
       var note_536871175 = ({start: 0.0, duration: 0.0, data: 0});
       var i_536871701 = 0;
       var L_536871702 = (s_536871082.notes).length;
-      Label5: {
+      {
           Label6: while (true) {
           if (!(i_536871701 < L_536871702)) break Label6;
             i_536871174 = i_536871701;
@@ -409,10 +409,10 @@ function createSequencer_536871080(s_536871082, initData_536871083, trackCount_5
     result_536871107.noteIntervals = nimCopy(null, noteIntervals_536871114, NTI536871026);
     result_536871107.playingNotes = nimCopy(null, playingNotes_536871168, NTI536871066);
     var tracks_536871191 = [];
-    Label7: {
+    {
       var i_536871196 = 0;
       var i_536871705 = 0;
-      Label8: {
+      {
           Label9: while (true) {
           if (!(i_536871705 < trackCount_536871084)) break Label9;
             i_536871196 = i_536871705;
@@ -436,11 +436,11 @@ function HEX2BHEX3D_536871005(x_536871007, x_536871007_Idx, y_536871008) {
 function toSequence_536870963(melody_536870965, null_536870966) {
   var result_536870972 = ({notes: [], duration: 0.0});
 
-    Label1: {
+    {
       var note_536870993 = {Field0: 0.0, Field1: 0};
       var i_536871717 = 0;
       var L_536871718 = (melody_536870965).length;
-      Label2: {
+      {
           Label3: while (true) {
           if (!(i_536871717 < L_536871718)) break Label3;
             note_536870993 = melody_536870965[i_536871717];
@@ -499,11 +499,11 @@ function collectionToString_536871550(x_536871552, prefix_536871553, separator_5
 
     result_536871556[0] = nimCopy(null, prefix_536871553, NTI33554449);
     var firstElement_536871557 = true;
-    Label1: {
+    {
       var value_536871578 = 0;
       var i_536871737 = 0;
       var L_536871738 = (x_536871552).length;
-      Label2: {
+      {
           Label3: while (true) {
           if (!(i_536871737 < L_536871738)) break Label3;
             value_536871578 = x_536871552[i_536871737];
@@ -540,12 +540,12 @@ function currentNotes_536871345(s_536871347, currentTime_536871348) {
     var currentLoop_536871350 = Math.floor(((currentTime_536871348 - s_536871347.startTime) / s_536871347.seqDuration));
     if (((s_536871347.repetitions == 0) || (toInt_33556014(currentLoop_536871350) < s_536871347.repetitions))) {
     var seqTime_536871351 = (currentTime_536871348 - (currentLoop_536871350 * s_536871347.seqDuration));
-    Label1: {
+    {
       var i_536871392 = 0;
       var n_536871393 = {Field0: 0.0, Field1: 0.0};
       var i_536871727 = 0;
       var L_536871728 = (s_536871347.noteIntervals).length;
-      Label2: {
+      {
           Label3: while (true) {
           if (!(i_536871727 < L_536871728)) break Label3;
             i_536871392 = i_536871727;
@@ -574,12 +574,12 @@ function currentNotes_536871345(s_536871347, currentTime_536871348) {
     };
     if (s_536871347.debug) {
     var playing_536871427 = [];
-    Label4: {
+    {
       var i_536871467 = 0;
       var v_536871468 = false;
       var i_536871732 = 0;
       var L_536871733 = (s_536871347.playingNotes).length;
-      Label5: {
+      {
           Label6: while (true) {
           if (!(i_536871732 < L_536871733)) break Label6;
             i_536871467 = i_536871732;
@@ -667,11 +667,11 @@ function play_536871319(midiNotes_536871320, time_536871321) {
 
     var notes_536871603 = currentNotes_536871345(seq1_536871318[0], time_536871321);
     result_536871322[0] = el.const({value: 0.0});
-    Label1: {
+    {
       var hit_536871624 = ({data: 0, idx: 0, gate: null});
       var i_536871722 = 0;
       var L_536871723 = (notes_536871603).length;
-      Label2: {
+      {
           Label3: while (true) {
           if (!(i_536871722 < L_536871723)) break Label3;
             hit_536871624 = notes_536871603[i_536871722];

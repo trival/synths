@@ -5,3 +5,6 @@ bin
 obj
 .fake
 .DS_Store
+.bsp
+.metals
+.scala-build
