@@ -4,9 +4,16 @@ import * as $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6 from "./int
 var $p;
 /** @constructor */
 function $c_Laudio_gsb_dynamic\uff3fplayback_audio$package$() {
-  this.p = null;
-  this.k = null;
-  $n_Laudio_gsb_dynamic\uff3fplayback_audio$package$ = this;
+}
+export { $c_Laudio_gsb_dynamic\uff3fplayback_audio$package$ as $c_Laudio_gsb_dynamic\uff3fplayback_audio$package$ };
+$p = $c_Laudio_gsb_dynamic\uff3fplayback_audio$package$.prototype = new $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$h_O();
+$p.constructor = $c_Laudio_gsb_dynamic\uff3fplayback_audio$package$;
+/** @constructor */
+function $h_Laudio_gsb_dynamic\uff3fplayback_audio$package$() {
+}
+export { $h_Laudio_gsb_dynamic\uff3fplayback_audio$package$ as $h_Laudio_gsb_dynamic\uff3fplayback_audio$package$ };
+$h_Laudio_gsb_dynamic\uff3fplayback_audio$package$.prototype = $p;
+$p.C = (function() {
   var node$proxy1 = $i_$0040elemaudio$002fcore.el.const((() => {
     var this$1 = ({});
     this$1.value = 0.0;
@@ -27,24 +34,13 @@ function $c_Laudio_gsb_dynamic\uff3fplayback_audio$package$() {
     this$3.value = 0.5;
     return this$3;
   })());
-  this.p = $i_$0040elemaudio$002fcore.el.mul(node$proxy3, other$proxy2);
-  this.k = $i_$0040elemaudio$002fcore.el.table((() => {
+  var rate = $i_$0040elemaudio$002fcore.el.mul(node$proxy3, other$proxy2);
+  return $i_$0040elemaudio$002fcore.el.table((() => {
     var this$4 = ({});
     this$4.path = null;
     this$4.path = "sample1";
     return this$4;
-  })(), $m_Laudio_gsb_dynamic\uff3fplayback_audio$package$().p);
-}
-export { $c_Laudio_gsb_dynamic\uff3fplayback_audio$package$ as $c_Laudio_gsb_dynamic\uff3fplayback_audio$package$ };
-$p = $c_Laudio_gsb_dynamic\uff3fplayback_audio$package$.prototype = new $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$h_O();
-$p.constructor = $c_Laudio_gsb_dynamic\uff3fplayback_audio$package$;
-/** @constructor */
-function $h_Laudio_gsb_dynamic\uff3fplayback_audio$package$() {
-}
-export { $h_Laudio_gsb_dynamic\uff3fplayback_audio$package$ as $h_Laudio_gsb_dynamic\uff3fplayback_audio$package$ };
-$h_Laudio_gsb_dynamic\uff3fplayback_audio$package$.prototype = $p;
-$p.o = (function() {
-  return [$m_Laudio_gsb_dynamic\uff3fplayback_audio$package$().k, $m_Laudio_gsb_dynamic\uff3fplayback_audio$package$().k];
+  })(), rate);
 });
 var $d_Laudio_gsb_dynamic\uff3fplayback_audio$package$ = new $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$TypeData().i($c_Laudio_gsb_dynamic\uff3fplayback_audio$package$, "audio.gsb.dynamic_playback.audio$package$", ({
   h: 1
