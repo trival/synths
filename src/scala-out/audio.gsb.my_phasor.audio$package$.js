@@ -13,7 +13,7 @@ function $h_Laudio_gsb_my\uff3fphasor_audio$package$() {
 }
 export { $h_Laudio_gsb_my\uff3fphasor_audio$package$ as $h_Laudio_gsb_my\uff3fphasor_audio$package$ };
 $h_Laudio_gsb_my\uff3fphasor_audio$package$.prototype = $p;
-$p.y = (function(hz) {
+$p.z = (function(hz) {
   var other$proxy1 = $i_$0040elemaudio$002fcore.el.sr();
   var node$proxy2 = $i_$0040elemaudio$002fcore.el.div(hz, other$proxy1);
   var other$proxy2 = $i_$0040elemaudio$002fcore.el.const((() => {
@@ -26,8 +26,8 @@ $p.y = (function(hz) {
   var reset$proxy1 = $i_$0040elemaudio$002fcore.el.train(node$proxy1);
   return $i_$0040elemaudio$002fcore.el.accum(node$proxy2, reset$proxy1);
 });
-$p.B = (function(hz) {
-  var node$proxy3 = $m_Laudio_gsb_my\uff3fphasor_audio$package$().y($i_$0040elemaudio$002fcore.el.const((() => {
+$p.C = (function(hz) {
+  var node$proxy3 = $m_Laudio_gsb_my\uff3fphasor_audio$package$().z($i_$0040elemaudio$002fcore.el.const((() => {
     var hz$1 = 0.0;
     hz$1 = hz;
     var this$1 = ({});
@@ -43,7 +43,7 @@ $p.B = (function(hz) {
   })(), node$proxy3);
 });
 var $d_Laudio_gsb_my\uff3fphasor_audio$package$ = new $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$TypeData().i($c_Laudio_gsb_my\uff3fphasor_audio$package$, "audio.gsb.my_phasor.audio$package$", ({
-  i: 1
+  j: 1
 }));
 export { $d_Laudio_gsb_my\uff3fphasor_audio$package$ as $d_Laudio_gsb_my\uff3fphasor_audio$package$ };
 var $n_Laudio_gsb_my\uff3fphasor_audio$package$;

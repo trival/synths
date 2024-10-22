@@ -8,6 +8,7 @@ import _loverManOld from './standards/lover-man-nim/lover-man-old.js'
 import loverMan from './standards/lover-man-nim/track.js'
 import gsbMyPhasor from './generating_sound_book/my_phasor/track.js'
 import gsbDynamicPlayback from './generating_sound_book/dynamic_playback/track.js'
+import gsbBeatSlicing from './generating_sound_book/beat_slicing/track.js'
 
 export default [
 	sequencer1,
@@ -21,6 +22,7 @@ export default [
 
 	gsbMyPhasor,
 	gsbDynamicPlayback,
+	gsbBeatSlicing,
 
 	...basicTracks,
 ]

@@ -625,25 +625,25 @@ var $d_D = new $TypeData().p(0.0, "D", "double", $ac_D, Float64Array);
 export { $d_D as $d_D };
 /** @constructor */
 function $c_jl_FloatingPointBits$() {
-  this.t = false;
+  this.u = false;
   this.h = null;
   this.i = null;
-  this.m = null;
+  this.n = null;
   this.k = false;
-  this.s = 0;
-  this.v = 0;
-  this.u = null;
+  this.t = 0;
+  this.w = 0;
+  this.v = null;
   $n_jl_FloatingPointBits$ = this;
-  this.t = true;
+  this.u = true;
   this.h = new ArrayBuffer(8);
   this.i = new Int32Array(this.h, 0, 2);
   new Float32Array(this.h, 0, 2);
-  this.m = new Float64Array(this.h, 0, 1);
+  this.n = new Float64Array(this.h, 0, 1);
   this.i[0] = 16909060;
   this.k = ((new Int8Array(this.h, 0, 8)[0] | 0) === 1);
-  this.s = (this.k ? 0 : 1);
-  this.v = (this.k ? 1 : 0);
-  this.u = null;
+  this.t = (this.k ? 0 : 1);
+  this.w = (this.k ? 1 : 0);
+  this.v = null;
 }
 export { $c_jl_FloatingPointBits$ as $c_jl_FloatingPointBits$ };
 $p = $c_jl_FloatingPointBits$.prototype = new $h_O();
@@ -653,17 +653,17 @@ function $h_jl_FloatingPointBits$() {
 }
 export { $h_jl_FloatingPointBits$ as $h_jl_FloatingPointBits$ };
 $h_jl_FloatingPointBits$.prototype = $p;
-$p.n = (function(value) {
+$p.o = (function(value) {
   var iv = ((value | 0.0) | 0);
   if (((iv === value) && ((1.0 / value) !== (-Infinity)))) {
     return iv;
   } else {
-    this.m[0] = value;
+    this.n[0] = value;
     return ((this.i[0] | 0) ^ (this.i[1] | 0));
   }
 });
 var $d_jl_FloatingPointBits$ = new $TypeData().i($c_jl_FloatingPointBits$, "java.lang.FloatingPointBits$", ({
-  r: 1
+  s: 1
 }));
 export { $d_jl_FloatingPointBits$ as $d_jl_FloatingPointBits$ };
 var $n_jl_FloatingPointBits$;
@@ -683,7 +683,7 @@ function $f_jl_Void__toString__T($thiz) {
 }
 export { $f_jl_Void__toString__T as $f_jl_Void__toString__T };
 var $d_jl_Void = new $TypeData().i(0, "java.lang.Void", ({
-  y: 1
+  z: 1
 }), ((x) => (x === (void 0))));
 export { $d_jl_Void as $d_jl_Void };
 /** @constructor */
@@ -708,16 +708,16 @@ $p.g = (function() {
   return (this.b ^ this.c);
 });
 $p.j = (function() {
-  return $m_RTLong$().r(this.b, this.c);
+  return $m_RTLong$().s(this.b, this.c);
 });
 $p.aa = (function() {
   return this.b;
 });
 $p.a9 = (function() {
-  return $m_RTLong$().q(this.b, this.c);
+  return $m_RTLong$().r(this.b, this.c);
 });
 $p.a8 = (function() {
-  return $m_RTLong$().p(this.b, this.c);
+  return $m_RTLong$().q(this.b, this.c);
 });
 $p.T = (function() {
   return ((this.b << 24) >> 24);
@@ -732,16 +732,16 @@ $p.a5 = (function() {
   return this;
 });
 $p.Z = (function() {
-  return $m_RTLong$().q(this.b, this.c);
+  return $m_RTLong$().r(this.b, this.c);
 });
 $p.W = (function() {
-  return $m_RTLong$().p(this.b, this.c);
+  return $m_RTLong$().q(this.b, this.c);
 });
 $p.V = (function(that) {
-  return $m_RTLong$().o(this.b, this.c, that.b, that.c);
+  return $m_RTLong$().p(this.b, this.c, that.b, that.c);
 });
 $p.U = (function(that) {
-  return $m_RTLong$().o(this.b, this.c, that.b, that.c);
+  return $m_RTLong$().p(this.b, this.c, that.b, that.c);
 });
 $p.Y = (function(b) {
   return ((this.b === b.b) && (this.c === b.c));
@@ -828,11 +828,11 @@ $p.R = (function(b) {
 });
 $p.G = (function(b) {
   var this$1 = $m_RTLong$();
-  return new $c_RTLong(this$1.w(this.b, this.c, b.b, b.c), this$1.d);
+  return new $c_RTLong(this$1.x(this.b, this.c, b.b, b.c), this$1.d);
 });
 $p.P = (function(b) {
   var this$1 = $m_RTLong$();
-  return new $c_RTLong(this$1.A(this.b, this.c, b.b, b.c), this$1.d);
+  return new $c_RTLong(this$1.B(this.b, this.c, b.b, b.c), this$1.d);
 });
 function $isArrayOf_RTLong(obj, depth) {
   return (!(!(((obj && obj.$classData) && (obj.$classData.D === depth)) && obj.$classData.B.n.g)));
@@ -986,13 +986,13 @@ function $h_RTLong$() {
 }
 export { $h_RTLong$ as $h_RTLong$ };
 $h_RTLong$.prototype = $p;
-$p.r = (function(lo, hi) {
+$p.s = (function(lo, hi) {
   return ((hi === (lo >> 31)) ? ("" + lo) : ((hi < 0) ? ("-" + $p_RTLong$__toUnsignedString__I__I__T(this, ((-lo) | 0), ((lo !== 0) ? (~hi) : ((-hi) | 0)))) : $p_RTLong$__toUnsignedString__I__I__T(this, lo, hi)));
 });
-$p.p = (function(lo, hi) {
+$p.q = (function(lo, hi) {
   return ((hi < 0) ? (-((4.294967296E9 * (+(((lo !== 0) ? (~hi) : ((-hi) | 0)) >>> 0.0))) + (+(((-lo) | 0) >>> 0.0)))) : ((4.294967296E9 * hi) + (+(lo >>> 0.0))));
 });
-$p.q = (function(lo, hi) {
+$p.r = (function(lo, hi) {
   if ((hi < 0)) {
     var abs__lo = ((-lo) | 0);
     var abs__hi = ((lo !== 0) ? (~hi) : ((-hi) | 0));
@@ -1008,9 +1008,9 @@ $p.a1 = (function(value) {
   return new $c_RTLong(value, (value >> 31));
 });
 $p.a0 = (function(value) {
-  return new $c_RTLong(this.z(value), this.d);
+  return new $c_RTLong(this.A(value), this.d);
 });
-$p.z = (function(value) {
+$p.A = (function(value) {
   if ((value < (-9.223372036854776E18))) {
     this.d = (-2147483648);
     return 0;
@@ -1024,10 +1024,10 @@ $p.z = (function(value) {
     return rawLo;
   }
 });
-$p.o = (function(alo, ahi, blo, bhi) {
+$p.p = (function(alo, ahi, blo, bhi) {
   return ((ahi === bhi) ? ((alo === blo) ? 0 : ((((-2147483648) ^ alo) < ((-2147483648) ^ blo)) ? (-1) : 1)) : ((ahi < bhi) ? (-1) : 1));
 });
-$p.w = (function(alo, ahi, blo, bhi) {
+$p.x = (function(alo, ahi, blo, bhi) {
   if (((blo | bhi) === 0)) {
     throw new $c_jl_ArithmeticException("/ by zero");
   }
@@ -1073,7 +1073,7 @@ $p.w = (function(alo, ahi, blo, bhi) {
     }
   }
 });
-$p.A = (function(alo, ahi, blo, bhi) {
+$p.B = (function(alo, ahi, blo, bhi) {
   if (((blo | bhi) === 0)) {
     throw new $c_jl_ArithmeticException("/ by zero");
   }
@@ -1120,7 +1120,7 @@ $p.A = (function(alo, ahi, blo, bhi) {
   }
 });
 var $d_RTLong$ = new $TypeData().i($c_RTLong$, "org.scalajs.linker.runtime.RuntimeLong$", ({
-  z: 1
+  A: 1
 }));
 export { $d_RTLong$ as $d_RTLong$ };
 var $n_RTLong$;
@@ -1145,7 +1145,7 @@ $h_jl_Number.prototype = $p;
 function $ct_jl_Throwable__T__jl_Throwable__Z__Z__($thiz, s, e, enableSuppression, writableStackTrace) {
   $thiz.l = s;
   if (writableStackTrace) {
-    $thiz.x();
+    $thiz.y();
   }
   return $thiz;
 }
@@ -1155,7 +1155,7 @@ class $c_jl_Throwable extends Error {
     super();
     this.l = null;
   }
-  x() {
+  y() {
     var $x_1 = this;
     var reference = (false ? $x_1.D : $x_1);
     if ((Object.prototype.toString.call(reference) !== "[object Error]")) {
@@ -1199,7 +1199,7 @@ function $f_jl_Boolean__toString__T($thiz) {
 }
 export { $f_jl_Boolean__toString__T as $f_jl_Boolean__toString__T };
 var $d_jl_Boolean = new $TypeData().i(0, "java.lang.Boolean", ({
-  k: 1,
+  l: 1,
   a: 1,
   b: 1,
   c: 1
@@ -1214,7 +1214,7 @@ function $f_jl_Character__toString__T($thiz) {
 }
 export { $f_jl_Character__toString__T as $f_jl_Character__toString__T };
 var $d_jl_Character = new $TypeData().i(0, "java.lang.Character", ({
-  n: 1,
+  o: 1,
   a: 1,
   b: 1,
   c: 1
@@ -1231,10 +1231,10 @@ class $c_jl_ArithmeticException extends $c_jl_RuntimeException {
 }
 export { $c_jl_ArithmeticException as $c_jl_ArithmeticException };
 var $d_jl_ArithmeticException = new $TypeData().i($c_jl_ArithmeticException, "java.lang.ArithmeticException", ({
-  j: 1,
-  u: 1,
-  p: 1,
-  x: 1,
+  k: 1,
+  v: 1,
+  q: 1,
+  y: 1,
   a: 1
 }));
 export { $d_jl_ArithmeticException as $d_jl_ArithmeticException };
@@ -1247,7 +1247,7 @@ function $f_jl_Byte__toString__T($thiz) {
 }
 export { $f_jl_Byte__toString__T as $f_jl_Byte__toString__T };
 var $d_jl_Byte = new $TypeData().i(0, "java.lang.Byte", ({
-  l: 1,
+  m: 1,
   d: 1,
   a: 1,
   b: 1,
@@ -1263,7 +1263,7 @@ function $f_jl_Short__toString__T($thiz) {
 }
 export { $f_jl_Short__toString__T as $f_jl_Short__toString__T };
 var $d_jl_Short = new $TypeData().i(0, "java.lang.Short", ({
-  v: 1,
+  w: 1,
   d: 1,
   a: 1,
   b: 1,
@@ -1271,7 +1271,7 @@ var $d_jl_Short = new $TypeData().i(0, "java.lang.Short", ({
 }), ((x) => $isShort(x)));
 export { $d_jl_Short as $d_jl_Short };
 function $f_jl_Double__hashCode__I($thiz) {
-  return $m_jl_FloatingPointBits$().n($thiz);
+  return $m_jl_FloatingPointBits$().o($thiz);
 }
 export { $f_jl_Double__hashCode__I as $f_jl_Double__hashCode__I };
 function $f_jl_Double__toString__T($thiz) {
@@ -1279,7 +1279,7 @@ function $f_jl_Double__toString__T($thiz) {
 }
 export { $f_jl_Double__toString__T as $f_jl_Double__toString__T };
 var $d_jl_Double = new $TypeData().i(0, "java.lang.Double", ({
-  o: 1,
+  p: 1,
   d: 1,
   a: 1,
   b: 1,
@@ -1289,7 +1289,7 @@ var $d_jl_Double = new $TypeData().i(0, "java.lang.Double", ({
 export { $d_jl_Double as $d_jl_Double };
 function $f_jl_Float__hashCode__I($thiz) {
   var value = $thiz;
-  return $m_jl_FloatingPointBits$().n(value);
+  return $m_jl_FloatingPointBits$().o(value);
 }
 export { $f_jl_Float__hashCode__I as $f_jl_Float__hashCode__I };
 function $f_jl_Float__toString__T($thiz) {
@@ -1297,7 +1297,7 @@ function $f_jl_Float__toString__T($thiz) {
 }
 export { $f_jl_Float__toString__T as $f_jl_Float__toString__T };
 var $d_jl_Float = new $TypeData().i(0, "java.lang.Float", ({
-  q: 1,
+  r: 1,
   d: 1,
   a: 1,
   b: 1,
@@ -1314,7 +1314,7 @@ function $f_jl_Integer__toString__T($thiz) {
 }
 export { $f_jl_Integer__toString__T as $f_jl_Integer__toString__T };
 var $d_jl_Integer = new $TypeData().i(0, "java.lang.Integer", ({
-  s: 1,
+  t: 1,
   d: 1,
   a: 1,
   b: 1,
@@ -1327,11 +1327,11 @@ function $f_jl_Long__hashCode__I($thiz) {
 }
 export { $f_jl_Long__hashCode__I as $f_jl_Long__hashCode__I };
 function $f_jl_Long__toString__T($thiz) {
-  return $m_RTLong$().r($thiz.b, $thiz.c);
+  return $m_RTLong$().s($thiz.b, $thiz.c);
 }
 export { $f_jl_Long__toString__T as $f_jl_Long__toString__T };
 var $d_jl_Long = new $TypeData().i(0, "java.lang.Long", ({
-  t: 1,
+  u: 1,
   d: 1,
   a: 1,
   b: 1,
@@ -1356,16 +1356,16 @@ function $f_T__toString__T($thiz) {
 }
 export { $f_T__toString__T as $f_T__toString__T };
 var $d_T = new $TypeData().i(0, "java.lang.String", ({
-  w: 1,
+  x: 1,
   a: 1,
   b: 1,
-  m: 1,
+  n: 1,
   c: 1,
   e: 1
 }), ((x) => ((typeof x) === "string")));
 export { $d_T as $d_T };
 function $isArrayOf_sjs_js_JavaScriptException(obj, depth) {
-  return (!(!(((obj && obj.$classData) && (obj.$classData.D === depth)) && obj.$classData.B.n.A)));
+  return (!(!(((obj && obj.$classData) && (obj.$classData.D === depth)) && obj.$classData.B.n.B)));
 }
 export { $isArrayOf_sjs_js_JavaScriptException as $isArrayOf_sjs_js_JavaScriptException };
 $L0 = new $c_RTLong(0, 0);
