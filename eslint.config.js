@@ -25,6 +25,6 @@ export default [
 		},
 	},
 	{
-		ignores: ['**/play.js', 'dist/'],
+		ignores: ['**/play.js', 'dist/', 'src/scala-out/'],
 	},
 ]

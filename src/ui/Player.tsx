@@ -3,9 +3,10 @@ import { Icon } from 'solid-heroicons'
 import { pause, play } from 'solid-heroicons/solid'
 import { Show, createEffect, createSignal, onCleanup } from 'solid-js'
 import { Track } from '../lib/base.js'
-import { MidiController } from '../midi.jsx'
-import { Oscilloscope } from './Visualization.jsx'
+import sample1 from '../assets/dr_n_bass.mp3'
 import { InputType, Inputs } from './input.jsx'
+import { MidiController } from './midi.jsx'
+import { Oscilloscope } from './Visualization.jsx'
 
 const ctx = new AudioContext()
 ctx.suspend()
@@ -31,10 +32,6 @@ function pauseCtx() {
 
 const [loaded, setLoaded] = createSignal(false)
 
-core.on('load', function () {
-	setLoaded(true)
-})
-
 let node: AudioWorkletNode | undefined
 
 async function main() {
@@ -44,6 +41,14 @@ async function main() {
 		outputChannelCount: [2],
 	})
 	node.connect(analyser)
+
+	const res = await fetch(sample1)
+	const sampleBuffer = await ctx.decodeAudioData(await res.arrayBuffer())
+	core.updateVirtualFileSystem({
+		sample1: sampleBuffer.getChannelData(0),
+	})
+
+	setLoaded(true)
 }
 
 main().catch(console.error)
