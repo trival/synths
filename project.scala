@@ -7,3 +7,4 @@
 //> using jsSmallModuleForPackage audio audio.libs
 //> using dep org.scala-js:scalajs-library_2.13:1.17.0
 //> using option -language:implicitConversions
+//> using exclude .metals/*

@@ -13,7 +13,7 @@ function $h_Laudio_gsb_dynamic\uff3fplayback_audio$package$() {
 }
 export { $h_Laudio_gsb_dynamic\uff3fplayback_audio$package$ as $h_Laudio_gsb_dynamic\uff3fplayback_audio$package$ };
 $h_Laudio_gsb_dynamic\uff3fplayback_audio$package$.prototype = $p;
-$p.m = (function() {
+$p.D = (function() {
   var node$proxy1 = $i_$0040elemaudio$002fcore.el.const((() => {
     var this$1 = ({});
     this$1.value = 0.0;
