@@ -13,7 +13,7 @@ function $h_Laudio_gsb_beat\uff3fslicing_audio$package$() {
 }
 export { $h_Laudio_gsb_beat\uff3fslicing_audio$package$ as $h_Laudio_gsb_beat\uff3fslicing_audio$package$ };
 $h_Laudio_gsb_beat\uff3fslicing_audio$package$.prototype = $p;
-$p.B = (function(bpm, slices) {
+$p.B = (function(bpm, slices, jump, noiseFactor) {
   var freq = ((bpm / 60.0) / 8.0);
   var node$proxy1 = $i_$0040elemaudio$002fcore.el.const((() => {
     var freq$1 = 0.0;
@@ -65,17 +65,21 @@ $p.B = (function(bpm, slices) {
   })());
   var train = $i_$0040elemaudio$002fcore.el.ge(node$proxy6, other$proxy6);
   var other$proxy7 = $i_$0040elemaudio$002fcore.el.const((() => {
+    var jump$1 = 0.0;
+    jump$1 = jump;
     var this$7 = ({});
     this$7.value = 0.0;
-    this$7.value = 1.2;
+    this$7.value = jump$1;
     return this$7;
   })());
   var node$proxy10 = $i_$0040elemaudio$002fcore.el.mul(phase, other$proxy7);
   var node$proxy7 = $i_$0040elemaudio$002fcore.el.noise();
   var other$proxy8 = $i_$0040elemaudio$002fcore.el.const((() => {
+    var noiseFactor$1 = 0.0;
+    noiseFactor$1 = noiseFactor;
     var this$8 = ({});
     this$8.value = 0.0;
-    this$8.value = 0.2;
+    this$8.value = noiseFactor$1;
     return this$8;
   })());
   var node$proxy8 = $i_$0040elemaudio$002fcore.el.mul(node$proxy7, other$proxy8);

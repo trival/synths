@@ -22,9 +22,25 @@ export default {
 			initialValue: 16,
 			step: 1,
 		},
+		{
+			type: InputType.SLIDER,
+			label: 'Jump distance',
+			min: 0,
+			max: 5,
+			initialValue: 1.2,
+			step: 0.05,
+		},
+		{
+			type: InputType.SLIDER,
+			label: 'Noise factor',
+			min: 0,
+			max: 5,
+			initialValue: 0.2,
+			step: 0.01,
+		},
 	],
 
-	renderAudio([bpm, slices]) {
-		return gsbBeatSlicing(bpm, slices)
+	renderAudio([bpm, slices, jump, noiseFactor]) {
+		return gsbBeatSlicing(bpm, slices, jump, noiseFactor)
 	},
 } as Track
