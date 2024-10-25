@@ -22,25 +22,9 @@ export default {
 			initialValue: 16,
 			step: 1,
 		},
-		{
-			type: InputType.SLIDER,
-			label: 'Rate',
-			min: -1,
-			max: 1,
-			initialValue: 1,
-			step: 0.01,
-		},
-		{
-			type: InputType.SLIDER,
-			label: 'scrub',
-			min: 0,
-			max: 1,
-			initialValue: 0,
-			step: 0.01,
-		},
 	],
 
-	renderAudio([bpm, slices, rate, scrub]) {
-		return gsbBeatSlicing(bpm, slices, rate, scrub)
+	renderAudio([bpm, slices]) {
+		return gsbBeatSlicing(bpm, slices)
 	},
 } as Track

@@ -23,6 +23,10 @@ object El extends js.Object:
   def geq(a: AudioNode, b: AudioNode): AudioNode = js.native
   def max(a: AudioNode, b: AudioNode): AudioNode = js.native
   def min(a: AudioNode, b: AudioNode): AudioNode = js.native
+  def abs(n: AudioNode): AudioNode = js.native
+  def floor(n: AudioNode): AudioNode = js.native
+  def ceil(n: AudioNode): AudioNode = js.native
+  def round(n: AudioNode): AudioNode = js.native
 
   def cycle(n: AudioNode): AudioNode = js.native
   def triangle(n: AudioNode): AudioNode = js.native
@@ -75,10 +79,15 @@ extension (node: AudioNode)
   inline def train: AudioNode = El.train(node)
   inline def phasor: AudioNode = El.phasor(node)
 
-  inline infix def *(other: AudioNode): AudioNode = El.mul(node, other)
+  inline def add(other: AudioNode): AudioNode = El.add(node, other)
+  inline def sub(other: AudioNode): AudioNode = El.sub(node, other)
+  inline def mul(other: AudioNode): AudioNode = El.mul(node, other)
+  inline def div(other: AudioNode): AudioNode = El.div(node, other)
+
   inline infix def +(other: AudioNode): AudioNode = El.add(node, other)
-  inline infix def /(other: AudioNode): AudioNode = El.div(node, other)
   inline infix def -(other: AudioNode): AudioNode = El.sub(node, other)
+  inline infix def *(other: AudioNode): AudioNode = El.mul(node, other)
+  inline infix def /(other: AudioNode): AudioNode = El.div(node, other)
 
   inline infix def <(other: AudioNode): AudioNode = El.le(node, other)
   inline infix def >(other: AudioNode): AudioNode = El.ge(node, other)
@@ -91,6 +100,10 @@ extension (node: AudioNode)
   inline infix def %(other: AudioNode): AudioNode = El.mod(node, other)
   inline def max(other: AudioNode): AudioNode = El.max(node, other)
   inline def min(other: AudioNode): AudioNode = El.min(node, other)
+  inline def abs: AudioNode = El.abs(node)
+  inline def floor: AudioNode = El.floor(node)
+  inline def ceil: AudioNode = El.ceil(node)
+  inline def round: AudioNode = El.round(node)
 
   inline def pink: AudioNode = El.pink(node)
   inline def latch(train: AudioNode): AudioNode = El.latch(train, node)
