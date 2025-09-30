@@ -1,14 +1,7 @@
 'use strict';
 var $p;
-var $linkingInfo = Object.freeze(({
-  "esVersion": 12,
-  "assumingES6": true,
-  "isWebAssembly": false,
-  "productionMode": true,
-  "linkerVersion": "1.17.0",
-  "fileLevelThis": this
-}));
-export { $linkingInfo as $linkingInfo };
+var $fileLevelThis = this;
+export { $fileLevelThis as $fileLevelThis };
 var $L0;
 export { $L0 as $L0 };
 function $Char(c) {
@@ -58,16 +51,14 @@ function $objectClassName(arg0) {
       return "java.lang.Void";
     }
     default: {
-      if ((arg0 === null)) {
-        return arg0.a3();
-      } else if ((arg0 instanceof $c_RTLong)) {
+      if ((arg0 instanceof $c_RTLong)) {
         return "java.lang.Long";
       } else if ((arg0 instanceof $Char)) {
         return "java.lang.Character";
       } else if ((!(!(arg0 && arg0.$classData)))) {
         return arg0.$classData.N;
       } else {
-        return null.a4();
+        return null.a3();
       }
     }
   }
@@ -710,25 +701,25 @@ $p.g = (function() {
 $p.j = (function() {
   return $m_RTLong$().r(this.b, this.c);
 });
-$p.ab = (function() {
+$p.aa = (function() {
   return this.b;
 });
-$p.aa = (function() {
+$p.a9 = (function() {
   return $m_RTLong$().q(this.b, this.c);
 });
-$p.a9 = (function() {
+$p.a8 = (function() {
   return $m_RTLong$().p(this.b, this.c);
 });
 $p.U = (function() {
   return ((this.b << 24) >> 24);
 });
-$p.a8 = (function() {
+$p.a7 = (function() {
   return ((this.b << 16) >> 16);
 });
-$p.a5 = (function() {
+$p.a4 = (function() {
   return this.b;
 });
-$p.a6 = (function() {
+$p.a5 = (function() {
   return this;
 });
 $p.a0 = (function() {
@@ -746,7 +737,7 @@ $p.V = (function(that) {
 $p.Z = (function(b) {
   return ((this.b === b.b) && (this.c === b.c));
 });
-$p.a7 = (function(b) {
+$p.a6 = (function(b) {
   return (!((this.b === b.b) && (this.c === b.c)));
 });
 $p.M = (function(b) {
@@ -769,7 +760,7 @@ $p.J = (function(b) {
   var bhi = b.c;
   return ((ahi === bhi) ? (((-2147483648) ^ this.b) >= ((-2147483648) ^ b.b)) : (ahi > bhi));
 });
-$p.ad = (function() {
+$p.ac = (function() {
   return new $c_RTLong((~this.b), (~this.c));
 });
 $p.G = (function(b) {
@@ -793,7 +784,7 @@ $p.K = (function(n) {
   var hi = this.c;
   return new $c_RTLong((((32 & n) === 0) ? (((this.b >>> n) | 0) | ((hi << 1) << ((31 - n) | 0))) : (hi >> n)), (((32 & n) === 0) ? (hi >> n) : (hi >> 31)));
 });
-$p.ac = (function() {
+$p.ab = (function() {
   var lo = this.b;
   var hi = this.c;
   return new $c_RTLong(((-lo) | 0), ((lo !== 0) ? (~hi) : ((-hi) | 0)));
@@ -1156,8 +1147,7 @@ class $c_jl_Throwable extends Error {
     this.l = null;
   }
   x() {
-    var $x_1 = this;
-    var reference = (false ? $x_1.E : $x_1);
+    var reference = (false ? this.E : this);
     if ((Object.prototype.toString.call(reference) !== "[object Error]")) {
       if (((Error.captureStackTrace === (void 0)) || (!(!Object.isSealed(this))))) {
         new Error();
