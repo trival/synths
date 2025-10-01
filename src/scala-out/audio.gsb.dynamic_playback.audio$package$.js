@@ -13,7 +13,7 @@ function $h_Laudio_gsb_dynamic\uff3fplayback_audio$package$() {
 }
 export { $h_Laudio_gsb_dynamic\uff3fplayback_audio$package$ as $h_Laudio_gsb_dynamic\uff3fplayback_audio$package$ };
 $h_Laudio_gsb_dynamic\uff3fplayback_audio$package$.prototype = $p;
-$p.D = (function() {
+$p.u = (function() {
   var node$proxy1 = $i_$0040elemaudio$002fcore.el.const((() => {
     var this$1 = ({});
     this$1.value = 0.0;
@@ -23,18 +23,18 @@ $p.D = (function() {
   var node$proxy2 = $i_$0040elemaudio$002fcore.el.cycle(node$proxy1);
   var other$proxy1 = $i_$0040elemaudio$002fcore.el.const((() => {
     var this$2 = ({});
-    this$2.value = 0;
-    this$2.value = 1;
+    this$2.value = 0.0;
+    this$2.value = 0.5;
     return this$2;
   })());
-  var node$proxy3 = $i_$0040elemaudio$002fcore.el.add(node$proxy2, other$proxy1);
+  var node$proxy3 = $i_$0040elemaudio$002fcore.el.mul(node$proxy2, other$proxy1);
   var other$proxy2 = $i_$0040elemaudio$002fcore.el.const((() => {
     var this$3 = ({});
     this$3.value = 0.0;
     this$3.value = 0.5;
     return this$3;
   })());
-  var rate = $i_$0040elemaudio$002fcore.el.mul(node$proxy3, other$proxy2);
+  var rate = $i_$0040elemaudio$002fcore.el.add(node$proxy3, other$proxy2);
   return $i_$0040elemaudio$002fcore.el.table((() => {
     var this$4 = ({});
     this$4.path = null;

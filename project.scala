@@ -1,10 +1,11 @@
-//> using scala 3.7.2
-//> using jsVersion 1.19.0
+//> using scala 3.7.3
+//> using jsVersion 1.20.1
 //> using jsMode full
 //> using jsModuleKind es
 //> using jsEsVersionStr es2021
 //> using jsModuleSplitStyleStr smallmodulesfor
-//> using jsSmallModuleForPackage audio audio.libs
-//> using dep org.scala-js:scalajs-library_2.13:1.17.0
+//> using jsSmallModuleForPackage audio
+//> using jsSmallModuleForPackage audio.libs
+//> using dep org.scala-js:scalajs-library_2.13:1.20.1
 //> using option -language:implicitConversions
 //> using exclude .metals/*

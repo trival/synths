@@ -13,7 +13,7 @@ function $h_Laudio_gsb_beat\uff3fslicing_audio$package$() {
 }
 export { $h_Laudio_gsb_beat\uff3fslicing_audio$package$ as $h_Laudio_gsb_beat\uff3fslicing_audio$package$ };
 $h_Laudio_gsb_beat\uff3fslicing_audio$package$.prototype = $p;
-$p.B = (function(bpm, slices, jump, noiseFactor) {
+$p.s = (function(bpm, slices, jump, noiseFactor) {
   var freq = ((bpm / 60.0) / 8.0);
   var node$proxy1 = $i_$0040elemaudio$002fcore.el.const((() => {
     var freq$1 = 0.0;
