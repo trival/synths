@@ -723,6 +723,17 @@ end El
 // Standalone Helper Functions
 // ============================================================================
 
+/** Generates a AudioNode representing a stream of random numbers uniformly
+  * distributed on the range [0, 1].
+  */
+inline def rand: AudioNode = El.rand()
+
+/** Generates a AudioNode representing a continuous, monotonically increasing
+  * signal counting the number of elapsed audio samples in the underlying audio
+  * engine.
+  */
+inline def time: AudioNode = El.time()
+
 /** Returns the current sample rate as a constant audio signal.
   *
   * Useful for sample-accurate calculations that depend on the sample rate.
@@ -1197,6 +1208,11 @@ extension (node: AudioNode)
   * memoization.
   */
 extension (num: Double)
+  /** Creates a constant AudioNode with a key for memoization.
+    *
+    * @param str
+    *   Key string identifier
+    */
   @scala.annotation.nowarn
   inline infix def °(str: String): AudioNode =
     El.const(
