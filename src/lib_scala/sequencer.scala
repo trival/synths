@@ -108,20 +108,16 @@ def patternToSequence[T](
 /** A playable note containing data, track index, and gate signal. */
 case class PlayableNote[T](
     data: T,
-    idx: Int,
     gate: AudioNode
 )
 
 // === Sequencer Implementation ===
 
-private case class Period(start: Double, finish: Double)
-
-/** Creates a sequencer function that returns playable notes at each call.
+/** A stateful sequencer that manages playback of a sequence with polyphonic
+  * tracks.
   *
   * @param sequence
   *   The sequence to play
-  * @param initData
-  *   Initial data for tracks
   * @param trackCount
   *   Number of simultaneous tracks for polyphony
   * @param bpm
@@ -134,93 +130,90 @@ private case class Period(start: Double, finish: Double)
   *   Unique key for trigger signals
   * @param debug
   *   Enable debug logging
-  * @return
-  *   Function that takes current time and returns playable notes
   */
-def createSequencer[T](
-    sequence: Sequence[T],
-    initData: T,
-    trackCount: Int = 2,
-    bpm: Double = 120.0,
-    repetitions: Int = 0,
-    startTime: Double = 0.0,
-    seqKey: String = "seq_trigger",
-    debug: Boolean = false
-): Double => Seq[PlayableNote[T]] =
-  val secPerBeat = 60.0 / bpm
-  val seqDuration = sequence.duration * secPerBeat
+class Sequencer[T](
+    val sequence: Sequence[T],
+    val trackCount: Int = 2,
+    val bpm: Double = 120.0,
+    val repetitions: Int = 0,
+    val startTime: Double = 0.0,
+    val seqKey: String = "seq_trigger",
+    val debug: Boolean = false
+):
+  val secPerBeat: Double = 60.0 / bpm
+  val seqDuration: Double = sequence.duration * secPerBeat
 
-  // Create note intervals with wraparound for seamless looping
-  var noteIntervals = sequence.notes.zipWithIndex.map((note, i) =>
-    val start = note.start * secPerBeat
-    val finish = start + note.duration * secPerBeat
-    (Period(start, finish), i)
-  )
+  // Convert notes to Vector for O(1) access
+  private val indexedNotes = sequence.notes.toVector
 
-  // Add previous loop's tail notes for seamless transitions
-  val prevLoopNotes = noteIntervals
-    .map((period, i) =>
-      (Period(period.start - seqDuration, period.finish - seqDuration), i)
-    )
-    .filter(_._1.finish > 0)
+  // Named tuple type for iterator
+  type NoteWithTiming = (note: SeqNote[T], start: Double, finish: Double)
 
-  noteIntervals = prevLoopNotes ++ noteIntervals
+  // Lazy infinite iterator that yields notes with absolute timestamps
+  private var noteStream: BufferedIterator[NoteWithTiming] =
+    Iterator
+      .unfold((0, 0)): (loop, idx) =>
+        if repetitions > 0 && loop >= repetitions then None
+        else
+          val note = indexedNotes(idx)
+          val loopOffset = loop * seqDuration
+          val start = note.start * secPerBeat + loopOffset
+          val finish = start + note.duration * secPerBeat
 
-  // Initialize tracks
-  val tracks = (0 until trackCount)
+          val nextState =
+            if idx + 1 >= indexedNotes.length then (loop + 1, 0)
+            else (loop, idx + 1)
+
+          Some(((note, start, finish), nextState))
+      .buffered
+
+  // Initialize tracks with notes from the sequence (cycling if needed)
+  private val tracks = (0 until trackCount)
     .map(i =>
+      val note = indexedNotes(i % indexedNotes.length)
       PlayableNote(
-        data = initData,
-        idx = i,
+        data = note.data,
         gate = timedTrigger(0, 0, seqKey + i)
       )
     )
     .toArray
 
   // Track state
-  var currentTrackIdx = 0
-  val playingNotes = scala.collection.mutable.Map.empty[Int, Boolean]
+  private var currentTrackIdx = 0
 
-  def getNextTrackIdx(): Int =
+  private def getNextTrackIdx(): Int =
     val idx = currentTrackIdx
     currentTrackIdx = (currentTrackIdx + 1) % trackCount
     idx
 
-  // Return the sequencer function
-  (currentTime: Double) =>
-    val currentLoop = floor((currentTime - startTime) / seqDuration)
+  /** Returns the current playable notes at the given time. */
+  def currentNotes(currentTime: Double): Seq[PlayableNote[T]] =
+    val lookAhead = currentTime + 0.1
 
-    if repetitions == 0 || currentLoop < repetitions then
-      val seqTime = currentTime - currentLoop * seqDuration
+    // Consume notes from the iterator up to the lookahead window
+    while noteStream.hasNext && noteStream.head.start <= lookAhead do
+      val timing = noteStream.next()
 
-      noteIntervals.foreach { case (period, noteIdx) =>
-        if period.start - 0.1 <= seqTime && period.finish > seqTime then
-          if !playingNotes.getOrElse(noteIdx, false) then
-            val note = sequence.notes(noteIdx)
-            val start = period.start + currentLoop * seqDuration
-            val nextTrackIdx = getNextTrackIdx()
-            tracks(nextTrackIdx) = PlayableNote(
-              data = note.data,
-              idx = nextTrackIdx,
-              gate = timedTrigger(
-                start,
-                note.duration * secPerBeat,
-                seqKey + nextTrackIdx
-              )
-            )
-            playingNotes(noteIdx) = true
-        else playingNotes(noteIdx) = false
-      }
+      // Only schedule notes that are still active (haven't finished yet)
+      if timing.finish > currentTime then
+        val nextTrackIdx = getNextTrackIdx()
+        tracks(nextTrackIdx) = PlayableNote(
+          data = timing.note.data,
+          gate = timedTrigger(
+            timing.start - startTime,
+            timing.note.duration * secPerBeat,
+            seqKey + nextTrackIdx
+          )
+        )
 
-      if debug then
-        val playing = playingNotes.filter(_._2).keys.toSeq
-        println(s"$seqKey $currentTrackIdx $playing")
+        if debug then
+          println(
+            s"$seqKey scheduled note on track $nextTrackIdx at ${timing.start}"
+          )
 
     tracks.toSeq
 
-// ============================================================================
-// Elementary Audio Helper
-// ============================================================================
+// === helpers ===
 
 /** Creates a timed trigger signal for Elementary Audio.
   *
