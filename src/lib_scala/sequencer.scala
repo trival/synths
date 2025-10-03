@@ -106,6 +106,7 @@ def patternToSequence[T](
 /** A playable note containing data, track index, and gate signal. */
 case class PlayableNote[T](
     data: T,
+    idx: Int,
     gate: AudioNode
 )
 
@@ -171,6 +172,7 @@ class Sequencer[T](
       val note = indexedNotes(i % indexedNotes.length)
       PlayableNote(
         data = note.data,
+        idx = i,
         gate = timedTrigger(0, 0, seqKey + i)
       )
     )
@@ -197,6 +199,7 @@ class Sequencer[T](
         val nextTrackIdx = getNextTrackIdx()
         tracks(nextTrackIdx) = PlayableNote(
           data = timing.note.data,
+          idx = nextTrackIdx,
           gate = timedTrigger(
             timing.start - startTime,
             timing.note.duration * secPerBeat,
