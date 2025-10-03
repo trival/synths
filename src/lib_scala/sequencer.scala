@@ -50,19 +50,17 @@ def melodyToSequence[T](melody: Melody[T]): Sequence[T] =
 
 /** Combines multiple sequences sequentially. */
 def combine[T](seqs: Sequence[T]*): Sequence[T] =
-  var notes = Seq.empty[SeqNote[T]]
-  var duration = 0.0
+  if seqs.isEmpty then Sequence(Seq.empty, 0.0)
+  else
+    var allNotes = seqs.head.notes
+    var duration = seqs.head.duration
 
-  for seq <- seqs do
-    for note <- seq.notes do
-      notes = notes :+ SeqNote(
-        start = duration + note.start,
-        duration = note.duration,
-        data = note.data
-      )
-    duration += seq.duration
+    for seq <- seqs.tail do
+      allNotes =
+        allNotes ++ seq.notes.map(n => n.copy(start = n.start + duration))
+      duration += seq.duration
 
-  Sequence(notes, duration)
+    Sequence(allNotes, duration)
 
 inline def +(seq1: Sequence[Int], seq2: Sequence[Int]): Sequence[Int] =
   combine(seq1, seq2)
