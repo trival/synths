@@ -13,7 +13,7 @@ function $h_Laudio_gsb_beat\uff3fslicing_audio$package$() {
 }
 export { $h_Laudio_gsb_beat\uff3fslicing_audio$package$ as $h_Laudio_gsb_beat\uff3fslicing_audio$package$ };
 $h_Laudio_gsb_beat\uff3fslicing_audio$package$.prototype = $p;
-$p.s = (function(bpm, slices, jump, noiseFactor) {
+$p.gi = (function(bpm, slices, jump, noiseFactor) {
   var freq = ((bpm / 60.0) / 8.0);
   var node$proxy1 = $i_$0040elemaudio$002fcore.el.const((() => {
     var freq$1 = 0.0;
@@ -139,7 +139,7 @@ $p.s = (function(bpm, slices, jump, noiseFactor) {
   })(), node$proxy16);
 });
 var $d_Laudio_gsb_beat\uff3fslicing_audio$package$ = new $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$TypeData().i($c_Laudio_gsb_beat\uff3fslicing_audio$package$, "audio.gsb.beat_slicing.audio$package$", ({
-  h: 1
+  b0: 1
 }));
 export { $d_Laudio_gsb_beat\uff3fslicing_audio$package$ as $d_Laudio_gsb_beat\uff3fslicing_audio$package$ };
 var $n_Laudio_gsb_beat\uff3fslicing_audio$package$;

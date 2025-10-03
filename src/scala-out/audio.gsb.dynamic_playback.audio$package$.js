@@ -13,7 +13,7 @@ function $h_Laudio_gsb_dynamic\uff3fplayback_audio$package$() {
 }
 export { $h_Laudio_gsb_dynamic\uff3fplayback_audio$package$ as $h_Laudio_gsb_dynamic\uff3fplayback_audio$package$ };
 $h_Laudio_gsb_dynamic\uff3fplayback_audio$package$.prototype = $p;
-$p.u = (function() {
+$p.gk = (function() {
   var node$proxy1 = $i_$0040elemaudio$002fcore.el.const((() => {
     var this$1 = ({});
     this$1.value = 0.0;
@@ -43,7 +43,7 @@ $p.u = (function() {
   })(), rate);
 });
 var $d_Laudio_gsb_dynamic\uff3fplayback_audio$package$ = new $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$TypeData().i($c_Laudio_gsb_dynamic\uff3fplayback_audio$package$, "audio.gsb.dynamic_playback.audio$package$", ({
-  i: 1
+  b1: 1
 }));
 export { $d_Laudio_gsb_dynamic\uff3fplayback_audio$package$ as $d_Laudio_gsb_dynamic\uff3fplayback_audio$package$ };
 var $n_Laudio_gsb_dynamic\uff3fplayback_audio$package$;
