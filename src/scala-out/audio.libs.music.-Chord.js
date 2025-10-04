@@ -69,8 +69,8 @@ function $h_Laudio_libs_music_Chord$() {
 }
 export { $h_Laudio_libs_music_Chord$ as $h_Laudio_libs_music_Chord$ };
 $h_Laudio_libs_music_Chord$.prototype = $p;
-$p.cY = (function(midiRoot, chordType) {
-  var this$1 = chordType.fR();
+$p.cZ = (function(midiRoot, chordType) {
+  var this$1 = chordType.fU();
   var f = ((interval) => ((midiRoot + (interval | 0)) | 0));
   if ((this$1 === $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$m_sci_Nil$())) {
     return $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$m_sci_Nil$();
@@ -78,13 +78,13 @@ $p.cY = (function(midiRoot, chordType) {
     var x0 = this$1.al();
     var h = new $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$c_sci_$colon$colon(f(x0), $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$m_sci_Nil$());
     var t = h;
-    var rest = this$1.an();
+    var rest = this$1.aJ();
     while ((rest !== $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$m_sci_Nil$())) {
       var x0$1 = rest.al();
       var nx = new $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$c_sci_$colon$colon(f(x0$1), $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$m_sci_Nil$());
-      t.aX = nx;
+      t.aW = nx;
       t = nx;
-      rest = rest.an();
+      rest = rest.aJ();
     }
     return h;
   }
@@ -114,10 +114,10 @@ function $h_Laudio_libs_music_Chord() {
 }
 export { $h_Laudio_libs_music_Chord as $h_Laudio_libs_music_Chord };
 $h_Laudio_libs_music_Chord.prototype = $p;
-$p.am = (function() {
+$p.aI = (function() {
   return new $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$c_s_Product$$anon$1(this);
 });
-$p.fR = (function() {
+$p.fU = (function() {
   var x = $s_Laudio_libs_music_Chord$__Major__Laudio_libs_music_Chord();
   if (((x !== null) && (x === this))) {
     return new $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$c_sci_$colon$colon(0, new $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$c_sci_$colon$colon(4, new $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$c_sci_$colon$colon(7, $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$m_sci_Nil$())));
@@ -154,8 +154,8 @@ $p.fR = (function() {
 });
 /** @constructor */
 function $c_Laudio_libs_music_Chord$$anon$3(\u03b4name$6, _$ordinal$6) {
-  this.cA = null;
-  this.cA = \u03b4name$6;
+  this.cy = null;
+  this.cy = \u03b4name$6;
 }
 export { $c_Laudio_libs_music_Chord$$anon$3 as $c_Laudio_libs_music_Chord$$anon$3 };
 $p = $c_Laudio_libs_music_Chord$$anon$3.prototype = new $h_Laudio_libs_music_Chord();
@@ -165,26 +165,26 @@ function $h_Laudio_libs_music_Chord$$anon$3() {
 }
 export { $h_Laudio_libs_music_Chord$$anon$3 as $h_Laudio_libs_music_Chord$$anon$3 };
 $h_Laudio_libs_music_Chord$$anon$3.prototype = $p;
-$p.a6 = (function() {
+$p.ab = (function() {
   return 0;
 });
-$p.a7 = (function(n) {
+$p.ac = (function(n) {
   return $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$f_sr_EnumValue__productElement__I__O(this, n);
 });
-$p.a8 = (function() {
-  return this.cA;
+$p.ad = (function() {
+  return this.cy;
 });
-$p.B = (function() {
-  return this.cA;
+$p.C = (function() {
+  return this.cy;
 });
-$p.s = (function() {
-  return $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$f_T__hashCode__I(this.cA);
+$p.t = (function() {
+  return $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$f_T__hashCode__I(this.cy);
 });
 var $d_Laudio_libs_music_Chord$$anon$3 = new $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$TypeData().i($c_Laudio_libs_music_Chord$$anon$3, "audio.libs.music.Chord$$anon$3", ({
   b5: 1,
   b3: 1,
   c: 1,
-  M: 1,
+  P: 1,
   a: 1,
   aY: 1,
   aZ: 1,

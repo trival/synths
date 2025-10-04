@@ -2,42 +2,21 @@
 import * as $i_$0040elemaudio$002fcore from "@elemaudio/core";
 import * as $j_audio$002elibs$002emusic$002e$002dChord from "./audio.libs.music.-Chord.js";
 import * as $j_audio$002elibs$002emusic$002e$002dNote$002dName$0024 from "./audio.libs.music.-Note-Name$.js";
-import * as $j_audio$002elibs$002emusic$002emusic$0024package$0024 from "./audio.libs.music.music$package$.js";
 import * as $j_audio$002elibs$002esequencer$002e$002dMelody$002dNote from "./audio.libs.sequencer.-Melody-Note.js";
 import * as $j_audio$002elibs$002esequencer$002e$002dSequencer from "./audio.libs.sequencer.-Sequencer.js";
 import * as $j_audio$002elibs$002esequencer$002esequencer$0024package$0024 from "./audio.libs.sequencer.sequencer$package$.js";
-import * as $j_audio$002etracks$002escala$002esequencer$002e$002dSynth$002dSignal from "./audio.tracks.scala.sequencer.-Synth-Signal.js";
 import * as $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6 from "./internal-3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.js";
 var $p;
 /** @constructor */
 function $c_Laudio_tracks_scala_sequencer_audio$package$() {
-}
-export { $c_Laudio_tracks_scala_sequencer_audio$package$ as $c_Laudio_tracks_scala_sequencer_audio$package$ };
-$p = $c_Laudio_tracks_scala_sequencer_audio$package$.prototype = new $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$h_O();
-$p.constructor = $c_Laudio_tracks_scala_sequencer_audio$package$;
-/** @constructor */
-function $h_Laudio_tracks_scala_sequencer_audio$package$() {
-}
-export { $h_Laudio_tracks_scala_sequencer_audio$package$ as $h_Laudio_tracks_scala_sequencer_audio$package$ };
-$h_Laudio_tracks_scala_sequencer_audio$package$.prototype = $p;
-$p.ft = (function(signals) {
-  if (signals.O()) {
-    return $i_$0040elemaudio$002fcore.el.const((() => {
-      var this$1 = ({});
-      this$1.value = 0.0;
-      this$1.value = 0.0;
-      return this$1;
-    })());
-  } else {
-    var sum = signals.aT(new $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$c_sr_AbstractFunction1_$$Lambda$70e1780b84463d18653aacefee3ab989ac625f28(((s) => {
-      var node$proxy1 = $i_$0040elemaudio$002fcore.el.mul(s.d9, s.c7);
-      return $i_$0040elemaudio$002fcore.el.mul(node$proxy1, s.c7);
-    }))).d4(new $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$c_sr_AbstractFunction2_$$Lambda$286cbfc6187197affcadc8465aaec93d6b7d20dc(((a, b) => $i_$0040elemaudio$002fcore.el.add(a, b))));
-    var volume = signals.aT(new $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$c_sr_AbstractFunction1_$$Lambda$70e1780b84463d18653aacefee3ab989ac625f28(((_$1) => _$1.c7))).d4(new $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$c_sr_AbstractFunction2_$$Lambda$286cbfc6187197affcadc8465aaec93d6b7d20dc(((a$2, b$2) => $i_$0040elemaudio$002fcore.el.add(a$2, b$2))));
-    return $i_$0040elemaudio$002fcore.el.div(sum, volume);
-  }
-});
-$p.go = (function(tick) {
+  this.cI = null;
+  this.cJ = null;
+  this.cK = null;
+  this.cH = null;
+  this.dP = null;
+  this.dQ = null;
+  this.dR = null;
+  $n_Laudio_tracks_scala_sequencer_audio$package$ = this;
   var _1 = $j_audio$002elibs$002emusic$002e$002dNote$002dName$0024.$s_Laudio_libs_music_NoteName$__C__Laudio_libs_music_NoteName();
   var \u03b42$___1;
   var \u03b42$___2;
@@ -136,7 +115,7 @@ $p.go = (function(tick) {
   }
   var midiRoot = ((base + Math.imul(12, ((1 + octave) | 0))) | 0);
   var chordType = $j_audio$002elibs$002emusic$002e$002dChord.$s_Laudio_libs_music_Chord$__Major__Laudio_libs_music_Chord();
-  var cMaj = $j_audio$002elibs$002emusic$002e$002dChord.$m_Laudio_libs_music_Chord$().cY(midiRoot, chordType);
+  this.cI = $j_audio$002elibs$002emusic$002e$002dChord.$m_Laudio_libs_music_Chord$().cZ(midiRoot, chordType);
   var _1$1 = $j_audio$002elibs$002emusic$002e$002dNote$002dName$0024.$s_Laudio_libs_music_NoteName$__F__Laudio_libs_music_NoteName();
   var \u03b42$$1___1;
   var \u03b42$$1___2;
@@ -235,7 +214,7 @@ $p.go = (function(tick) {
   }
   var midiRoot$1 = ((base$1 + Math.imul(12, ((1 + octave$1) | 0))) | 0);
   var chordType$1 = $j_audio$002elibs$002emusic$002e$002dChord.$s_Laudio_libs_music_Chord$__Major__Laudio_libs_music_Chord();
-  var fMaj = $j_audio$002elibs$002emusic$002e$002dChord.$m_Laudio_libs_music_Chord$().cY(midiRoot$1, chordType$1);
+  this.cJ = $j_audio$002elibs$002emusic$002e$002dChord.$m_Laudio_libs_music_Chord$().cZ(midiRoot$1, chordType$1);
   var _1$2 = $j_audio$002elibs$002emusic$002e$002dNote$002dName$0024.$s_Laudio_libs_music_NoteName$__G__Laudio_libs_music_NoteName();
   var \u03b42$$2___1;
   var \u03b42$$2___2;
@@ -334,7 +313,7 @@ $p.go = (function(tick) {
   }
   var midiRoot$2 = ((base$2 + Math.imul(12, ((1 + octave$2) | 0))) | 0);
   var chordType$2 = $j_audio$002elibs$002emusic$002e$002dChord.$s_Laudio_libs_music_Chord$__Major__Laudio_libs_music_Chord();
-  var gMaj = $j_audio$002elibs$002emusic$002e$002dChord.$m_Laudio_libs_music_Chord$().cY(midiRoot$2, chordType$2);
+  this.cK = $j_audio$002elibs$002emusic$002e$002dChord.$m_Laudio_libs_music_Chord$().cZ(midiRoot$2, chordType$2);
   var _1$3 = $j_audio$002elibs$002emusic$002e$002dNote$002dName$0024.$s_Laudio_libs_music_NoteName$__A__Laudio_libs_music_NoteName();
   var \u03b42$$3___1;
   var \u03b42$$3___2;
@@ -433,69 +412,33 @@ $p.go = (function(tick) {
   }
   var midiRoot$3 = ((base$3 + Math.imul(12, ((1 + octave$3) | 0))) | 0);
   var chordType$3 = $j_audio$002elibs$002emusic$002e$002dChord.$s_Laudio_libs_music_Chord$__Minor__Laudio_libs_music_Chord();
-  var aMin = $j_audio$002elibs$002emusic$002e$002dChord.$m_Laudio_libs_music_Chord$().cY(midiRoot$3, chordType$3);
-  var notes = $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$m_sci_Seq$().eq($j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$m_sr_ScalaRunTime$().gv(new ($j_audio$002elibs$002esequencer$002e$002dMelody$002dNote.$d_Laudio_libs_sequencer_MelodyNote.r().C)([new $j_audio$002elibs$002esequencer$002e$002dMelody$002dNote.$c_Laudio_libs_sequencer_MelodyNote(1.0, new $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$c_s_Some($j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$f_sc_LinearSeqOps__apply__I__O(cMaj, 0))), new $j_audio$002elibs$002esequencer$002e$002dMelody$002dNote.$c_Laudio_libs_sequencer_MelodyNote(1.0, new $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$c_s_Some($j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$f_sc_LinearSeqOps__apply__I__O(cMaj, 1))), new $j_audio$002elibs$002esequencer$002e$002dMelody$002dNote.$c_Laudio_libs_sequencer_MelodyNote(1.0, new $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$c_s_Some($j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$f_sc_LinearSeqOps__apply__I__O(cMaj, 2))), new $j_audio$002elibs$002esequencer$002e$002dMelody$002dNote.$c_Laudio_libs_sequencer_MelodyNote(1.0, $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$m_s_None$()), new $j_audio$002elibs$002esequencer$002e$002dMelody$002dNote.$c_Laudio_libs_sequencer_MelodyNote(1.0, new $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$c_s_Some($j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$f_sc_LinearSeqOps__apply__I__O(fMaj, 0))), new $j_audio$002elibs$002esequencer$002e$002dMelody$002dNote.$c_Laudio_libs_sequencer_MelodyNote(1.0, new $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$c_s_Some($j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$f_sc_LinearSeqOps__apply__I__O(fMaj, 1))), new $j_audio$002elibs$002esequencer$002e$002dMelody$002dNote.$c_Laudio_libs_sequencer_MelodyNote(1.0, new $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$c_s_Some($j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$f_sc_LinearSeqOps__apply__I__O(fMaj, 2))), new $j_audio$002elibs$002esequencer$002e$002dMelody$002dNote.$c_Laudio_libs_sequencer_MelodyNote(1.0, $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$m_s_None$()), new $j_audio$002elibs$002esequencer$002e$002dMelody$002dNote.$c_Laudio_libs_sequencer_MelodyNote(1.0, new $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$c_s_Some($j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$f_sc_LinearSeqOps__apply__I__O(gMaj, 0))), new $j_audio$002elibs$002esequencer$002e$002dMelody$002dNote.$c_Laudio_libs_sequencer_MelodyNote(1.0, new $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$c_s_Some($j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$f_sc_LinearSeqOps__apply__I__O(gMaj, 1))), new $j_audio$002elibs$002esequencer$002e$002dMelody$002dNote.$c_Laudio_libs_sequencer_MelodyNote(1.0, new $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$c_s_Some($j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$f_sc_LinearSeqOps__apply__I__O(gMaj, 2))), new $j_audio$002elibs$002esequencer$002e$002dMelody$002dNote.$c_Laudio_libs_sequencer_MelodyNote(1.0, $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$m_s_None$()), new $j_audio$002elibs$002esequencer$002e$002dMelody$002dNote.$c_Laudio_libs_sequencer_MelodyNote(1.0, new $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$c_s_Some($j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$f_sc_LinearSeqOps__apply__I__O(aMin, 0))), new $j_audio$002elibs$002esequencer$002e$002dMelody$002dNote.$c_Laudio_libs_sequencer_MelodyNote(1.0, new $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$c_s_Some($j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$f_sc_LinearSeqOps__apply__I__O(aMin, 1))), new $j_audio$002elibs$002esequencer$002e$002dMelody$002dNote.$c_Laudio_libs_sequencer_MelodyNote(1.0, new $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$c_s_Some($j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$f_sc_LinearSeqOps__apply__I__O(aMin, 2))), new $j_audio$002elibs$002esequencer$002e$002dMelody$002dNote.$c_Laudio_libs_sequencer_MelodyNote(1.0, $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$m_s_None$())])));
-  var sequence = $j_audio$002elibs$002esequencer$002esequencer$0024package$0024.$m_Laudio_libs_sequencer_sequencer$package$().fZ(notes);
-  var sequencer = new $j_audio$002elibs$002esequencer$002e$002dSequencer.$c_Laudio_libs_sequencer_Sequencer(sequence, 3, 140.0, 0, 0.0, "seq_trigger", false);
-  var activeNotes = sequencer.fD(tick);
-  if (activeNotes.O()) {
-    return $i_$0040elemaudio$002fcore.el.const((() => {
-      var this$109 = ({});
-      this$109.value = 0.0;
-      this$109.value = 0.0;
-      return this$109;
+  this.cH = $j_audio$002elibs$002emusic$002e$002dChord.$m_Laudio_libs_music_Chord$().cZ(midiRoot$3, chordType$3);
+  this.dP = $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$m_sci_Seq$().eu($j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$m_sr_ScalaRunTime$().gx(new ($j_audio$002elibs$002esequencer$002e$002dMelody$002dNote.$d_Laudio_libs_sequencer_MelodyNote.r().C)([new $j_audio$002elibs$002esequencer$002e$002dMelody$002dNote.$c_Laudio_libs_sequencer_MelodyNote(1.0, new $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$c_s_Some($j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$f_sc_LinearSeqOps__apply__I__O($m_Laudio_tracks_scala_sequencer_audio$package$().cI, 0))), new $j_audio$002elibs$002esequencer$002e$002dMelody$002dNote.$c_Laudio_libs_sequencer_MelodyNote(1.0, new $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$c_s_Some($j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$f_sc_LinearSeqOps__apply__I__O($m_Laudio_tracks_scala_sequencer_audio$package$().cI, 1))), new $j_audio$002elibs$002esequencer$002e$002dMelody$002dNote.$c_Laudio_libs_sequencer_MelodyNote(1.0, new $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$c_s_Some($j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$f_sc_LinearSeqOps__apply__I__O($m_Laudio_tracks_scala_sequencer_audio$package$().cI, 2))), new $j_audio$002elibs$002esequencer$002e$002dMelody$002dNote.$c_Laudio_libs_sequencer_MelodyNote(1.0, $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$m_s_None$()), new $j_audio$002elibs$002esequencer$002e$002dMelody$002dNote.$c_Laudio_libs_sequencer_MelodyNote(1.0, new $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$c_s_Some($j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$f_sc_LinearSeqOps__apply__I__O($m_Laudio_tracks_scala_sequencer_audio$package$().cJ, 0))), new $j_audio$002elibs$002esequencer$002e$002dMelody$002dNote.$c_Laudio_libs_sequencer_MelodyNote(1.0, new $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$c_s_Some($j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$f_sc_LinearSeqOps__apply__I__O($m_Laudio_tracks_scala_sequencer_audio$package$().cJ, 1))), new $j_audio$002elibs$002esequencer$002e$002dMelody$002dNote.$c_Laudio_libs_sequencer_MelodyNote(1.0, new $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$c_s_Some($j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$f_sc_LinearSeqOps__apply__I__O($m_Laudio_tracks_scala_sequencer_audio$package$().cJ, 2))), new $j_audio$002elibs$002esequencer$002e$002dMelody$002dNote.$c_Laudio_libs_sequencer_MelodyNote(1.0, $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$m_s_None$()), new $j_audio$002elibs$002esequencer$002e$002dMelody$002dNote.$c_Laudio_libs_sequencer_MelodyNote(1.0, new $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$c_s_Some($j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$f_sc_LinearSeqOps__apply__I__O($m_Laudio_tracks_scala_sequencer_audio$package$().cK, 0))), new $j_audio$002elibs$002esequencer$002e$002dMelody$002dNote.$c_Laudio_libs_sequencer_MelodyNote(1.0, new $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$c_s_Some($j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$f_sc_LinearSeqOps__apply__I__O($m_Laudio_tracks_scala_sequencer_audio$package$().cK, 1))), new $j_audio$002elibs$002esequencer$002e$002dMelody$002dNote.$c_Laudio_libs_sequencer_MelodyNote(1.0, new $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$c_s_Some($j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$f_sc_LinearSeqOps__apply__I__O($m_Laudio_tracks_scala_sequencer_audio$package$().cK, 2))), new $j_audio$002elibs$002esequencer$002e$002dMelody$002dNote.$c_Laudio_libs_sequencer_MelodyNote(1.0, $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$m_s_None$()), new $j_audio$002elibs$002esequencer$002e$002dMelody$002dNote.$c_Laudio_libs_sequencer_MelodyNote(1.0, new $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$c_s_Some($j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$f_sc_LinearSeqOps__apply__I__O($m_Laudio_tracks_scala_sequencer_audio$package$().cH, 0))), new $j_audio$002elibs$002esequencer$002e$002dMelody$002dNote.$c_Laudio_libs_sequencer_MelodyNote(1.0, new $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$c_s_Some($j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$f_sc_LinearSeqOps__apply__I__O($m_Laudio_tracks_scala_sequencer_audio$package$().cH, 1))), new $j_audio$002elibs$002esequencer$002e$002dMelody$002dNote.$c_Laudio_libs_sequencer_MelodyNote(1.0, new $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$c_s_Some($j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$f_sc_LinearSeqOps__apply__I__O($m_Laudio_tracks_scala_sequencer_audio$package$().cH, 2))), new $j_audio$002elibs$002esequencer$002e$002dMelody$002dNote.$c_Laudio_libs_sequencer_MelodyNote(1.0, $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$m_s_None$())])));
+  this.dQ = $j_audio$002elibs$002esequencer$002esequencer$0024package$0024.$m_Laudio_libs_sequencer_sequencer$package$().g2($m_Laudio_tracks_scala_sequencer_audio$package$().dP);
+  this.dR = new $j_audio$002elibs$002esequencer$002e$002dSequencer.$c_Laudio_libs_sequencer_Sequencer($m_Laudio_tracks_scala_sequencer_audio$package$().dQ, 2, 140.0, 0, 0.0, "seq_trigger", true);
+}
+export { $c_Laudio_tracks_scala_sequencer_audio$package$ as $c_Laudio_tracks_scala_sequencer_audio$package$ };
+$p = $c_Laudio_tracks_scala_sequencer_audio$package$.prototype = new $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$h_O();
+$p.constructor = $c_Laudio_tracks_scala_sequencer_audio$package$;
+/** @constructor */
+function $h_Laudio_tracks_scala_sequencer_audio$package$() {
+}
+export { $h_Laudio_tracks_scala_sequencer_audio$package$ as $h_Laudio_tracks_scala_sequencer_audio$package$ };
+$h_Laudio_tracks_scala_sequencer_audio$package$.prototype = $p;
+$p.gq = (function(tick) {
+  return $m_Laudio_tracks_scala_sequencer_audio$package$().dR.fG(tick).bh(new $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$c_sr_AbstractFunction1_$$Lambda$70e1780b84463d18653aacefee3ab989ac625f28(((n) => {
+    var node$proxy2 = $i_$0040elemaudio$002fcore.el.const((() => {
+      var this$2 = ({});
+      this$2.value = 0;
+      this$2.value = 220;
+      return this$2;
     })());
-  } else {
-    var node$proxy3 = $m_Laudio_tracks_scala_sequencer_audio$package$().ft(activeNotes.aT(new $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$c_sr_AbstractFunction1_$$Lambda$70e1780b84463d18653aacefee3ab989ac625f28(((n) => {
-      var x$proxy1 = $j_audio$002elibs$002emusic$002emusic$0024package$0024.$m_Laudio_libs_music_music$package$().g0((n.cD | 0));
-      var node$proxy2 = $i_$0040elemaudio$002fcore.el.const((() => {
-        var x$proxy1$1 = 0.0;
-        x$proxy1$1 = x$proxy1;
-        var this$110 = ({});
-        this$110.value = 0.0;
-        this$110.value = x$proxy1$1;
-        return this$110;
-      })());
-      var $x_1 = $i_$0040elemaudio$002fcore.el.cycle(node$proxy2);
-      var attack$proxy1 = $i_$0040elemaudio$002fcore.el.const((() => {
-        var this$2$2 = ({});
-        this$2$2.value = 0.0;
-        this$2$2.value = 0.1;
-        return this$2$2;
-      })());
-      var decay$proxy1 = $i_$0040elemaudio$002fcore.el.const((() => {
-        var this$3$1 = ({});
-        this$3$1.value = 0.0;
-        this$3$1.value = 0.2;
-        return this$3$1;
-      })());
-      var sustain$proxy1 = $i_$0040elemaudio$002fcore.el.const((() => {
-        var this$4$1 = ({});
-        this$4$1.value = 0.0;
-        this$4$1.value = 0.6;
-        return this$4$1;
-      })());
-      var release$proxy1 = $i_$0040elemaudio$002fcore.el.const((() => {
-        var releaseTime$2 = 0.0;
-        releaseTime$2 = 0.5;
-        var this$5$1 = ({});
-        this$5$1.value = 0.0;
-        this$5$1.value = releaseTime$2;
-        return this$5$1;
-      })());
-      return new $j_audio$002etracks$002escala$002esequencer$002e$002dSynth$002dSignal.$c_Laudio_tracks_scala_sequencer_SynthSignal($x_1, $i_$0040elemaudio$002fcore.el.adsr(attack$proxy1, decay$proxy1, sustain$proxy1, release$proxy1, n.cE));
-    }))));
-    var other$proxy1 = $i_$0040elemaudio$002fcore.el.const((() => {
-      var this$3$2 = ({});
-      this$3$2.value = 0.0;
-      this$3$2.value = 0.7;
-      return this$3$2;
-    })());
-    return $i_$0040elemaudio$002fcore.el.mul(node$proxy3, other$proxy1);
-  }
+    var node$proxy3 = $i_$0040elemaudio$002fcore.el.cycle(node$proxy2);
+    return $i_$0040elemaudio$002fcore.el.mul(node$proxy3, n.cB);
+  }))).dK(new $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$c_sr_AbstractFunction2_$$Lambda$286cbfc6187197affcadc8465aaec93d6b7d20dc(((_$6, _$7) => $i_$0040elemaudio$002fcore.el.add(_$6, _$7))));
 });
 var $d_Laudio_tracks_scala_sequencer_audio$package$ = new $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$TypeData().i($c_Laudio_tracks_scala_sequencer_audio$package$, "audio.tracks.scala.sequencer.audio$package$", ({
-  bh: 1
+  bf: 1
 }));
 export { $d_Laudio_tracks_scala_sequencer_audio$package$ as $d_Laudio_tracks_scala_sequencer_audio$package$ };
 var $n_Laudio_tracks_scala_sequencer_audio$package$;

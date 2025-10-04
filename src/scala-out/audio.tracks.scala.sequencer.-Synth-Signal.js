@@ -3,9 +3,9 @@ import * as $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6 from "./int
 var $p;
 /** @constructor */
 function $c_Laudio_tracks_scala_sequencer_SynthSignal(sound, env) {
-  this.d9 = null;
+  this.dd = null;
   this.c7 = null;
-  this.d9 = sound;
+  this.dd = sound;
   this.c7 = env;
 }
 export { $c_Laudio_tracks_scala_sequencer_SynthSignal as $c_Laudio_tracks_scala_sequencer_SynthSignal };
@@ -20,7 +20,7 @@ $p.am = (function() {
   return new $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$c_s_Product$$anon$1(this);
 });
 $p.s = (function() {
-  return $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$m_s_util_hashing_MurmurHash3$().d3(this, 723050494, true);
+  return $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$m_s_util_hashing_MurmurHash3$().d7(this, 723050494, true);
 });
 $p.B = (function() {
   return $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$m_sr_ScalaRunTime$().bY(this);
@@ -33,7 +33,7 @@ $p.a8 = (function() {
 });
 $p.a7 = (function(n) {
   if ((n === 0)) {
-    return this.d9;
+    return this.dd;
   }
   if ((n === 1)) {
     return this.c7;

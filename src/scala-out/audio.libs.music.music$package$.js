@@ -12,7 +12,7 @@ function $h_Laudio_libs_music_music$package$() {
 }
 export { $h_Laudio_libs_music_music$package$ as $h_Laudio_libs_music_music$package$ };
 $h_Laudio_libs_music_music$package$.prototype = $p;
-$p.g0 = (function(midi) {
+$p.g4 = (function(midi) {
   var b = ((((-69) + midi) | 0) / 12.0);
   return (440.0 * (+Math.pow(2.0, b)));
 });

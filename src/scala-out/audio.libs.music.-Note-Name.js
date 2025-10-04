@@ -12,6 +12,6 @@ function $h_Laudio_libs_music_NoteName() {
 }
 export { $h_Laudio_libs_music_NoteName as $h_Laudio_libs_music_NoteName };
 $h_Laudio_libs_music_NoteName.prototype = $p;
-$p.am = (function() {
+$p.aI = (function() {
   return new $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$c_s_Product$$anon$1(this);
 });

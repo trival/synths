@@ -13,7 +13,7 @@ function $h_Laudio_gsb_my\uff3fphasor_audio$package$() {
 }
 export { $h_Laudio_gsb_my\uff3fphasor_audio$package$ as $h_Laudio_gsb_my\uff3fphasor_audio$package$ };
 $h_Laudio_gsb_my\uff3fphasor_audio$package$.prototype = $p;
-$p.g1 = (function(hz) {
+$p.g3 = (function(hz) {
   var other$proxy1 = $i_$0040elemaudio$002fcore.el.sr();
   var node$proxy2 = $i_$0040elemaudio$002fcore.el.div(hz, other$proxy1);
   var other$proxy2 = $i_$0040elemaudio$002fcore.el.const((() => {
@@ -26,8 +26,8 @@ $p.g1 = (function(hz) {
   var reset$proxy1 = $i_$0040elemaudio$002fcore.el.train(node$proxy1);
   return $i_$0040elemaudio$002fcore.el.accum(node$proxy2, reset$proxy1);
 });
-$p.gj = (function(hz) {
-  var node$proxy3 = $m_Laudio_gsb_my\uff3fphasor_audio$package$().g1($i_$0040elemaudio$002fcore.el.const((() => {
+$p.gl = (function(hz) {
+  var node$proxy3 = $m_Laudio_gsb_my\uff3fphasor_audio$package$().g3($i_$0040elemaudio$002fcore.el.const((() => {
     var hz$1 = 0.0;
     hz$1 = hz;
     var this$1 = ({});

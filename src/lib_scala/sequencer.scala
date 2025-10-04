@@ -226,7 +226,7 @@ class Sequencer[T](
   *   Unique key for memoization
   */
 def timedTrigger(start: Double, duration: Double, key: String): AudioNode =
-  val t = time
+  val t = time / sr
   val startNode = start ° (key + "_start")
   val endNode = (start + duration) ° (key + "_end")
-  (t >= startNode) && (t < endNode)
+  (t >= startNode) * (t < endNode)

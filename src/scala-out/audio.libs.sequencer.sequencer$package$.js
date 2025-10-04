@@ -15,21 +15,23 @@ function $h_Laudio_libs_sequencer_sequencer$package$() {
 }
 export { $h_Laudio_libs_sequencer_sequencer$package$ as $h_Laudio_libs_sequencer_sequencer$package$ };
 $h_Laudio_libs_sequencer_sequencer$package$.prototype = $p;
-$p.fZ = (function(melody) {
-  var notes = new $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$c_sr_ObjectRef($j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$m_sci_Seq$().eE());
+$p.g2 = (function(melody) {
+  var notes = new $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$c_sr_ObjectRef($j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$m_sci_Seq$().eI());
   var duration = new $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$c_sr_DoubleRef(0.0);
-  melody.dF(new $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$c_sr_AbstractFunction1_$$Lambda$70e1780b84463d18653aacefee3ab989ac625f28(((note) => {
-    var this$3 = note.cC;
-    if ((!this$3.O())) {
-      var x0 = this$3.d0();
-      notes.cl = notes.cl.S(new $j_audio$002elibs$002esequencer$002e$002dSeq$002dNote.$c_Laudio_libs_sequencer_SeqNote(duration.bX, note.c2, x0));
+  melody.dE(new $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$c_sr_AbstractFunction1_$$Lambda$70e1780b84463d18653aacefee3ab989ac625f28(((note) => {
+    var this$3 = note.cA;
+    if ((!this$3.S())) {
+      var x0 = this$3.d1();
+      notes.ci = notes.ci.R(new $j_audio$002elibs$002esequencer$002e$002dSeq$002dNote.$c_Laudio_libs_sequencer_SeqNote(duration.bV, note.c0, x0));
     }
-    duration.bX = (duration.bX + note.c2);
+    duration.bV = (duration.bV + note.c0);
   })));
-  return new $j_audio$002elibs$002esequencer$002e$002dSequence.$c_Laudio_libs_sequencer_Sequence(notes.cl, duration.bX);
+  return new $j_audio$002elibs$002esequencer$002e$002dSequence.$c_Laudio_libs_sequencer_Sequence(notes.ci, duration.bV);
 });
-$p.eU = (function(start, duration, key) {
-  var t = $i_$0040elemaudio$002fcore.el.time();
+$p.eY = (function(start, duration, key) {
+  var node$proxy1 = $i_$0040elemaudio$002fcore.el.time();
+  var other$proxy1 = $i_$0040elemaudio$002fcore.el.sr();
+  var t = $i_$0040elemaudio$002fcore.el.div(node$proxy1, other$proxy1);
   var str$proxy1 = (key + "_start");
   var startNode = $i_$0040elemaudio$002fcore.el.const((() => {
     var start$2 = 0.0;
@@ -57,12 +59,12 @@ $p.eU = (function(start, duration, key) {
     this$2.key = str$proxy2$1;
     return this$2;
   })());
-  var node$proxy1 = $i_$0040elemaudio$002fcore.el.geq(t, startNode);
-  var other$proxy1 = $i_$0040elemaudio$002fcore.el.le(t, endNode);
-  return $i_$0040elemaudio$002fcore.el.and(node$proxy1, other$proxy1);
+  var node$proxy2 = $i_$0040elemaudio$002fcore.el.geq(t, startNode);
+  var other$proxy2 = $i_$0040elemaudio$002fcore.el.le(t, endNode);
+  return $i_$0040elemaudio$002fcore.el.mul(node$proxy2, other$proxy2);
 });
 var $d_Laudio_libs_sequencer_sequencer$package$ = new $j_internal$002d3ebfae0cba70adf981029a0da5b1e4b5ab5d02c6.$TypeData().i($c_Laudio_libs_sequencer_sequencer$package$, "audio.libs.sequencer.sequencer$package$", ({
-  bf: 1
+  be: 1
 }));
 export { $d_Laudio_libs_sequencer_sequencer$package$ as $d_Laudio_libs_sequencer_sequencer$package$ };
 var $n_Laudio_libs_sequencer_sequencer$package$;
